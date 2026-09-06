@@ -15,11 +15,7 @@ const viewerLinks = [
 const sanctumLinks = [
   { href: "/admin/queue", label: "Queue" },
   { href: "/admin/users", label: "Users" },
-  { href: "/admin/collections", label: "Collections" },
-  { href: "/admin/cards", label: "Cards" },
-  { href: "/admin/boosters", label: "Boosters" },
-  { href: "/admin/achievements", label: "Titles" },
-  { href: "/admin/rewards", label: "Rewards" },
+  { href: "/admin/rewards", label: "Fulfillment" },
   { href: "/admin/history", label: "Draws" },
   { href: "/admin/dev", label: "Dev" },
 ];
@@ -55,7 +51,7 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
               key={link.href}
               href={link.href}
               className={cn(
-                "ritual-ember font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.2em] uppercase",
+                "ritual-ember font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] uppercase",
                 active ? "text-[#d4b36a]" : "text-[#d7d3c8]",
               )}
             >
@@ -73,7 +69,7 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "ritual-ember font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.18em] uppercase",
+                  "ritual-ember font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.18em] uppercase",
                   active ? "text-[#d4b36a]" : "text-[#cfc6b4]",
                 )}
               >

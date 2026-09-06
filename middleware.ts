@@ -14,7 +14,8 @@ export default auth((req) => {
   if (
     pathname.startsWith("/api/auth") ||
     pathname.startsWith("/api/twitch") ||
-    pathname.startsWith("/api/reveal")
+    pathname.startsWith("/api/reveal") ||
+    pathname.startsWith("/api/cms")
   ) {
     return NextResponse.next();
   }

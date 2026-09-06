@@ -30,6 +30,7 @@ describe("seed catalog", () => {
     ).toBe(SEED_CARDS.length);
     expect(ORIGIN_COLLECTION.slug).toBe("origin");
     expect(ORIGIN_COLLECTION.name).toBe("Origin");
+    expect(ORIGIN_COLLECTION.backImageUrl).toBe("/collections/origin-back.svg");
     const keys = SEED_CARDS.map(
       (card) =>
         `${ORIGIN_COLLECTION_ID}:${card.number}:${card.signed ?? false}`,

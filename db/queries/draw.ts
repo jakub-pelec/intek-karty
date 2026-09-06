@@ -4,6 +4,7 @@ import {
   boosterDropRates,
   boosterTypes,
   cards,
+  collections,
   draws,
   userBoosters,
   userCards,
@@ -33,6 +34,7 @@ export class DrawError extends Error {
 export type DrawResult = {
   drawId: string;
   card: typeof cards.$inferSelect;
+  backImageUrl: string | null;
   isDuplicate: boolean;
   pointsAwarded: number;
   holographic: boolean;
@@ -109,7 +111,7 @@ export async function openUserBooster(input: {
       .from(boosterTypes)
       .where(eq(boosterTypes.id, locked.boosterTypeId))
       .limit(1);
-    if (!boosterType || !boosterType.active) {
+    if (!boosterType || !boosterType.active || !boosterType.cmsId) {
       throw new DrawError("Booster type is missing or inactive");
     }
 
@@ -212,10 +214,16 @@ export async function openUserBooster(input: {
     }
 
     const unlocked = await evaluateAchievements(tx, userId);
+    const [set] = await tx
+      .select({ backImageUrl: collections.backImageUrl })
+      .from(collections)
+      .where(eq(collections.id, card.collectionId))
+      .limit(1);
 
     return {
       drawId: draw.id,
       card,
+      backImageUrl: set?.backImageUrl ?? null,
       isDuplicate,
       pointsAwarded,
       holographic,

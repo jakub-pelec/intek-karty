@@ -7,5 +7,5 @@
   </defs>
   <rect width="300" height="420" rx="18" fill="url(#jb)"/>
   <rect x="16" y="16" width="268" height="388" rx="12" fill="none" stroke="#a33d62" stroke-width="2"/>
-  <text x="150" y="215" text-anchor="middle" fill="#ff7eac" font-size="20" font-family="serif">WILD CARD</text>
+  <text x="150" y="215" text-anchor="middle" fill="#ff4d94" font-size="20" font-family="serif">WILD CARD</text>
 </svg>

@@ -11,11 +11,11 @@ export function RitualPageHeader({
 }) {
   return (
     <header className="mb-12 text-center">
-      <h1 className="font-[family-name:var(--font-cormorant)] text-4xl tracking-wide text-[#cfc6b4] italic md:text-5xl">
+      <h1 className="font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide text-[#cfc6b4] italic md:text-[53px]">
         {title}
       </h1>
       {eyebrow ? (
-        <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.3em] text-[#d4b36a] uppercase">
+        <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.3em] text-[#d4b36a] uppercase">
           {eyebrow}
         </p>
       ) : null}

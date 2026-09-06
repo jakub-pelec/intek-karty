@@ -16,6 +16,7 @@ import {
   type CollectionSlot,
 } from "@/lib/collection";
 import { RARITIES, RARITY_LABELS } from "@/lib/constants";
+import { RARITY_LIGHT } from "@/lib/open-fx";
 import { toRoman } from "@/lib/ritual";
 import { cn, formatDate } from "@/lib/utils";
 
@@ -51,7 +52,7 @@ function FilterLink({
       href={href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.24em] uppercase",
+        "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase",
         active
           ? "border-[#d4b36a] text-[#d4b36a]"
           : "border-transparent text-[#d7d3c8]/40 hover:border-[#d4b36a]/50",
@@ -67,11 +68,13 @@ export function CollectionBrowser({
   query,
   sets,
   progress,
+  backImageUrl,
 }: {
   slots: CollectionSlot[];
   query: CollectionQuery;
   sets: { slug: string; name: string }[];
   progress: { owned: number; total: number };
+  backImageUrl?: string | null;
 }) {
   const [selected, setSelected] = useState<CollectionSlot | null>(null);
 
@@ -157,44 +160,63 @@ export function CollectionBrowser({
           No relics match.
         </p>
       ) : (
-        <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-x-12 gap-y-[77px] sm:grid-cols-3 md:grid-cols-4">
           {slots.map((slot) => (
             <button
               key={slot.id}
               type="button"
               onClick={() => slot.owned && setSelected(slot)}
-              className="text-left"
+              className={cn("text-left", slot.owned ? "cursor-pointer" : "cursor-default")}
             >
-              <RelicFrame
-                rarity={slot.owned?.rarity}
-                holographic={slot.owned?.holographic}
-                sealed={!slot.owned}
-              >
-                {slot.owned ? (
-                  <CardFace
-                    name={slot.owned.name}
-                    imageUrl={slot.owned.imageUrl}
-                    rarity={slot.owned.rarity}
-                    holographic={slot.owned.holographic}
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center">
-                    <span className="font-[family-name:var(--font-cormorant)] text-4xl text-[#d7d3c8]/25">
-                      ?
-                    </span>
-                  </div>
-                )}
-                <p className="absolute top-3 z-10 w-full text-center font-[family-name:var(--font-cinzel)] text-[8px] tracking-[0.18em] text-[#d7d3c8]/40 uppercase">
-                  {toRoman(slot.number)}
-                </p>
-              </RelicFrame>
+              <div className={slot.owned ? "collection-bound-card" : undefined}>
+                <RelicFrame
+                  rarity={slot.owned?.rarity}
+                  holographic={slot.owned?.holographic}
+                  sealed={!slot.owned}
+                >
+                  {slot.owned ? (
+                    <CardFace
+                      name={slot.owned.name}
+                      imageUrl={slot.owned.imageUrl}
+                      rarity={slot.owned.rarity}
+                      holographic={slot.owned.holographic}
+                    />
+                  ) : (
+                    <>
+                      {backImageUrl ? (
+                        <CardFace
+                          name={`${slot.name} back`}
+                          imageUrl={backImageUrl}
+                          className="opacity-28"
+                        />
+                      ) : (
+                        <div className="h-full w-full bg-[#05040a]" />
+                      )}
+                      <div className="pointer-events-none absolute inset-0 z-[15] flex items-center justify-center bg-[#05040a]/55">
+                        <span
+                          className="font-[family-name:var(--font-cormorant)] text-[80px] font-semibold text-[#e8edf2] italic"
+                          style={{
+                            textShadow:
+                              "0 0 8px rgba(232,237,242,0.95), 0 0 22px rgba(184,192,200,0.75), 0 0 42px rgba(184,192,200,0.45)",
+                          }}
+                        >
+                          ?
+                        </span>
+                      </div>
+                    </>
+                  )}
+                  <p className="absolute top-3 z-20 w-full text-center font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.18em] text-[#d7d3c8]/40 uppercase">
+                    {toRoman(slot.number)}
+                  </p>
+                </RelicFrame>
+              </div>
               <div className="mt-3 text-center">
                 {slot.owned ? (
                   <p className="truncate font-[family-name:var(--font-cormorant)] text-sm text-[#d7d3c8] italic">
                     {slot.owned.name}
                   </p>
                 ) : (
-                  <p className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.18em] text-[#d7d3c8]/35 uppercase">
+                  <p className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.18em] text-[#d7d3c8]/35 uppercase">
                     {slot.signed ? "Unseen signed" : "Unseen"}
                   </p>
                 )}
@@ -210,39 +232,48 @@ export function CollectionBrowser({
           onClick={() => setSelected(null)}
         >
           <div
-            className="flex w-full max-w-3xl flex-col items-center gap-8 border border-[#d4b36a]/35 bg-[#0c0b12] px-6 py-6 sm:flex-row sm:items-center sm:gap-10 sm:px-10 sm:py-9"
+            className="relative flex w-full max-w-3xl flex-col items-center gap-8 overflow-hidden border border-[#d4b36a]/35 bg-[#0c0b12] px-6 py-6 sm:flex-row sm:items-center sm:gap-10 sm:px-10 sm:py-9"
             onClick={(event) => event.stopPropagation()}
           >
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-0"
+              style={{
+                background: `radial-gradient(ellipse 56% 92% at 50% 112%, color-mix(in srgb, ${RARITY_LIGHT[selected.owned.rarity]} 32%, transparent) 0%, color-mix(in srgb, ${RARITY_LIGHT[selected.owned.rarity]} 14%, transparent) 42%, transparent 78%)`,
+              }}
+            />
             <CardInspect
-              className="w-56 shrink-0 sm:w-72"
+              className="relative z-10 w-56 shrink-0 sm:w-72"
               name={selected.owned.name}
               imageUrl={selected.owned.imageUrl}
+              backImageUrl={backImageUrl}
               rarity={selected.owned.rarity}
               holographic={selected.owned.holographic}
               signature={selected.owned.signature}
+              glow={false}
             />
-            <div className="min-w-0 flex-1 space-y-4 text-center sm:text-left">
+            <div className="relative z-10 min-w-0 flex-1 space-y-4 text-center sm:text-left">
               <p className="font-[family-name:var(--font-cinzel)] text-xs tracking-[0.2em] text-[#d7d3c8]/70 uppercase">
                 {toRoman(selected.number)}
               </p>
-              <h2 className="font-[family-name:var(--font-cormorant)] text-4xl text-[#f3efe6] italic sm:text-5xl">
+              <h2 className="font-[family-name:var(--font-cormorant)] text-[40px] text-[#f3efe6] italic sm:text-[53px]">
                 {selected.owned.name}
               </h2>
-              <p className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.24em] text-[#d4b36a] uppercase">
+              <p className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#d4b36a] uppercase">
                 {selected.owned.rarity}
                 {selected.owned.holographic ? " · holo" : ""}
                 {selected.owned.signature ? " · signed" : ""}
               </p>
               <div className="h-px bg-[#d4b36a]/40" />
-              <p className="text-base leading-relaxed text-[#d7d3c8]">
+              <p className="text-lg leading-relaxed text-[#d7d3c8]">
                 {selected.owned.description}
               </p>
-              <p className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] text-[#d7d3c8]/75 uppercase">
+              <p className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.16em] text-[#d7d3c8]/75 uppercase">
                 Bound {formatDate(selected.owned.acquiredAt)}
               </p>
               <button
                 type="button"
-                className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.24em] text-[#f3efe6] uppercase hover:text-[#d4b36a]"
+                className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#f3efe6] uppercase hover:text-[#d4b36a]"
                 onClick={() => setSelected(null)}
               >
                 Close

@@ -1,8 +1,9 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { CollectionBrowser } from "@/components/collection-browser";
 import { getDb } from "@/db";
 import { cards, userCards } from "@/db/schema";
 import { listActiveCollections } from "@/db/queries/collections";
+import { isLiveCmsRow, liveCms } from "@/lib/cms/live";
 import {
   arrangeCollection,
   parseCollectionQuery,
@@ -34,7 +35,7 @@ export default async function CollectionPage({
     ? await db
         .select()
         .from(cards)
-        .where(eq(cards.collectionId, selected.id))
+        .where(and(eq(cards.collectionId, selected.id), liveCms(cards)))
         .orderBy(cards.number, cards.signed)
     : [];
   const owned = await db
@@ -66,17 +67,17 @@ export default async function CollectionPage({
     };
   });
 
-  const activeCatalog = catalog.filter((card) => card.active);
+  const activeCatalog = catalog.filter((card) => isLiveCmsRow(card));
   const ownedInSet = activeCatalog.filter((card) => ownedByCard.has(card.id)).length;
   const total = activeCatalog.length;
   const visible = arrangeCollection(slots, query);
 
   return (
     <main className="mx-auto w-full max-w-6xl pt-2 md:pt-6">
-      <h1 className="mb-3 text-center font-[family-name:var(--font-cormorant)] text-4xl tracking-wide text-[#cfc6b4] italic md:text-5xl">
+      <h1 className="mb-3 text-center font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide text-[#cfc6b4] italic md:text-[53px]">
         Collection
       </h1>
-      <p className="mb-10 text-center font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/70 uppercase">
+      <p className="mb-10 text-center font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.3em] text-[#d4b36a]/70 uppercase">
         {toRoman(ownedInSet)} of {toRoman(total)} relics bound
       </p>
       <CollectionBrowser
@@ -84,6 +85,7 @@ export default async function CollectionPage({
         query={query}
         sets={sets.map((set) => ({ slug: set.slug, name: set.name }))}
         progress={{ owned: ownedInSet, total }}
+        backImageUrl={selected?.backImageUrl}
       />
     </main>
   );

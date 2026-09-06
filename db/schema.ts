@@ -87,11 +87,16 @@ export const collections = pgTable(
     slug: text("slug").notNull(),
     name: text("name").notNull(),
     description: text("description"),
+    backImageUrl: text("back_image_url"),
+    cmsId: text("cms_id"),
     active: boolean("active").default(true).notNull(),
     sortOrder: integer("sort_order").default(0).notNull(),
     ...timestamps,
   },
-  (table) => [uniqueIndex("collections_slug_idx").on(table.slug)],
+  (table) => [
+    uniqueIndex("collections_slug_idx").on(table.slug),
+    uniqueIndex("collections_cms_id_idx").on(table.cmsId),
+  ],
 );
 
 export const cards = pgTable(
@@ -106,6 +111,7 @@ export const cards = pgTable(
     description: text("description").notNull(),
     rarity: rarityEnum("rarity").notNull(),
     imageUrl: text("image_url"),
+    cmsId: text("cms_id"),
     signed: boolean("signed").default(false).notNull(),
     active: boolean("active").default(true).notNull(),
     ...timestamps,
@@ -116,6 +122,7 @@ export const cards = pgTable(
       table.number,
       table.signed,
     ),
+    uniqueIndex("cards_cms_id_idx").on(table.cmsId),
   ],
 );
 
@@ -133,12 +140,14 @@ export const boosterTypes = pgTable(
     holographicChanceBp: integer("holographic_chance_bp").default(0).notNull(),
     frontImageUrl: text("front_image_url"),
     backImageUrl: text("back_image_url"),
+    cmsId: text("cms_id"),
     active: boolean("active").default(true).notNull(),
     ...timestamps,
   },
   (table) => [
     uniqueIndex("booster_types_slug_idx").on(table.slug),
     uniqueIndex("booster_types_twitch_reward_id_idx").on(table.twitchRewardId),
+    uniqueIndex("booster_types_cms_id_idx").on(table.cmsId),
   ],
 );
 
@@ -272,10 +281,14 @@ export const achievements = pgTable(
     conditionType: achievementConditionEnum("condition_type").notNull(),
     threshold: integer("threshold"),
     pointReward: integer("point_reward").default(0).notNull(),
+    cmsId: text("cms_id"),
     active: boolean("active").default(true).notNull(),
     ...timestamps,
   },
-  (table) => [uniqueIndex("achievements_slug_idx").on(table.slug)],
+  (table) => [
+    uniqueIndex("achievements_slug_idx").on(table.slug),
+    uniqueIndex("achievements_cms_id_idx").on(table.cmsId),
+  ],
 );
 
 export const userAchievements = pgTable(
@@ -300,15 +313,20 @@ export const userAchievements = pgTable(
   ],
 );
 
-export const rewards = pgTable("rewards", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  pointCost: integer("point_cost").notNull(),
-  stock: integer("stock"),
-  active: boolean("active").default(true).notNull(),
-  ...timestamps,
-});
+export const rewards = pgTable(
+  "rewards",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    name: text("name").notNull(),
+    description: text("description").notNull(),
+    pointCost: integer("point_cost").notNull(),
+    stock: integer("stock"),
+    cmsId: text("cms_id"),
+    active: boolean("active").default(true).notNull(),
+    ...timestamps,
+  },
+  (table) => [uniqueIndex("rewards_cms_id_idx").on(table.cmsId)],
+);
 
 export const shopRedemptions = pgTable(
   "shop_redemptions",

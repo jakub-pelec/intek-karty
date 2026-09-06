@@ -5,13 +5,16 @@ import { RitualPageHeader } from "@/components/ritual-page-header";
 import { SanctumSection } from "@/components/sanctum";
 import { MutationBadges, RarityBadge } from "@/components/ui/badge";
 import { getDb } from "@/db";
-import { boosterTypes, cards } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { boosterTypes, cards, collections } from "@/db/schema";
+import { liveCms } from "@/lib/cms/live";
 import { SEED_BOOSTERS } from "@/db/seed-data/boosters";
 import {
   FEATURED_SHOWCASE_CARD,
   FEATURED_SHOWCASE_SIGNED_CARD,
   SEED_CARDS,
 } from "@/db/seed-data/cards";
+import { ORIGIN_COLLECTION } from "@/db/seed-data/collections";
 import type { Rarity } from "@/db/schema";
 import { RARITIES } from "@/lib/constants";
 import { formatCardNumber } from "@/lib/utils";
@@ -34,6 +37,7 @@ type ShowcaseCard = {
   name: string;
   rarity: Rarity;
   imageUrl: string | null;
+  backImageUrl?: string | null;
   signed?: boolean;
 };
 
@@ -57,34 +61,41 @@ export default async function AdminDevPage() {
         rarity: cards.rarity,
         imageUrl: cards.imageUrl,
         signed: cards.signed,
+        backImageUrl: collections.backImageUrl,
       })
-      .from(cards);
+      .from(cards)
+      .innerJoin(collections, eq(cards.collectionId, collections.id))
+      .where(liveCms(cards));
     const storedPacks = await db
       .select({
         name: boosterTypes.name,
         frontImageUrl: boosterTypes.frontImageUrl,
         backImageUrl: boosterTypes.backImageUrl,
       })
-      .from(boosterTypes);
+      .from(boosterTypes)
+      .where(liveCms(boosterTypes));
     if (storedPacks.some((pack) => pack.frontImageUrl || pack.backImageUrl)) {
       packs = storedPacks;
     }
   } catch {
-    catalog = SEED_CARDS;
+    catalog = SEED_CARDS.map((card) => ({
+      ...card,
+      backImageUrl: ORIGIN_COLLECTION.backImageUrl,
+    }));
   }
 
   const featured =
     catalog.find(
       (card) =>
         !card.signed && card.imageUrl === FEATURED_SHOWCASE_CARD.imageUrl,
-    ) ?? FEATURED_SHOWCASE_CARD;
+    ) ?? { ...FEATURED_SHOWCASE_CARD, backImageUrl: ORIGIN_COLLECTION.backImageUrl };
   const featuredSigned =
     catalog.find(
       (card) =>
         card.signed &&
         (card.imageUrl === FEATURED_SHOWCASE_SIGNED_CARD.imageUrl ||
           card.number === FEATURED_SHOWCASE_SIGNED_CARD.number),
-    ) ?? FEATURED_SHOWCASE_SIGNED_CARD;
+    ) ?? { ...FEATURED_SHOWCASE_SIGNED_CARD, backImageUrl: ORIGIN_COLLECTION.backImageUrl };
 
   const samples = [
     featured,
@@ -109,6 +120,9 @@ export default async function AdminDevPage() {
       return {
         name: FEATURED_SHOWCASE_CARD.name,
         imageUrl: FEATURED_SHOWCASE_CARD.imageUrl,
+        backImageUrl:
+          catalog.find((row) => row.number === FEATURED_SHOWCASE_CARD.number)
+            ?.backImageUrl ?? ORIGIN_COLLECTION.backImageUrl,
         rarity: FEATURED_SHOWCASE_CARD.rarity,
         holographic: false,
       };
@@ -120,6 +134,7 @@ export default async function AdminDevPage() {
     return {
       name: card.name,
       imageUrl: card.imageUrl,
+      backImageUrl: card.backImageUrl ?? ORIGIN_COLLECTION.backImageUrl,
       rarity: card.rarity,
       holographic: false,
     };
@@ -131,7 +146,7 @@ export default async function AdminDevPage() {
         title="Dev"
         eyebrow="Foil, signed art, and packs"
       />
-      <SanctumSection title="Opening rehearsal" className="mb-16">
+      <SanctumSection title="Opening rehearsal" className="mb-16" rule={false}>
         <div className="mx-auto max-w-xl">
           <BoosterOpenDemo
             name={packs[0]?.name ?? "Booster"}
@@ -141,7 +156,7 @@ export default async function AdminDevPage() {
           />
         </div>
       </SanctumSection>
-      <SanctumSection title="Booster packs" className="mb-16">
+      <SanctumSection title="Booster packs" className="mb-16" rule={false}>
         <div className="grid gap-8 md:grid-cols-3">
           {packs.map((pack) => (
             <article key={pack.name} className="text-center">
@@ -150,7 +165,7 @@ export default async function AdminDevPage() {
                 frontImageUrl={pack.frontImageUrl}
                 backImageUrl={pack.backImageUrl}
               />
-              <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.2em] text-[#d7d3c8]/55 uppercase">
+              <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d7d3c8]/55 uppercase">
                 {pack.name}
               </p>
             </article>
@@ -163,9 +178,8 @@ export default async function AdminDevPage() {
             key={`${card.number}-${card.signed ? "signed" : "default"}`}
             className="relative"
           >
-            <div className="absolute -top-1 right-0 left-0 h-px bg-gradient-to-r from-transparent via-[#d4b36a]/30 to-transparent" />
             <div className="mb-6 flex flex-col items-center pt-4">
-              <h2 className="font-[family-name:var(--font-cormorant)] text-2xl tracking-wide text-[#cfc6b4] italic md:text-3xl">
+              <h2 className="font-[family-name:var(--font-cormorant)] text-[26px] tracking-wide text-[#cfc6b4] italic md:text-[33px]">
                 {formatCardNumber(card.number)} {card.name}
               </h2>
               <div className="mt-3 flex justify-center gap-3">
@@ -179,12 +193,14 @@ export default async function AdminDevPage() {
                   <CardInspect
                     name={card.name}
                     imageUrl={card.imageUrl}
+                    backImageUrl={card.backImageUrl}
                     rarity={card.rarity}
                     holographic={variant.holographic}
                     signature={Boolean(card.signed)}
+                    glow={false}
                   />
                   <div className="flex flex-wrap items-center justify-center gap-2">
-                    <p className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.18em] text-[#d7d3c8]/55 uppercase">
+                    <p className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.18em] text-[#d7d3c8]/55 uppercase">
                       {variant.label}
                     </p>
                     <MutationBadges

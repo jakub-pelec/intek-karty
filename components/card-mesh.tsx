@@ -12,6 +12,7 @@ import { cardArtUrl, RARITY_LIGHT } from "@/lib/open-fx";
 export const CARD_SIZE = [PACK_SIZE[0], PACK_SIZE[1], 0.03] as const;
 
 const paintedCache = new Map<string, THREE.CanvasTexture>();
+const backCache = new Map<string, THREE.Texture>();
 let foilTexture: THREE.Texture | null = null;
 let foilPromise: Promise<THREE.Texture> | null = null;
 let holoTemplate: THREE.ShaderMaterial | null = null;
@@ -19,6 +20,7 @@ let holoTemplate: THREE.ShaderMaterial | null = null;
 type CardMeshProps = {
   name: string;
   imageUrl: string | null;
+  backImageUrl?: string | null;
   rarity?: Rarity;
   holographic?: boolean;
   interactive?: boolean;
@@ -78,6 +80,7 @@ function loadFoilTexture() {
 export function CardMesh({
   name,
   imageUrl,
+  backImageUrl,
   rarity = "common",
   holographic = false,
   interactive = true,
@@ -89,6 +92,7 @@ export function CardMesh({
   const timer = useSceneTimer();
   const { gl } = useThree();
   const texture = usePaintedCard(name, imageUrl, rarity);
+  const backTexture = useCardBack(backImageUrl);
   const drag = useRef({
     active: false,
     x: 0,
@@ -125,13 +129,16 @@ export function CardMesh({
 
   useEffect(() => {
     front.map = texture;
+    back.map = backTexture;
+    back.color.set(backTexture ? "#ffffff" : "#0c0b12");
     if (envMap) {
       front.envMap = envMap;
       back.envMap = envMap;
     }
     front.needsUpdate = true;
+    back.needsUpdate = true;
     if (texture) onReady?.();
-  }, [back, envMap, front, onReady, texture]);
+  }, [back, backTexture, envMap, front, onReady, texture]);
 
   useEffect(() => {
     if (!interactive) return;
@@ -332,6 +339,49 @@ function HoloFoil({ rarity }: { rarity: Rarity }) {
       <primitive object={material} attach="material" />
     </mesh>
   );
+}
+
+function useCardBack(backImageUrl?: string | null) {
+  const [texture, setTexture] = useState<THREE.Texture | null>(() =>
+    backImageUrl ? (backCache.get(backImageUrl) ?? null) : null,
+  );
+
+  useEffect(() => {
+    if (!backImageUrl) {
+      setTexture(null);
+      return;
+    }
+    const cached = backCache.get(backImageUrl);
+    if (cached) {
+      setTexture(cached);
+      return;
+    }
+    let cancelled = false;
+    const loader = new THREE.TextureLoader();
+    loader.setCrossOrigin("anonymous");
+    loader.load(
+      backImageUrl,
+      (loaded) => {
+        loaded.colorSpace = THREE.SRGBColorSpace;
+        loaded.anisotropy = 4;
+        loaded.wrapS = THREE.RepeatWrapping;
+        loaded.center.set(0.5, 0.5);
+        loaded.repeat.x = -1;
+        loaded.needsUpdate = true;
+        backCache.set(backImageUrl, loaded);
+        if (!cancelled) setTexture(loaded);
+      },
+      undefined,
+      () => {
+        if (!cancelled) setTexture(null);
+      },
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [backImageUrl]);
+
+  return texture;
 }
 
 function usePaintedCard(name: string, imageUrl: string | null, rarity: Rarity) {

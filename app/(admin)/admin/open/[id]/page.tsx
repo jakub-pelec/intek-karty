@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { BoosterOpenStage } from "@/components/booster-open-stage";
 import { RitualPageHeader } from "@/components/ritual-page-header";
 import { getDb } from "@/db";
-import { boosterTypes, draws, userBoosters, users } from "@/db/schema";
+import { boosterTypes, cards, collections, draws, userBoosters, users } from "@/db/schema";
 
 export default async function AdminOpenBoosterPage({
   params,
@@ -44,8 +44,11 @@ export default async function AdminOpenBoosterPage({
         signature: draws.signature,
         isDuplicate: draws.isDuplicate,
         pointsAwarded: draws.pointsAwarded,
+        backImageUrl: collections.backImageUrl,
       })
       .from(draws)
+      .leftJoin(cards, eq(draws.cardId, cards.id))
+      .leftJoin(collections, eq(cards.collectionId, collections.id))
       .where(eq(draws.userBoosterId, row.id))
       .limit(1);
     if (draw) {
@@ -54,6 +57,7 @@ export default async function AdminOpenBoosterPage({
         number: draw.cardNumber,
         rarity: draw.cardRarity,
         imageUrl: draw.cardImageUrl,
+        backImageUrl: draw.backImageUrl,
         holographic: draw.holographic,
         signature: draw.signature,
         isDuplicate: draw.isDuplicate,

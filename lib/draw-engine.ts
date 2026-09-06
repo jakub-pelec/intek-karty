@@ -49,11 +49,18 @@ export function rollDrop(
 }
 
 export function inBoosterDrawPool(
-  card: { active: boolean; rarity: Rarity; signed: boolean; collectionId: string },
+  card: {
+    active: boolean;
+    rarity: Rarity;
+    signed: boolean;
+    collectionId: string;
+    cmsId?: string | null;
+  },
   drop: DropRoll & { collectionId: string },
 ) {
   return (
     card.active &&
+    (card.cmsId === undefined || Boolean(card.cmsId)) &&
     card.rarity === drop.rarity &&
     card.signed === drop.signed &&
     card.collectionId === drop.collectionId
@@ -61,7 +68,13 @@ export function inBoosterDrawPool(
 }
 
 export function filterDrawPool<
-  T extends { active: boolean; rarity: Rarity; signed: boolean; collectionId: string },
+  T extends {
+    active: boolean;
+    rarity: Rarity;
+    signed: boolean;
+    collectionId: string;
+    cmsId?: string | null;
+  },
 >(catalog: T[], drop: DropRoll & { collectionId: string }) {
   return catalog.filter((card) => inBoosterDrawPool(card, drop));
 }

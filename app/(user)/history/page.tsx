@@ -60,7 +60,7 @@ export default async function HistoryPage({
         <Link
           href="/history"
           className={cn(
-            "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase",
+            "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.24em] uppercase",
             tab === "cards"
               ? "border-[#d4b36a] text-[#d4b36a]"
               : "border-transparent text-[#d7d3c8]",
@@ -71,7 +71,7 @@ export default async function HistoryPage({
         <Link
           href="/history?tab=points"
           className={cn(
-            "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase",
+            "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.24em] uppercase",
             tab === "points"
               ? "border-[#d4b36a] text-[#d4b36a]"
               : "border-transparent text-[#d7d3c8]",
@@ -95,15 +95,15 @@ export default async function HistoryPage({
                   <span className="h-3 w-3 shrink-0">
                     <RarityGem rarity={row.cardRarity} />
                   </span>
-                  <span className="truncate text-base text-[#f3efe6] italic">
+                  <span className="truncate text-lg text-[#f3efe6] italic">
                     {String(row.cardNumber).padStart(2, "0")} {row.cardName}
                     {row.isDuplicate ? (
-                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[11px] text-[#d4b36a] not-italic uppercase">
+                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[12px] text-[#d4b36a] not-italic uppercase">
                         (Echo)
                       </span>
                     ) : null}
                     {row.signature ? (
-                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[11px] text-[#d4b36a] not-italic uppercase">
+                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[12px] text-[#d4b36a] not-italic uppercase">
                         (Signed)
                       </span>
                     ) : null}
@@ -126,7 +126,7 @@ export default async function HistoryPage({
               className="flex items-center justify-between gap-3 border-b border-[#d7d3c8]/15 py-4 last:border-b-0"
             >
               <div className="min-w-0">
-                <p className="font-[family-name:var(--font-cinzel)] text-base text-[#f3efe6]">
+                <p className="font-[family-name:var(--font-cinzel)] text-lg text-[#f3efe6]">
                   {row.amount > 0 ? `+${row.amount}` : row.amount}{" "}
                   <span className="text-[#d7d3c8]">
                     {LEDGER_SOURCE_LABELS[row.source]}
@@ -149,7 +149,7 @@ export default async function HistoryPage({
           {page > 1 ? (
             <Link
               href={`/history?tab=${tab}&page=${page - 1}`}
-              className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+              className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
             >
               Previous
             </Link>
@@ -157,7 +157,7 @@ export default async function HistoryPage({
           {hasMore ? (
             <Link
               href={`/history?tab=${tab}&page=${page + 1}`}
-              className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+              className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
             >
               Next
             </Link>

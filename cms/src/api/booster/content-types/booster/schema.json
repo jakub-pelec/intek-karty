@@ -1,0 +1,68 @@
+{
+  "kind": "collectionType",
+  "collectionName": "boosters",
+  "info": {
+    "singularName": "booster",
+    "pluralName": "boosters",
+    "displayName": "Booster"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "collection": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::collection.collection",
+      "inversedBy": "boosters",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "twitchChannelPointCost": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "twitchRewardId": {
+      "type": "string"
+    },
+    "holographicChancePercent": {
+      "type": "decimal",
+      "default": 0,
+      "required": true,
+      "min": 0,
+      "max": 100
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "frontImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "backImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "dropRates": {
+      "type": "component",
+      "repeatable": true,
+      "component": "booster.drop-rate",
+      "required": true
+    }
+  }
+}

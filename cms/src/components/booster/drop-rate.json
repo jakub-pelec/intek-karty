@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_booster_drop_rates",
+  "info": {
+    "displayName": "Drop rate",
+    "icon": "percent"
+  },
+  "options": {},
+  "attributes": {
+    "rarity": {
+      "type": "enumeration",
+      "enum": ["common", "rare", "epic", "legendary", "joker"],
+      "required": true
+    },
+    "signed": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "probabilityPercent": {
+      "type": "decimal",
+      "required": true,
+      "min": 0,
+      "max": 100
+    }
+  }
+}

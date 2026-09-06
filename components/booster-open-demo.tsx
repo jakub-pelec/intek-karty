@@ -53,7 +53,7 @@ export function BoosterOpenDemo({
 
   return (
     <div>
-      <div className="overflow-hidden border border-[#d4b36a]/30 bg-[#05040a]">
+      <div className="overflow-hidden bg-[#05040a]">
         <BoosterPackPreview
           name={name}
           frontImageUrl={frontImageUrl}
@@ -71,7 +71,7 @@ export function BoosterOpenDemo({
         onDismiss={dismiss}
         details={
           shown ? (
-            <h3 className="font-[family-name:var(--font-display)] text-3xl text-[#f3efe6]">
+            <h3 className="font-[family-name:var(--font-display)] text-[33px] text-[#f3efe6]">
               {shown.name}
             </h3>
           ) : null
@@ -85,7 +85,7 @@ export function BoosterOpenDemo({
             disabled={isBusy}
             onClick={() => setRarity(value)}
             className={cn(
-              "font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.18em] uppercase transition-colors",
+              "font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.18em] uppercase transition-colors",
               rarity === value ? "text-[#d4b36a]" : "text-[#cfc6b4] hover:text-[#d4b36a]",
             )}
           >
@@ -94,7 +94,7 @@ export function BoosterOpenDemo({
         ))}
       </div>
       <div className="mt-3 flex items-center justify-between gap-3">
-        <label className="flex items-center gap-2 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.16em] text-[#d7d3c8] uppercase">
+        <label className="flex items-center gap-2 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8] uppercase">
           <input
             type="checkbox"
             checked={holographic}

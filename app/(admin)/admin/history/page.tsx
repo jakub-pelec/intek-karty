@@ -7,6 +7,7 @@ import { SanctumCard, SanctumEmpty } from "@/components/sanctum";
 import { Input, Label, Select } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MutationBadges, RarityBadge } from "@/components/ui/badge";
+import { liveCms } from "@/lib/cms/live";
 import { PAGE_SIZE } from "@/lib/constants";
 import { formatCardNumber, formatDate } from "@/lib/utils";
 
@@ -38,7 +39,7 @@ export default async function AdminHistoryPage({
   const params = await searchParams;
   const page = Math.max(1, Number(params.page ?? 1) || 1);
   const db = getDb();
-  const types = await db.select().from(boosterTypes);
+  const types = await db.select().from(boosterTypes).where(liveCms(boosterTypes));
 
   const filters = [];
   if (params.user) {
@@ -116,18 +117,18 @@ export default async function AdminHistoryPage({
                 className="border-b border-[#d7d3c8]/15 py-5 last:border-b-0"
               >
                 <div className="flex items-baseline justify-between gap-4">
-                  <p className="font-[family-name:var(--font-cormorant)] text-xl text-[#f3efe6] italic">
+                  <p className="font-[family-name:var(--font-cormorant)] text-[22px] text-[#f3efe6] italic">
                     {row.viewerName}
                   </p>
-                  <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[8px] tracking-[0.12em] text-[#cfc6b4] uppercase">
+                  <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.12em] text-[#cfc6b4] uppercase">
                     {formatDate(row.createdAt)}
                   </span>
                 </div>
                 <div className="mt-2 flex flex-wrap items-center gap-3">
-                  <span className="text-[15px] text-[#d7d3c8]/80 italic">
+                  <span className="text-[17px] text-[#d7d3c8]/80 italic">
                     {formatCardNumber(row.cardNumber)} {row.cardName}
                     {row.isDuplicate ? (
-                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[8px] text-[#d4b36a]/60 not-italic uppercase">
+                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[9px] text-[#d4b36a]/60 not-italic uppercase">
                         (Echo)
                       </span>
                     ) : null}
@@ -138,7 +139,7 @@ export default async function AdminHistoryPage({
                     signature={row.signature}
                   />
                 </div>
-                <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] text-[#d7d3c8]/45 uppercase">
+                <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.16em] text-[#d7d3c8]/45 uppercase">
                   {row.boosterName ?? "Manual"} · {row.triggeredByName}
                 </p>
               </li>
@@ -152,7 +153,7 @@ export default async function AdminHistoryPage({
           {page > 1 ? (
             <Link
               href={drawsHref(params, page - 1)}
-              className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+              className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
             >
               Previous
             </Link>
@@ -160,7 +161,7 @@ export default async function AdminHistoryPage({
           {hasMore ? (
             <Link
               href={drawsHref(params, page + 1)}
-              className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+              className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
             >
               Next
             </Link>

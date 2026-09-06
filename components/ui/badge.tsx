@@ -4,10 +4,10 @@ import type { Rarity } from "@/db/schema";
 
 const rarityClass: Record<Rarity, string> = {
   common: "text-[#c5cedb]",
-  rare: "text-[#7ec2ff]",
-  epic: "text-[#d2a6ff]",
-  legendary: "text-[#f5c542]",
-  joker: "text-[#ff7eac]",
+  rare: "text-[#4d7fd6]",
+  epic: "text-[#c46bff]",
+  legendary: "text-[#edc24a]",
+  joker: "text-[#ff4d94]",
 };
 
 export function Badge({
@@ -17,7 +17,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center font-[family-name:var(--font-cinzel)] text-[8px] tracking-[0.16em] uppercase",
+        "inline-flex items-center font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] uppercase",
         className,
       )}
       {...props}

@@ -43,3 +43,13 @@ next-env.d.ts
 
 # superdesign temp templates
 .superdesign/tmp/
+
+# Strapi
+/cms/node_modules
+/cms/.tmp
+/cms/.cache
+/cms/build
+/cms/dist
+/cms/.strapi
+/cms/data
+/cms/public/uploads/*

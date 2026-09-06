@@ -36,6 +36,20 @@
       "when": 1788720000000,
       "tag": "0004_collections",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1788730000000,
+      "tag": "0005_cms_id",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1788740000000,
+      "tag": "0006_collection_back",
+      "breakpoints": true
     }
   ]
 }

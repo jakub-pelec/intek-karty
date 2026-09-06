@@ -31,11 +31,11 @@ export default async function LoginPage({
         </header>
         <main className="flex flex-1 flex-col items-center justify-center px-6 pb-24">
           <RitualPageHeader title="The Threshold" eyebrow="Stream collection" />
-          <p className="max-w-md text-center font-[family-name:var(--font-cormorant)] text-xl tracking-wide text-[#d7d3c8]/80 italic md:text-2xl">
+          <p className="max-w-md text-center font-[family-name:var(--font-cormorant)] text-[22px] tracking-wide text-[#d7d3c8]/80 italic md:text-[26px]">
             Approach to bind relics, gather echoes, and receive titles.
           </p>
           {message ? (
-            <p className="mt-8 border border-[#8b1e2d]/50 bg-[#1a0a0c] px-4 py-2 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.16em] text-[#f3efe6] uppercase">
+            <p className="mt-8 border border-[#8b1e2d]/50 bg-[#1a0a0c] px-4 py-2 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#f3efe6] uppercase">
               {message}
             </p>
           ) : null}
@@ -50,7 +50,7 @@ export default async function LoginPage({
                 Enter
               </Button>
             </form>
-            <p className="mt-4 font-[family-name:var(--font-cinzel)] text-[8px] tracking-[0.22em] text-[#d7d3c8]/40 uppercase">
+            <p className="mt-4 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.22em] text-[#d7d3c8]/40 uppercase">
               Via Twitch
             </p>
           </div>

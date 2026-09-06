@@ -27,6 +27,7 @@ const CAMERA_Z = { fullscreen: 5.2, inline: 3.2 } as const;
 export type OpenCard = {
   name: string;
   imageUrl: string | null;
+  backImageUrl?: string | null;
   rarity: Rarity;
   holographic: boolean;
   signature?: boolean;
@@ -191,6 +192,7 @@ function RevealedCard({
       <CardMesh
         name={card.name}
         imageUrl={card.imageUrl}
+        backImageUrl={card.backImageUrl}
         rarity={card.rarity}
         holographic={card.holographic}
         interactive={phase === "reveal"}

@@ -5,6 +5,7 @@ export const ORIGIN_COLLECTION = {
   slug: "origin",
   name: "Origin",
   description: "The first binder.",
+  backImageUrl: "/collections/origin-back.svg",
   sortOrder: 0,
   active: true,
 } as const;

@@ -22,7 +22,7 @@ export async function redeemReward(input: {
       .where(eq(rewards.id, input.rewardId))
       .limit(1);
 
-    if (!reward || !reward.active) {
+    if (!reward || !reward.active || !reward.cmsId) {
       throw new RedeemError("Reward is not available");
     }
 

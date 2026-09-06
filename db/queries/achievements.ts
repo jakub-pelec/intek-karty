@@ -1,5 +1,6 @@
 import { and, eq, sql } from "drizzle-orm";
 import { getDb, type Database } from "@/db";
+import { liveCms } from "@/lib/cms/live";
 import {
   achievements,
   cards,
@@ -95,12 +96,12 @@ export async function evaluateAchievements(
       })
       .from(userCards)
       .innerJoin(cards, eq(userCards.cardId, cards.id))
-      .where(eq(userCards.userId, userId)),
+      .where(and(eq(userCards.userId, userId), liveCms(cards))),
     tx
       .select({ count: sql<number>`count(*)::int` })
       .from(draws)
       .where(eq(draws.userId, userId)),
-    tx.select().from(achievements).where(eq(achievements.active, true)),
+    tx.select().from(achievements).where(liveCms(achievements)),
     tx
       .select({ achievementId: userAchievements.achievementId })
       .from(userAchievements)
@@ -111,7 +112,7 @@ export async function evaluateAchievements(
         collectionId: cards.collectionId,
       })
       .from(cards)
-      .where(eq(cards.active, true)),
+      .where(liveCms(cards)),
   ]);
 
   const ownedIds = new Set(owned.map((row) => row.cardId));
@@ -208,7 +209,7 @@ export async function activeCardsOfRarity(
     .from(cards)
     .where(
       and(
-        eq(cards.active, true),
+        liveCms(cards),
         eq(cards.rarity, rarity),
         eq(cards.signed, signed),
         eq(cards.collectionId, collectionId),

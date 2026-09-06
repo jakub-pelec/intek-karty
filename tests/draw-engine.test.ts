@@ -63,6 +63,14 @@ describe("draw engine", () => {
           signed: false,
           collectionId: origin,
         },
+        {
+          id: "legacy",
+          active: true,
+          rarity: "common",
+          signed: false,
+          collectionId: origin,
+          cmsId: null,
+        },
       ],
       { rarity: "common", signed: false, collectionId: origin },
     );

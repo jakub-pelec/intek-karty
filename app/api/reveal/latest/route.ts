@@ -1,7 +1,7 @@
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { getDb } from "@/db";
-import { draws } from "@/db/schema";
+import { cards, collections, draws } from "@/db/schema";
 
 export const dynamic = "force-dynamic";
 
@@ -19,8 +19,11 @@ export async function GET() {
         isDuplicate: draws.isDuplicate,
         holographic: draws.holographic,
         signature: draws.signature,
+        backImageUrl: collections.backImageUrl,
       })
       .from(draws)
+      .leftJoin(cards, eq(draws.cardId, cards.id))
+      .leftJoin(collections, eq(cards.collectionId, collections.id))
       .orderBy(desc(draws.createdAt))
       .limit(1);
     return NextResponse.json(draw ?? null);

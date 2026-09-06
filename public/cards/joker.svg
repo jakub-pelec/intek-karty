@@ -6,6 +6,6 @@
     </linearGradient>
   </defs>
   <rect width="300" height="420" rx="18" fill="url(#g)"/>
-  <rect x="16" y="16" width="268" height="388" rx="12" fill="none" stroke="#ff4d8d" stroke-width="3"/>
-  <text x="150" y="215" text-anchor="middle" fill="#ff7eac" font-size="28" font-family="serif">JOKER</text>
+  <rect x="16" y="16" width="268" height="388" rx="12" fill="none" stroke="#ff2e86" stroke-width="3"/>
+  <text x="150" y="215" text-anchor="middle" fill="#ff4d94" font-size="28" font-family="serif">JOKER</text>
 </svg>

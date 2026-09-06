@@ -1,7 +1,8 @@
 import { and, eq, ilike, or } from "drizzle-orm";
 import { getDb } from "@/db";
-import { cards, draws, userBoosters, userCards, users } from "@/db/schema";
+import { boosterTypes, cards, draws, userBoosters, userCards, users } from "@/db/schema";
 import { creditPoints, evaluateAchievements } from "@/db/queries/achievements";
+import { liveCms } from "@/lib/cms/live";
 
 export class AdminActionError extends Error {
   constructor(message: string) {
@@ -39,9 +40,9 @@ export async function grantCard(input: {
     const [card] = await tx
       .select()
       .from(cards)
-      .where(eq(cards.id, input.cardId))
+      .where(and(eq(cards.id, input.cardId), liveCms(cards)))
       .limit(1);
-    if (!card) throw new AdminActionError("Card not found");
+    if (!card) throw new AdminActionError("Card is not in the live catalog");
 
     const inserted = await tx
       .insert(userCards)
@@ -93,6 +94,13 @@ export async function revokeCard(input: {
 }) {
   requireReason(input.reason);
   const db = getDb();
+  const [card] = await db
+    .select({ id: cards.id })
+    .from(cards)
+    .where(and(eq(cards.id, input.cardId), liveCms(cards)))
+    .limit(1);
+  if (!card) throw new AdminActionError("Card is not in the live catalog");
+
   const deleted = await db
     .delete(userCards)
     .where(
@@ -142,6 +150,13 @@ export async function addBoosterToUser(input: {
     .where(eq(users.id, input.userId))
     .limit(1);
   if (!user) throw new AdminActionError("User not found");
+
+  const [booster] = await db
+    .select({ id: boosterTypes.id })
+    .from(boosterTypes)
+    .where(and(eq(boosterTypes.id, input.boosterTypeId), liveCms(boosterTypes)))
+    .limit(1);
+  if (!booster) throw new AdminActionError("Booster is not in the live catalog");
 
   const [row] = await db
     .insert(userBoosters)

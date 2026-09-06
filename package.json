@@ -14,7 +14,9 @@
     "db:push": "drizzle-kit push",
     "db:seed": "tsx db/seed.ts",
     "db:seed:boosters": "tsx db/seed.ts boosters",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "cms:develop": "npm run develop --prefix cms",
+    "cms:pull": "tsx scripts/cms-pull.ts"
   },
   "dependencies": {
     "@auth/core": "^0.34.3",

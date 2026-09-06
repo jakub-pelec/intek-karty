@@ -40,10 +40,10 @@ export default async function QueuePage() {
                 className="flex items-center justify-between gap-4 border-b border-[#d7d3c8]/15 py-5 last:border-b-0"
               >
                 <div className="min-w-0">
-                  <p className="font-[family-name:var(--font-cormorant)] text-xl text-[#f3efe6] italic">
+                  <p className="font-[family-name:var(--font-cormorant)] text-[22px] text-[#f3efe6] italic">
                     {row.userName ?? `twitch:${row.twitchId}`}
                   </p>
-                  <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
+                  <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
                     {row.boosterName}
                     {row.note ? ` · ${row.note}` : ""}
                     {` · ${formatDate(row.createdAt)}`}
@@ -51,7 +51,7 @@ export default async function QueuePage() {
                 </div>
                 <Link
                   href={`/admin/open/${row.id}`}
-                  className="ritual-ember shrink-0 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.24em] text-[#d4b36a] uppercase"
+                  className="ritual-ember shrink-0 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#d4b36a] uppercase"
                 >
                   Open
                 </Link>

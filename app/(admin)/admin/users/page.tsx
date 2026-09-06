@@ -34,10 +34,10 @@ export default async function AdminUsersPage({
                   href={`/admin/users/${user.id}`}
                   className="flex items-baseline justify-between gap-4 py-5 hover:text-[#d4b36a]"
                 >
-                  <span className="font-[family-name:var(--font-cormorant)] text-xl text-[#f3efe6] italic">
+                  <span className="font-[family-name:var(--font-cormorant)] text-[22px] text-[#f3efe6] italic">
                     {user.name}
                   </span>
-                  <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.16em] text-[#d7d3c8]/55 uppercase">
+                  <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/55 uppercase">
                     {user.role} · {user.pointsBalance} echoes
                   </span>
                 </Link>

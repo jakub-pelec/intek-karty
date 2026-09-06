@@ -13,6 +13,7 @@ type RevealPayload = {
   cardNumber: number;
   rarity: Rarity;
   imageUrl: string | null;
+  backImageUrl?: string | null;
   isDuplicate: boolean;
   holographic: boolean;
   signature: boolean;
@@ -21,10 +22,10 @@ type RevealPayload = {
 
 const rarityGlow: Record<Rarity, string> = {
   common: "shadow-[0_0_40px_#9aa3b5]",
-  rare: "shadow-[0_0_50px_#4ea3ff]",
-  epic: "shadow-[0_0_60px_#b56bff]",
-  legendary: "shadow-[0_0_70px_#f5c542]",
-  joker: "shadow-[0_0_80px_#ff4d8d]",
+  rare: "shadow-[0_0_50px_#2560c8]",
+  epic: "shadow-[0_0_60px_#9b3ef0]",
+  legendary: "shadow-[0_0_70px_#edc24a]",
+  joker: "shadow-[0_0_80px_#ff2e86]",
 };
 
 function fromApi(row: {
@@ -34,6 +35,7 @@ function fromApi(row: {
   cardNumber: number;
   cardRarity: Rarity;
   cardImageUrl: string | null;
+  backImageUrl?: string | null;
   isDuplicate: boolean;
   holographic: boolean;
   signature: boolean;
@@ -45,6 +47,7 @@ function fromApi(row: {
     cardNumber: row.cardNumber,
     rarity: row.cardRarity,
     imageUrl: row.cardImageUrl,
+    backImageUrl: row.backImageUrl,
     isDuplicate: row.isDuplicate,
     holographic: row.holographic,
     signature: row.signature,
@@ -149,6 +152,7 @@ export function RevealStage({
               <CardInspect
                 name={current.cardName}
                 imageUrl={current.imageUrl}
+                backImageUrl={current.backImageUrl}
                 rarity={current.rarity}
                 holographic={current.holographic}
                 signature={current.signature}
@@ -160,7 +164,7 @@ export function RevealStage({
               <p className="text-sm text-white/70">
                 {formatCardNumber(current.cardNumber)}
               </p>
-              <h2 className="font-[family-name:var(--font-display)] text-3xl">
+              <h2 className="font-[family-name:var(--font-display)] text-[33px]">
                 {current.cardName}
               </h2>
               <div className="flex justify-center gap-1">

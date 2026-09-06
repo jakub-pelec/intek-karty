@@ -188,6 +188,25 @@ a {
   }
 }
 
+@keyframes collectionBoundPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+.collection-bound-card {
+  transform-origin: center center;
+  transition: transform 280ms ease;
+}
+
+button:hover > .collection-bound-card {
+  animation: collectionBoundPulse 1.6s ease-in-out infinite;
+}
+
 .card-ceremony {
   animation:
     cardRise 0.95s cubic-bezier(0.16, 1, 0.3, 1) both,
@@ -229,7 +248,8 @@ a.ritual-ember:hover,
   .card-ceremony,
   .open-veil,
   .open-flash,
-  .ritual-ember {
+  .ritual-ember,
+  .collection-bound-card {
     animation: none;
     transition: none;
   }

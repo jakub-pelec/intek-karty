@@ -6,7 +6,7 @@
     </linearGradient>
   </defs>
   <rect width="300" height="420" rx="18" fill="url(#jf)"/>
-  <rect x="16" y="16" width="268" height="388" rx="12" fill="none" stroke="#ff7eac" stroke-width="3"/>
-  <text x="150" y="200" text-anchor="middle" fill="#ff7eac" font-size="22" font-family="serif">INTEK</text>
+  <rect x="16" y="16" width="268" height="388" rx="12" fill="none" stroke="#ff2e86" stroke-width="3"/>
+  <text x="150" y="200" text-anchor="middle" fill="#ff4d94" font-size="22" font-family="serif">INTEK</text>
   <text x="150" y="240" text-anchor="middle" fill="#f3efe6" font-size="28" font-family="serif">JOKER HUNT</text>
 </svg>

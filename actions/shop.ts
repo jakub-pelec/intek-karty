@@ -4,52 +4,25 @@ import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { getDb } from "@/db";
-import { rewards } from "@/db/schema";
+import { shopRedemptions } from "@/db/schema";
 import { RedeemError, redeemReward } from "@/db/queries/redeem";
 import { requireAdmin, requireUser } from "@/lib/rbac";
 import { AuthError } from "@/lib/rbac";
 
-export async function saveReward(formData: FormData) {
+export async function setRedemptionStatus(formData: FormData) {
   await requireAdmin();
   const id = String(formData.get("id") ?? "");
-  const stockRaw = String(formData.get("stock") ?? "").trim();
   const parsed = z
-    .object({
-      name: z.string().trim().min(1),
-      description: z.string().trim().min(1),
-      pointCost: z.coerce.number().int().positive(),
-      active: z.coerce.boolean().optional(),
-    })
-    .safeParse({
-      name: formData.get("name"),
-      description: formData.get("description"),
-      pointCost: formData.get("pointCost"),
-      active: formData.get("active") === "on",
-    });
-  if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Invalid reward" };
-  }
+    .enum(["fulfilled", "cancelled", "pending_fulfillment"])
+    .safeParse(formData.get("status"));
+  if (!id || !parsed.success) return { error: "Invalid fulfillment update" };
 
-  const stock = stockRaw === "" ? null : Number(stockRaw);
-  if (stock !== null && (!Number.isInteger(stock) || stock < 0)) {
-    return { error: "Stock must be empty (unlimited) or a non-negative integer" };
-  }
-
-  const db = getDb();
-  const values = {
-    ...parsed.data,
-    stock,
-    active: parsed.data.active ?? true,
-    updatedAt: new Date(),
-  };
-  if (id) {
-    await db.update(rewards).set(values).where(eq(rewards.id, id));
-  } else {
-    await db.insert(rewards).values(values);
-  }
+  await getDb()
+    .update(shopRedemptions)
+    .set({ status: parsed.data })
+    .where(eq(shopRedemptions.id, id));
   revalidatePath("/admin/rewards");
-  revalidatePath("/shop");
-  return { success: "Reward saved" };
+  return { success: parsed.data === "fulfilled" ? "Marked fulfilled" : "Updated" };
 }
 
 export async function redeemRewardAction(rewardId: string) {

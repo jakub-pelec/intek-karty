@@ -3,6 +3,7 @@ import { getDb } from "@/db";
 import { achievements, userAchievements } from "@/db/schema";
 import { evaluateAchievementsForUser } from "@/db/queries/achievements";
 import { RitualPageHeader } from "@/components/ritual-page-header";
+import { liveCms } from "@/lib/cms/live";
 import { requireUser } from "@/lib/rbac";
 import { toRoman } from "@/lib/ritual";
 import { cn, formatDate } from "@/lib/utils";
@@ -12,7 +13,7 @@ export default async function AchievementsPage() {
   await evaluateAchievementsForUser(user.id);
 
   const db = getDb();
-  const catalog = await db.select().from(achievements).where(eq(achievements.active, true));
+  const catalog = await db.select().from(achievements).where(liveCms(achievements));
   const unlocked = await db
     .select()
     .from(userAchievements)
@@ -39,7 +40,7 @@ export default async function AchievementsPage() {
               <div className="flex items-baseline justify-between gap-4">
                 <h2
                   className={cn(
-                    "font-[family-name:var(--font-cormorant)] text-2xl italic",
+                    "font-[family-name:var(--font-cormorant)] text-[26px] italic",
                     done ? "text-[#f3efe6]" : "text-[#d7d3c8]",
                   )}
                 >
@@ -47,14 +48,14 @@ export default async function AchievementsPage() {
                 </h2>
                 <span
                   className={cn(
-                    "shrink-0 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] uppercase",
+                    "shrink-0 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] uppercase",
                     done ? "text-[#d4b36a]" : "text-[#d7d3c8]",
                   )}
                 >
                   {done ? "Bestowed" : "Sealed"}
                 </span>
               </div>
-              <p className="mt-2 text-base leading-relaxed text-[#d7d3c8]">
+              <p className="mt-2 text-lg leading-relaxed text-[#d7d3c8]">
                 {achievement.description}
               </p>
               <p className="mt-3 font-[family-name:var(--font-cinzel)] text-xs tracking-[0.12em] text-[#cfc6b4] uppercase">

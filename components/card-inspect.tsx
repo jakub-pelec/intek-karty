@@ -7,6 +7,7 @@ import { Environment } from "@react-three/drei";
 import * as THREE from "three";
 import type { Rarity } from "@/db/schema";
 import { CARD_SIZE, CardMesh } from "@/components/card-mesh";
+import { RarityGlow } from "@/components/rarity-glow";
 import { RARITY_LIGHT } from "@/lib/open-fx";
 import { cn } from "@/lib/utils";
 
@@ -16,16 +17,20 @@ const FIT_FOV = 32;
 export function CardInspect({
   name,
   imageUrl,
+  backImageUrl,
   rarity,
   holographic = false,
   signature = false,
+  glow = true,
   className,
 }: {
   name: string;
   imageUrl: string | null;
+  backImageUrl?: string | null;
   rarity?: Rarity;
   holographic?: boolean;
   signature?: boolean;
+  glow?: boolean;
   className?: string;
 }) {
   const frame = useRef<HTMLDivElement>(null);
@@ -42,7 +47,7 @@ export function CardInspect({
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [name, imageUrl, holographic]);
+  }, [name, imageUrl, backImageUrl, holographic]);
 
   const markReady = useCallback(() => {
     requestAnimationFrame(() => setReady(true));
@@ -51,15 +56,16 @@ export function CardInspect({
   return (
     <div
       ref={frame}
-      className={cn("relative aspect-[63/88] h-full w-full min-h-0 touch-none overflow-hidden", className)}
+      className={cn("relative aspect-[63/88] h-full w-full min-h-0 touch-none", className)}
       role="img"
       aria-label={[holographic && "holographic", signature && "signed", name]
         .filter(Boolean)
         .join(" ")}
     >
+      {glow ? <RarityGlow rarity={rarity} /> : null}
       <div
         className={cn(
-          "absolute inset-0 flex items-center justify-center transition-opacity duration-300",
+          "absolute inset-0 z-10 flex items-center justify-center transition-opacity duration-300",
           ready ? "pointer-events-none opacity-0" : "opacity-100",
         )}
       >
@@ -80,6 +86,7 @@ export function CardInspect({
           style={{
             position: "absolute",
             inset: 0,
+            zIndex: 10,
             background: "transparent",
             cursor: "grab",
             opacity: ready ? 1 : 0,
@@ -106,6 +113,7 @@ export function CardInspect({
             <CardMesh
               name={name}
               imageUrl={imageUrl}
+              backImageUrl={backImageUrl}
               rarity={rarity}
               holographic={holographic}
               scale={1}

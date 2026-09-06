@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cards",
+  "info": {
+    "singularName": "card",
+    "pluralName": "cards",
+    "displayName": "Card"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "config": {
+    "layouts": {
+      "list": ["number", "name", "rarity", "collection"]
+    }
+  },
+  "attributes": {
+    "collection": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::collection.collection",
+      "inversedBy": "cards",
+      "required": true
+    },
+    "number": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "lore": {
+      "type": "text",
+      "required": true
+    },
+    "rarity": {
+      "type": "enumeration",
+      "enum": ["common", "rare", "epic", "legendary", "joker"],
+      "required": true
+    },
+    "signed": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    }
+  }
+}

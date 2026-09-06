@@ -28,6 +28,8 @@ import {
   DEMO_USER_NAME,
 } from "./seed-data/demo";
 import { SEED_REWARDS } from "./seed-data/rewards";
+import { liveCms } from "@/lib/cms/live";
+import { syncCatalogFromStrapi } from "@/lib/cms/sync-catalog";
 
 function requireDatabaseUrl() {
   const url = process.env.DATABASE_URL;
@@ -54,6 +56,7 @@ async function seedOriginCollection() {
       .set({
         name: ORIGIN_COLLECTION.name,
         description: ORIGIN_COLLECTION.description,
+        backImageUrl: ORIGIN_COLLECTION.backImageUrl,
         active: ORIGIN_COLLECTION.active,
         sortOrder: ORIGIN_COLLECTION.sortOrder,
         updatedAt: new Date(),
@@ -253,12 +256,13 @@ async function seedDemoCollection(
       and(
         eq(cards.collectionId, collectionId),
         inArray(cards.number, DEMO_OWNED_CARD_NUMBERS),
+        liveCms(cards),
       ),
     );
   const [booster] = await db
     .select()
     .from(boosterTypes)
-    .where(eq(boosterTypes.slug, "booster"))
+    .where(and(eq(boosterTypes.slug, "booster"), liveCms(boosterTypes)))
     .limit(1);
 
   for (const card of catalog) {
@@ -301,7 +305,7 @@ async function seedDemoAchievements(userId: string) {
 
 async function seedBoosterQueue(userId: string) {
   const db = getDb();
-  const types = await db.select().from(boosterTypes);
+  const types = await db.select().from(boosterTypes).where(liveCms(boosterTypes));
   const bySlug = new Map(types.map((row) => [row.slug, row]));
 
   await db
@@ -330,7 +334,7 @@ async function seedBoosterQueue(userId: string) {
 
 async function seedRewardsQueue(userId: string) {
   const db = getDb();
-  const catalog = await db.select().from(rewards);
+  const catalog = await db.select().from(rewards).where(liveCms(rewards));
   const shoutout = catalog.find((row) => row.name === "Shout-out on stream");
   const emote = catalog.find((row) => row.name === "Custom emote idea");
   if (!shoutout || !emote) return;
@@ -407,14 +411,31 @@ async function printBoosterSummary() {
   }
 }
 
+async function seedCatalogFromCms() {
+  if (!process.env.STRAPI_URL || !process.env.STRAPI_TOKEN) {
+    throw new Error(
+      "STRAPI_URL and STRAPI_TOKEN are required. Catalog is edited only in Strapi. Run pnpm cms:pull after publishing.",
+    );
+  }
+  console.log("Pulling catalog from Strapi…");
+  await syncCatalogFromStrapi();
+  const [first] = await getDb()
+    .select({ id: collections.id })
+    .from(collections)
+    .where(liveCms(collections))
+    .orderBy(collections.sortOrder)
+    .limit(1);
+  if (!first) throw new Error("Strapi pull left no active collections");
+  return first.id;
+}
+
 async function seed() {
   requireDatabaseUrl();
   const only = process.argv[2];
 
   if (only === "boosters") {
     console.log("Seeding booster types and pending queue…");
-    const collectionId = await seedOriginCollection();
-    await seedBoosters(collectionId);
+    await seedCatalogFromCms();
     const user = await upsertDemoUser();
     await seedBoosterQueue(user.id);
     await printBoosterSummary();
@@ -432,11 +453,7 @@ async function seed() {
   }
 
   console.log("Seeding catalog, shop, demo user, queues…");
-  const collectionId = await seedOriginCollection();
-  await seedCards(collectionId);
-  await seedBoosters(collectionId);
-  await seedAchievements();
-  await seedShopRewards();
+  const collectionId = await seedCatalogFromCms();
 
   const user = await upsertDemoUser();
   await seedDemoCollection(user.id, user.name, collectionId);

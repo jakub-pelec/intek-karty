@@ -21,10 +21,10 @@ export function chargeTension(ageSec: number) {
 
 export const RARITY_LIGHT: Record<Rarity, string> = {
   common: "#d7d3c8",
-  rare: "#7ec8ff",
-  epic: "#c084fc",
-  legendary: "#ffd76a",
-  joker: "#ff6b9d",
+  rare: "#2560c8",
+  epic: "#9b3ef0",
+  legendary: "#edc24a",
+  joker: "#ff2e86",
 };
 
 export const SEAL_LIGHT = "#ffe7a3";

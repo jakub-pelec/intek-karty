@@ -1,6 +1,7 @@
 import { and, asc, eq, sql } from "drizzle-orm";
 import { getDb } from "@/db";
 import { cards, collections, userCards } from "@/db/schema";
+import { liveCms } from "@/lib/cms/live";
 
 export async function listCollections() {
   return getDb()
@@ -13,7 +14,7 @@ export async function listActiveCollections() {
   return getDb()
     .select()
     .from(collections)
-    .where(eq(collections.active, true))
+    .where(liveCms(collections))
     .orderBy(asc(collections.sortOrder), asc(collections.name));
 }
 
@@ -23,7 +24,7 @@ export async function collectionProgress(userId: string, collectionId: string) {
     db
       .select({ count: sql<number>`count(*)::int` })
       .from(cards)
-      .where(and(eq(cards.collectionId, collectionId), eq(cards.active, true))),
+      .where(and(eq(cards.collectionId, collectionId), liveCms(cards))),
     db
       .select({ count: sql<number>`count(*)::int` })
       .from(userCards)
@@ -32,7 +33,7 @@ export async function collectionProgress(userId: string, collectionId: string) {
         and(
           eq(userCards.userId, userId),
           eq(cards.collectionId, collectionId),
-          eq(cards.active, true),
+          liveCms(cards),
         ),
       ),
   ]);
@@ -46,6 +47,6 @@ export async function activeCardCount(collectionId: string) {
   const [row] = await getDb()
     .select({ count: sql<number>`count(*)::int` })
     .from(cards)
-    .where(and(eq(cards.collectionId, collectionId), eq(cards.active, true)));
+    .where(and(eq(cards.collectionId, collectionId), liveCms(cards)));
   return Number(row?.count ?? 0);
 }

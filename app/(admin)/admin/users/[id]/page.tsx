@@ -1,4 +1,5 @@
-import { asc, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq } from "drizzle-orm";
+import { isLiveCmsRow, liveCms } from "@/lib/cms/live";
 import { notFound } from "next/navigation";
 import { getDb } from "@/db";
 import {
@@ -57,6 +58,7 @@ export default async function AdminUserDetailPage({
       })
       .from(cards)
       .innerJoin(collections, eq(cards.collectionId, collections.id))
+      .where(and(liveCms(cards), liveCms(collections)))
       .orderBy(
         asc(collections.sortOrder),
         asc(collections.name),
@@ -71,7 +73,7 @@ export default async function AdminUserDetailPage({
       })
       .from(boosterTypes)
       .innerJoin(collections, eq(boosterTypes.collectionId, collections.id))
-      .where(eq(boosterTypes.active, true))
+      .where(and(liveCms(boosterTypes), liveCms(collections)))
       .orderBy(asc(collections.sortOrder), asc(boosterTypes.name)),
     db
       .select()
@@ -92,7 +94,8 @@ export default async function AdminUserDetailPage({
       .where(eq(userAchievements.userId, user.id)),
   ]);
 
-  const ownedIds = new Set(owned.map((row) => row.card.id));
+  const liveOwned = owned.filter((row) => isLiveCmsRow(row.card));
+  const ownedIds = new Set(liveOwned.map((row) => row.card.id));
 
   return (
     <main className="mx-auto w-full max-w-4xl pt-2 md:pt-6">
@@ -130,7 +133,7 @@ export default async function AdminUserDetailPage({
             <input type="hidden" name="userId" value={user.id} />
             <Label>Revoke card</Label>
             <Select name="cardId" required>
-              {owned.map((row) => (
+              {liveOwned.map((row) => (
                 <option key={row.card.id} value={row.card.id}>
                   {formatCardNumber(row.card.number)} {row.card.name}
                 </option>
@@ -171,16 +174,16 @@ export default async function AdminUserDetailPage({
       </div>
 
       <SanctumSection title="Collection" className="mt-16">
-        {owned.length === 0 ? (
+        {liveOwned.length === 0 ? (
           <SanctumEmpty>No relics bound.</SanctumEmpty>
         ) : (
           <ul className="space-y-3">
-            {owned.map((row) => (
+            {liveOwned.map((row) => (
               <li
                 key={row.card.id}
                 className="flex flex-wrap items-baseline justify-between gap-3 border-b border-white/5 py-2"
               >
-                <span className="text-[15px] text-[#d7d3c8]/80 italic">
+                <span className="text-[17px] text-[#d7d3c8]/80 italic">
                   {formatCardNumber(row.card.number)} {row.card.name}
                 </span>
                 <span className="flex items-center gap-3">
@@ -203,10 +206,10 @@ export default async function AdminUserDetailPage({
                 key={row.name}
                 className="flex items-baseline justify-between gap-3 border-b border-white/5 py-2"
               >
-                <span className="font-[family-name:var(--font-cinzel)] text-[11px] text-[#d7d3c8]/80">
+                <span className="font-[family-name:var(--font-cinzel)] text-[12px] text-[#d7d3c8]/80">
                   {row.name}
                 </span>
-                <span className="font-[family-name:var(--font-cinzel)] text-[8px] tracking-widest text-[#d7d3c8]/30">
+                <span className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-widest text-[#d7d3c8]/30">
                   {formatDate(row.unlockedAt)}
                 </span>
               </li>
@@ -225,15 +228,15 @@ export default async function AdminUserDetailPage({
                 key={draw.id}
                 className="flex flex-wrap items-baseline justify-between gap-3 border-b border-white/5 py-2"
               >
-                <span className="text-[15px] text-[#d7d3c8]/80 italic">
+                <span className="text-[17px] text-[#d7d3c8]/80 italic">
                   {draw.cardName}
                   {draw.isDuplicate ? (
-                    <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[8px] text-[#d4b36a]/60 not-italic uppercase">
+                    <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[9px] text-[#d4b36a]/60 not-italic uppercase">
                       (Echo)
                     </span>
                   ) : null}
                 </span>
-                <span className="flex items-center gap-3 font-[family-name:var(--font-cinzel)] text-[8px] tracking-[0.12em] text-[#d7d3c8]/40 uppercase">
+                <span className="flex items-center gap-3 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.12em] text-[#d7d3c8]/40 uppercase">
                   <MutationBadges holographic={draw.holographic} signature={draw.signature} />
                   {formatDate(draw.createdAt)}
                 </span>

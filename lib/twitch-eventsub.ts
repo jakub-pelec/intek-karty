@@ -49,7 +49,7 @@ export async function ingestChannelPointsRedemption(
     .where(eq(boosterTypes.twitchRewardId, redemption.reward.id))
     .limit(1);
 
-  if (!boosterType || !boosterType.active) {
+  if (!boosterType || !boosterType.active || !boosterType.cmsId) {
     return { ignored: true as const, reason: "unknown_reward" };
   }
 
