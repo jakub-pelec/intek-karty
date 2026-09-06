@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { CSSProperties } from "react";
 import type { Rarity } from "@/db/schema";
 import { RARITY_LIGHT } from "@/lib/open-fx";
@@ -9,7 +10,12 @@ export type CardFaceProps = {
   rarity?: Rarity;
   holographic?: boolean;
   className?: string;
+  priority?: boolean;
+  sizes?: string;
 };
+
+const GRID_SIZES =
+  "(max-width: 640px) 45vw, (max-width: 768px) 30vw, 20vw";
 
 export function CardFace(props: CardFaceProps) {
   const rarity = props.rarity ?? "common";
@@ -20,17 +26,19 @@ export function CardFace(props: CardFaceProps) {
   return (
     <div
       className={cn(
-        "card-face relative h-full w-full overflow-hidden bg-[var(--surface-2)]",
+        "card-face absolute inset-0 overflow-hidden bg-[var(--surface-2)]",
         props.holographic && "card-face-holo",
         props.className,
       )}
     >
       {props.imageUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           src={props.imageUrl}
           alt={props.name}
-          className="h-full w-full object-cover"
+          fill
+          sizes={props.sizes ?? GRID_SIZES}
+          priority={props.priority}
+          className="object-cover"
         />
       ) : (
         <div className="flex h-full items-center justify-center px-3 text-center font-[family-name:var(--font-display)] text-lg text-[var(--muted)]">

@@ -2,13 +2,13 @@ import type { ButtonHTMLAttributes } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-const buttonVariants = cva(
+export const buttonVariants = cva(
   "ritual-ember inline-flex items-center justify-center gap-2 rounded-none font-[family-name:var(--font-cinzel)] text-[11px] font-medium tracking-[0.24em] uppercase disabled:pointer-events-none disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4b36a]",
   {
     variants: {
       variant: {
         primary:
-          "border border-[#d4b36a] bg-[#d4b36a] text-[#1a1404] hover:border-[#e8cf8a] hover:bg-[#e8cf8a] hover:text-[#1a1404] hover:shadow-[0_0_18px_rgba(212,179,106,0.4)]",
+          "ritual-ember-solid border border-[#d4b36a] bg-[#d4b36a] text-[#1a1404] hover:border-[#e8cf8a] hover:bg-[#e8cf8a] hover:text-[#1a1404] hover:shadow-[0_0_18px_rgba(212,179,106,0.4)]",
         secondary:
           "border border-[#d4b36a]/35 bg-transparent text-[#d7d3c8] hover:border-[#e8cf8a] hover:text-[#e8cf8a] hover:shadow-[0_0_16px_rgba(212,179,106,0.28)]",
         ghost:

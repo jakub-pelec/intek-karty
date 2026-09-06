@@ -1,51 +1,70 @@
 import Link from "next/link";
-import { searchUsers } from "@/db/queries/admin";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { listUsers } from "@/db/queries/admin";
+import { AdminUserSearch } from "@/components/admin-user-search";
 import { RitualPageHeader } from "@/components/ritual-page-header";
-import { SanctumCard, SanctumEmpty } from "@/components/sanctum";
+import { SanctumCard, SanctumEmpty, SanctumPager } from "@/components/sanctum";
+function usersHref(query: string, page: number) {
+  const params = new URLSearchParams();
+  if (query) params.set("q", query);
+  if (page > 1) params.set("page", String(page));
+  const search = params.toString();
+  return search ? `/admin/users?${search}` : "/admin/users";
+}
 
 export default async function AdminUsersPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; page?: string }>;
 }) {
-  const { q = "" } = await searchParams;
+  const { q = "", page: rawPage } = await searchParams;
   const query = q.trim();
-  const results = query ? await searchUsers(query) : [];
+  const page = Math.max(1, Number(rawPage ?? 1) || 1);
+  const { rows, total, hasMore } = await listUsers(query, page);
 
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">
-      <RitualPageHeader title="Users" eyebrow="Search by Twitch name" />
-      <form className="mb-10 flex gap-3">
-        <Input name="q" defaultValue={q} placeholder="Twitch username" />
-        <Button type="submit">Search</Button>
-      </form>
-      {!query ? (
-        <SanctumEmpty>Enter a name to begin.</SanctumEmpty>
-      ) : results.length === 0 ? (
-        <SanctumEmpty>No one matches that name.</SanctumEmpty>
+      <RitualPageHeader
+        title="Users"
+        eyebrow={
+          query
+            ? `${total} matching · A–Z`
+            : `${total} in the ledger · A–Z`
+        }
+      />
+      <SanctumCard className="mb-6">
+        <AdminUserSearch query={query} />
+      </SanctumCard>
+      {rows.length === 0 ? (
+        <SanctumEmpty>
+          {query ? "No one matches that name." : "No users yet."}
+        </SanctumEmpty>
       ) : (
         <SanctumCard className="px-6 py-0">
           <ul>
-            {results.map((user) => (
+            {rows.map((user) => (
               <li key={user.id} className="border-b border-[#d7d3c8]/15 last:border-b-0">
                 <Link
                   href={`/admin/users/${user.id}`}
-                  className="flex items-baseline justify-between gap-4 py-5 hover:text-[#d4b36a]"
+                  className="flex items-center justify-between gap-4 py-5"
                 >
-                  <span className="font-[family-name:var(--font-cormorant)] text-[22px] text-[#f3efe6] italic">
-                    {user.name}
-                  </span>
-                  <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/55 uppercase">
-                    {user.role} · {user.pointsBalance} echoes
-                  </span>
+                  <div className="min-w-0">
+                    <p className="font-[family-name:var(--font-cormorant)] text-[22px] text-[#f3efe6] italic">
+                      {user.name}
+                    </p>
+                    <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
+                      {user.role} · {user.pointsBalance} echoes
+                    </p>
+                  </div>
                 </Link>
               </li>
             ))}
           </ul>
         </SanctumCard>
       )}
+      <SanctumPager
+        prevHref={page > 1 ? usersHref(query, page - 1) : null}
+        nextHref={hasMore ? usersHref(query, page + 1) : null}
+      />
     </main>
   );
 }

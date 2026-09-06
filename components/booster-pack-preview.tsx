@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { CanvasFallback } from "@/components/canvas-fallback";
 import type { OpenCard } from "@/components/booster-open-scene";
 import type { OpenPhase } from "@/lib/open-fx";
 
@@ -9,8 +10,8 @@ const Pack = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-[28rem] items-center justify-center text-sm text-[var(--muted)]">
-        Loading pack…
+      <div className="relative h-[28rem] w-full">
+        <CanvasFallback />
       </div>
     ),
   },
@@ -22,8 +23,8 @@ const OpenScene = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full min-h-80 w-full items-center justify-center text-sm text-[var(--muted)]">
-        Loading pack…
+      <div className="relative h-full min-h-80 w-full">
+        <CanvasFallback />
       </div>
     ),
   },

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { auth } from "@/auth";
 import { getUserById } from "@/db/queries/users";
 import type { Role } from "@/db/schema";
@@ -12,7 +13,7 @@ export class AuthError extends Error {
   }
 }
 
-export async function requireUser() {
+export const requireUser = cache(async () => {
   const session = await auth();
   if (!session?.user?.id) {
     throw new AuthError("You must be signed in", 401);
@@ -22,7 +23,7 @@ export async function requireUser() {
     throw new AuthError("Session user no longer exists", 401);
   }
   return user;
-}
+});
 
 export async function requireRole(role: Role) {
   const user = await requireUser();

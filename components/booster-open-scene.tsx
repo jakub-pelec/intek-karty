@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useSceneTimer } from "@/lib/three-compat";
 import { ContactShadows } from "@react-three/drei";
@@ -12,6 +12,7 @@ import {
   FALLBACK_FRONT,
   PackMesh,
 } from "@/components/booster-pack-3d";
+import { CanvasFallback } from "@/components/canvas-fallback";
 import {
   HOLO_LIGHT,
   SEAL_LIGHT,
@@ -50,6 +51,7 @@ export function BoosterOpenScene({
 }) {
   const glow = openWashColor(phase, card?.rarity);
   const showCard = Boolean(card) && (phase === "burst" || phase === "reveal");
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     preloadHoloAssets();
@@ -79,18 +81,20 @@ export function BoosterOpenScene({
         }}
       />
       <div className="relative h-full">
+        {ready ? null : <CanvasFallback />}
         <Canvas
           camera={{
             position: [0, 0.1, fullscreen ? CAMERA_Z.fullscreen : CAMERA_Z.inline],
             fov: OPEN_FOV,
           }}
-          dpr={[1, 2]}
-          gl={{ alpha: true, antialias: true }}
+          dpr={[1, 1.5]}
+          gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
           onCreated={({ gl }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping;
             gl.toneMappingExposure = 1.12;
+            requestAnimationFrame(() => setReady(true));
           }}
-          style={{ background: "transparent" }}
+          style={{ background: "transparent", opacity: ready ? 1 : 0 }}
         >
           <ambientLight intensity={0.62} />
           <directionalLight position={[2.4, 3.2, 4]} intensity={1.35} color="#fff6e8" />

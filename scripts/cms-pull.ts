@@ -3,7 +3,12 @@ import { closeDb } from "@/db";
 import { CmsSyncError } from "@/lib/cms/map-catalog";
 import { syncCatalogFromStrapi } from "@/lib/cms/sync-catalog";
 
+const PROD_STRAPI = "https://cms-production-3078.up.railway.app";
+
 async function main() {
+  if (process.argv.includes("--prod")) {
+    process.env.STRAPI_URL = PROD_STRAPI;
+  }
   try {
     const counts = await syncCatalogFromStrapi();
     console.log("Catalog pulled from Strapi:");

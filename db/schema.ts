@@ -41,6 +41,13 @@ export const achievementConditionEnum = pgEnum("achievement_condition", [
   "first_joker",
   "cards_collected_threshold",
   "full_collection",
+  "holo_collected_threshold",
+  "signed_collected_threshold",
+  "signed_holo_collected_threshold",
+  "signed_holo_legendary_threshold",
+  "collection_first_card",
+  "collection_complete",
+  "collection_holo_complete",
 ]);
 
 export const redemptionStatusEnum = pgEnum("redemption_status", [
@@ -280,6 +287,7 @@ export const achievements = pgTable(
     description: text("description").notNull(),
     conditionType: achievementConditionEnum("condition_type").notNull(),
     threshold: integer("threshold"),
+    collectionSlug: text("collection_slug"),
     pointReward: integer("point_reward").default(0).notNull(),
     cmsId: text("cms_id"),
     active: boolean("active").default(true).notNull(),

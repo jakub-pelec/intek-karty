@@ -20,32 +20,38 @@ export default async function HistoryPage({
   const db = getDb();
   const offset = (page - 1) * PAGE_SIZE;
 
-  const cardRows = await db
-    .select({
-      id: draws.id,
-      cardName: draws.cardName,
-      cardNumber: draws.cardNumber,
-      cardRarity: draws.cardRarity,
-      holographic: draws.holographic,
-      signature: draws.signature,
-      isDuplicate: draws.isDuplicate,
-      createdAt: draws.createdAt,
-      boosterName: boosterTypes.name,
-    })
-    .from(draws)
-    .leftJoin(boosterTypes, eq(draws.boosterTypeId, boosterTypes.id))
-    .where(eq(draws.userId, user.id))
-    .orderBy(desc(draws.createdAt))
-    .limit(PAGE_SIZE)
-    .offset(offset);
+  const cardRows =
+    tab === "cards"
+      ? await db
+          .select({
+            id: draws.id,
+            cardName: draws.cardName,
+            cardNumber: draws.cardNumber,
+            cardRarity: draws.cardRarity,
+            holographic: draws.holographic,
+            signature: draws.signature,
+            isDuplicate: draws.isDuplicate,
+            createdAt: draws.createdAt,
+            boosterName: boosterTypes.name,
+          })
+          .from(draws)
+          .leftJoin(boosterTypes, eq(draws.boosterTypeId, boosterTypes.id))
+          .where(eq(draws.userId, user.id))
+          .orderBy(desc(draws.createdAt))
+          .limit(PAGE_SIZE)
+          .offset(offset)
+      : [];
 
-  const ledgerRows = await db
-    .select()
-    .from(pointsLedger)
-    .where(eq(pointsLedger.userId, user.id))
-    .orderBy(desc(pointsLedger.createdAt))
-    .limit(PAGE_SIZE)
-    .offset(offset);
+  const ledgerRows =
+    tab === "points"
+      ? await db
+          .select()
+          .from(pointsLedger)
+          .where(eq(pointsLedger.userId, user.id))
+          .orderBy(desc(pointsLedger.createdAt))
+          .limit(PAGE_SIZE)
+          .offset(offset)
+      : [];
 
   const rows = tab === "cards" ? cardRows : ledgerRows;
   const hasMore = rows.length === PAGE_SIZE;

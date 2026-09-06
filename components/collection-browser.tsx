@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { CardFace } from "@/components/card-face";
 import { CardInspect } from "@/components/card-inspect";
 import { RelicFrame } from "@/components/relic-frame";
@@ -9,7 +10,9 @@ import {
   COLLECTION_SORTS,
   OWNERSHIP_FILTERS,
   VARIANT_FILTERS,
+  arrangeCollection,
   collectionHref,
+  parseCollectionQuery,
   toggleRarity,
   toggleVariant,
   type CollectionQuery,
@@ -41,16 +44,35 @@ const SORT_LABELS: Record<(typeof COLLECTION_SORTS)[number], string> = {
 function FilterLink({
   active,
   href,
+  instant,
+  onInstant,
   children,
 }: {
   active: boolean;
   href: string;
+  instant?: boolean;
+  onInstant?: () => void;
   children: string;
 }) {
+  const router = useRouter();
   return (
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
+      prefetch={false}
+      onMouseEnter={() => {
+        if (!instant) router.prefetch(href);
+      }}
+      onFocus={() => {
+        if (!instant) router.prefetch(href);
+      }}
+      onClick={(event) => {
+        if (!instant || !onInstant) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        if (event.button !== 0) return;
+        event.preventDefault();
+        onInstant();
+      }}
       className={cn(
         "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase",
         active
@@ -77,20 +99,41 @@ export function CollectionBrowser({
   backImageUrl?: string | null;
 }) {
   const [selected, setSelected] = useState<CollectionSlot | null>(null);
+  const [viewQuery, setViewQuery] = useState(() => {
+    if (typeof window === "undefined") return query;
+    const params = new URLSearchParams(window.location.search);
+    const parsed = parseCollectionQuery({
+      set: params.get("set") ?? undefined,
+      own: params.get("own") ?? undefined,
+      rarity: params.get("rarity") ?? undefined,
+      variant: params.get("variant") ?? undefined,
+      sort: params.get("sort") ?? undefined,
+    });
+    return { ...parsed, set: parsed.set ?? query.set };
+  });
+  const visible = useMemo(
+    () => arrangeCollection(slots, viewQuery),
+    [slots, viewQuery],
+  );
+  const priorityIndexes = new Set(
+    visible.flatMap((slot, index) => (slot.owned ? [index] : [])).slice(0, 2),
+  );
+
+  function applyFilter(next: CollectionQuery) {
+    setViewQuery(next);
+    window.history.replaceState(null, "", collectionHref(next));
+  }
 
   return (
     <div>
       <div className="mb-8 flex flex-col items-center gap-4">
-        <p className="sr-only">
-          {progress.owned}/{progress.total}
-        </p>
         {sets.length > 0 ? (
           <div className="mb-2 flex flex-wrap items-center justify-center gap-x-10 gap-y-2">
             {sets.map((set) => (
               <FilterLink
                 key={set.slug}
-                href={collectionHref({ ...query, set: set.slug })}
-                active={query.set === set.slug}
+                href={collectionHref({ ...viewQuery, set: set.slug })}
+                active={viewQuery.set === set.slug}
               >
                 {set.name}
               </FilterLink>
@@ -101,8 +144,10 @@ export function CollectionBrowser({
           {OWNERSHIP_FILTERS.map((own) => (
             <FilterLink
               key={own}
-              href={collectionHref({ ...query, own })}
-              active={query.own === own}
+              href={collectionHref({ ...viewQuery, own })}
+              active={viewQuery.own === own}
+              instant
+              onInstant={() => applyFilter({ ...viewQuery, own })}
             >
               {OWN_LABELS[own]}
             </FilterLink>
@@ -110,16 +155,20 @@ export function CollectionBrowser({
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
           <FilterLink
-            href={collectionHref({ ...query, rarities: [] })}
-            active={query.rarities.length === 0}
+            href={collectionHref({ ...viewQuery, rarities: [] })}
+            active={viewQuery.rarities.length === 0}
+            instant
+            onInstant={() => applyFilter({ ...viewQuery, rarities: [] })}
           >
             Any rarity
           </FilterLink>
           {RARITIES.map((rarity) => (
             <FilterLink
               key={rarity}
-              href={collectionHref(toggleRarity(query, rarity))}
-              active={query.rarities.includes(rarity)}
+              href={collectionHref(toggleRarity(viewQuery, rarity))}
+              active={viewQuery.rarities.includes(rarity)}
+              instant
+              onInstant={() => applyFilter(toggleRarity(viewQuery, rarity))}
             >
               {RARITY_LABELS[rarity]}
             </FilterLink>
@@ -127,16 +176,20 @@ export function CollectionBrowser({
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
           <FilterLink
-            href={collectionHref({ ...query, variants: [] })}
-            active={query.variants.length === 0}
+            href={collectionHref({ ...viewQuery, variants: [] })}
+            active={viewQuery.variants.length === 0}
+            instant
+            onInstant={() => applyFilter({ ...viewQuery, variants: [] })}
           >
             Any mark
           </FilterLink>
           {VARIANT_FILTERS.map((variant) => (
             <FilterLink
               key={variant}
-              href={collectionHref(toggleVariant(query, variant))}
-              active={query.variants.includes(variant)}
+              href={collectionHref(toggleVariant(viewQuery, variant))}
+              active={viewQuery.variants.includes(variant)}
+              instant
+              onInstant={() => applyFilter(toggleVariant(viewQuery, variant))}
             >
               {VARIANT_LABELS[variant]}
             </FilterLink>
@@ -146,8 +199,10 @@ export function CollectionBrowser({
           {COLLECTION_SORTS.map((sort) => (
             <FilterLink
               key={sort}
-              href={collectionHref({ ...query, sort })}
-              active={query.sort === sort}
+              href={collectionHref({ ...viewQuery, sort })}
+              active={viewQuery.sort === sort}
+              instant
+              onInstant={() => applyFilter({ ...viewQuery, sort })}
             >
               {SORT_LABELS[sort]}
             </FilterLink>
@@ -155,13 +210,24 @@ export function CollectionBrowser({
         </div>
       </div>
 
-      {slots.length === 0 ? (
+      <div className="border border-[#d4b36a]/25 bg-[#05040a]/45 px-5 py-6 sm:px-8 sm:py-8">
+      <p
+        className={cn(
+          "mb-6 text-right font-[family-name:var(--font-cinzel)] text-[16px] tracking-[0.16em] uppercase tabular-nums",
+          progress.total > 0 && progress.owned >= progress.total
+            ? "text-[#7dbe72]"
+            : "text-[#d4b36a]",
+        )}
+      >
+        Completed {progress.owned}/{progress.total}
+      </p>
+      {visible.length === 0 ? (
         <p className="py-16 text-center font-[family-name:var(--font-cormorant)] text-lg text-[#d7d3c8]/50 italic">
           No relics match.
         </p>
       ) : (
         <div className="grid grid-cols-2 gap-x-12 gap-y-[77px] sm:grid-cols-3 md:grid-cols-4">
-          {slots.map((slot) => (
+          {visible.map((slot, index) => (
             <button
               key={slot.id}
               type="button"
@@ -180,6 +246,7 @@ export function CollectionBrowser({
                       imageUrl={slot.owned.imageUrl}
                       rarity={slot.owned.rarity}
                       holographic={slot.owned.holographic}
+                      priority={priorityIndexes.has(index)}
                     />
                   ) : (
                     <>
@@ -190,7 +257,7 @@ export function CollectionBrowser({
                           className="opacity-28"
                         />
                       ) : (
-                        <div className="h-full w-full bg-[#05040a]" />
+                        <div className="absolute inset-0 bg-[#05040a]" />
                       )}
                       <div className="pointer-events-none absolute inset-0 z-[15] flex items-center justify-center bg-[#05040a]/55">
                         <span
@@ -216,7 +283,7 @@ export function CollectionBrowser({
                     {slot.owned.name}
                   </p>
                 ) : (
-                  <p className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.18em] text-[#d7d3c8]/35 uppercase">
+                  <p className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.18em] text-[#8a8578] uppercase">
                     {slot.signed ? "Unseen signed" : "Unseen"}
                   </p>
                 )}
@@ -225,6 +292,7 @@ export function CollectionBrowser({
           ))}
         </div>
       )}
+      </div>
 
       {selected?.owned ? (
         <div

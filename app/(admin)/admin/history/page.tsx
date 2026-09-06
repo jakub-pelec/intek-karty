@@ -1,9 +1,8 @@
 import { and, desc, eq, gte, lte, sql } from "drizzle-orm";
-import Link from "next/link";
 import { getDb } from "@/db";
 import { boosterTypes, draws, users } from "@/db/schema";
 import { RitualPageHeader } from "@/components/ritual-page-header";
-import { SanctumCard, SanctumEmpty } from "@/components/sanctum";
+import { SanctumCard, SanctumEmpty, SanctumPager } from "@/components/sanctum";
 import { Input, Label, Select } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MutationBadges, RarityBadge } from "@/components/ui/badge";
@@ -78,34 +77,36 @@ export default async function AdminHistoryPage({
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">
       <RitualPageHeader title="Draws" eyebrow="Every open and grant" />
-      <form className="mb-10 grid gap-3 sm:grid-cols-2">
-        <div>
-          <Label>Viewer</Label>
-          <Input name="user" defaultValue={params.user} />
-        </div>
-        <div>
-          <Label>Booster</Label>
-          <Select name="booster" defaultValue={params.booster ?? ""}>
-            <option value="">All</option>
-            {types.map((type) => (
-              <option key={type.id} value={type.id}>
-                {type.name}
-              </option>
-            ))}
-          </Select>
-        </div>
-        <div>
-          <Label>From</Label>
-          <Input name="from" type="date" defaultValue={params.from} />
-        </div>
-        <div>
-          <Label>To</Label>
-          <Input name="to" type="date" defaultValue={params.to} />
-        </div>
-        <Button type="submit" className="sm:col-span-2 w-fit">
-          Filter
-        </Button>
-      </form>
+      <SanctumCard className="mb-6">
+        <form className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <Label>Viewer</Label>
+            <Input name="user" defaultValue={params.user} placeholder="Nickname" />
+          </div>
+          <div>
+            <Label>Booster</Label>
+            <Select name="booster" defaultValue={params.booster ?? ""}>
+              <option value="">All</option>
+              {types.map((type) => (
+                <option key={type.id} value={type.id}>
+                  {type.name}
+                </option>
+              ))}
+            </Select>
+          </div>
+          <div>
+            <Label>From</Label>
+            <Input name="from" type="date" defaultValue={params.from} />
+          </div>
+          <div>
+            <Label>To</Label>
+            <Input name="to" type="date" defaultValue={params.to} />
+          </div>
+          <div className="sm:col-span-2">
+            <Button type="submit">Filter</Button>
+          </div>
+        </form>
+      </SanctumCard>
       {rows.length === 0 ? (
         <SanctumEmpty>No manifestations match.</SanctumEmpty>
       ) : (
@@ -114,60 +115,36 @@ export default async function AdminHistoryPage({
             {rows.map((row) => (
               <li
                 key={row.id}
-                className="border-b border-[#d7d3c8]/15 py-5 last:border-b-0"
+                className="flex items-center justify-between gap-4 border-b border-[#d7d3c8]/15 py-5 last:border-b-0"
               >
-                <div className="flex items-baseline justify-between gap-4">
+                <div className="min-w-0">
                   <p className="font-[family-name:var(--font-cormorant)] text-[22px] text-[#f3efe6] italic">
                     {row.viewerName}
                   </p>
-                  <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.12em] text-[#cfc6b4] uppercase">
-                    {formatDate(row.createdAt)}
-                  </span>
-                </div>
-                <div className="mt-2 flex flex-wrap items-center gap-3">
-                  <span className="text-[17px] text-[#d7d3c8]/80 italic">
+                  <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
                     {formatCardNumber(row.cardNumber)} {row.cardName}
-                    {row.isDuplicate ? (
-                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[9px] text-[#d4b36a]/60 not-italic uppercase">
-                        (Echo)
-                      </span>
-                    ) : null}
-                  </span>
+                    {row.isDuplicate ? " · echo" : ""}
+                    {` · ${row.boosterName ?? "Manual"}`}
+                    {row.triggeredByName ? ` · ${row.triggeredByName}` : ""}
+                    {` · ${formatDate(row.createdAt)}`}
+                  </p>
+                </div>
+                <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
                   <RarityBadge rarity={row.cardRarity} />
                   <MutationBadges
                     holographic={row.holographic}
                     signature={row.signature}
                   />
                 </div>
-                <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.16em] text-[#d7d3c8]/45 uppercase">
-                  {row.boosterName ?? "Manual"} · {row.triggeredByName}
-                </p>
               </li>
             ))}
           </ul>
         </SanctumCard>
       )}
-
-      {page > 1 || hasMore ? (
-        <div className="mt-10 flex justify-center gap-10">
-          {page > 1 ? (
-            <Link
-              href={drawsHref(params, page - 1)}
-              className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
-            >
-              Previous
-            </Link>
-          ) : null}
-          {hasMore ? (
-            <Link
-              href={drawsHref(params, page + 1)}
-              className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
-            >
-              Next
-            </Link>
-          ) : null}
-        </div>
-      ) : null}
+      <SanctumPager
+        prevHref={page > 1 ? drawsHref(params, page - 1) : null}
+        nextHref={hasMore ? drawsHref(params, page + 1) : null}
+      />
     </main>
   );
 }

@@ -5,7 +5,7 @@
   "description": "Intek catalog CMS (Strapi 5)",
   "scripts": {
     "develop": "strapi develop",
-    "start": "strapi start",
+    "start": "node scripts/start-hosted.mjs",
     "build": "strapi build",
     "console": "strapi console"
   },

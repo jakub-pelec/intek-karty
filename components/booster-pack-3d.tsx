@@ -1,14 +1,16 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef } from "react";
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useSceneTimer } from "@/lib/three-compat";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
+import { CanvasFallback } from "@/components/canvas-fallback";
+import { PACK_SIZE } from "@/lib/pack-size";
 
 export const FALLBACK_FRONT = "/boosters/fallback-front.svg";
 export const FALLBACK_BACK = "/boosters/fallback-back.svg";
-export const PACK_SIZE = [1.26, 1.76, 0.08] as const;
+export { PACK_SIZE };
 
 export function BoosterPack3D({
   name,
@@ -19,12 +21,33 @@ export function BoosterPack3D({
   frontImageUrl?: string | null;
   backImageUrl?: string | null;
 }) {
+  const frame = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+
+  useLayoutEffect(() => {
+    const node = frame.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setActive(entry.isIntersecting),
+      { rootMargin: "80px", threshold: 0.01 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="h-[28rem] w-full" role="img" aria-label={`${name} pack`}>
+    <div
+      ref={frame}
+      className="relative h-[28rem] w-full"
+      role="img"
+      aria-label={`${name} pack`}
+    >
+      {active ? null : <CanvasFallback />}
+      {active ? (
       <Canvas
         camera={{ position: [0, 0.12, 3.35], fov: 32 }}
-        dpr={[1, 2]}
-        gl={{ alpha: true, antialias: true }}
+        dpr={[1, 1.5]}
+        gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
         style={{ background: "transparent" }}
       >
         <ambientLight intensity={0.7} />
@@ -37,6 +60,7 @@ export function BoosterPack3D({
           />
         </Suspense>
       </Canvas>
+      ) : null}
     </div>
   );
 }

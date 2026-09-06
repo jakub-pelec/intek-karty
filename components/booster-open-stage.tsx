@@ -6,10 +6,10 @@ import { openBoosterAction } from "@/actions/draw";
 import { BoosterOpenOverlay } from "@/components/booster-open-overlay";
 import { BoosterPackPreview } from "@/components/booster-pack-preview";
 import { MutationBadges, RarityBadge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useOpenSequence } from "@/components/use-open-sequence";
 import type { Rarity } from "@/db/schema";
-import { formatCardNumber } from "@/lib/utils";
+import { cn, formatCardNumber } from "@/lib/utils";
 
 type DrawnCard = {
   name: string;
@@ -154,7 +154,7 @@ export function BoosterOpenStage({
           ) : null}
           <Link
             href="/admin/queue"
-            className="mt-8 inline-block font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+            className={cn(buttonVariants(), "mt-8")}
           >
             Back to queue
           </Link>

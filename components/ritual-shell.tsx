@@ -1,6 +1,7 @@
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import { logout } from "@/actions/auth";
 import { RitualNav } from "@/components/ritual-nav";
+import { RitualPageCache } from "@/components/ritual-page-cache";
 import type { Role } from "@/db/schema";
 
 type UserInfo = {
@@ -37,7 +38,11 @@ export function RitualShell({
           </div>
           <RitualNav showAdmin={user.role === "admin"} />
         </header>
-        <div className="flex-1 px-4 pb-24 md:px-8">{children}</div>
+        <div className="flex-1 px-4 pb-24 md:px-8">
+          <Suspense fallback={children}>
+            <RitualPageCache>{children}</RitualPageCache>
+          </Suspense>
+        </div>
       </div>
     </div>
   );

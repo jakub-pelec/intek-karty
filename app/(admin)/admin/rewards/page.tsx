@@ -2,7 +2,7 @@ import { desc, eq } from "drizzle-orm";
 import { setRedemptionStatus } from "@/actions/shop";
 import { ActionForm } from "@/components/action-form";
 import { RitualPageHeader } from "@/components/ritual-page-header";
-import { SanctumCard, SanctumEmpty, SanctumSection } from "@/components/sanctum";
+import { SanctumCard, SanctumEmpty } from "@/components/sanctum";
 import { Button } from "@/components/ui/button";
 import { getDb } from "@/db";
 import { rewards, shopRedemptions, users } from "@/db/schema";
@@ -30,43 +30,40 @@ export default async function AdminRewardsPage() {
         title="Fulfillment"
         eyebrow="Offerings are edited in Strapi"
       />
-      <SanctumSection title="Redemption queue">
-        {queue.length === 0 ? (
-          <SanctumEmpty>No claims yet.</SanctumEmpty>
-        ) : (
-          <div className="space-y-3">
+      {queue.length === 0 ? (
+        <SanctumEmpty>No claims yet.</SanctumEmpty>
+      ) : (
+        <SanctumCard className="px-6 py-0">
+          <ul>
             {queue.map((row) => (
-              <SanctumCard key={row.id}>
-                <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="font-[family-name:var(--font-cormorant)] text-[22px] text-[#f3efe6] italic">
-                      {row.userName}
-                    </p>
-                    <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
-                      {row.rewardName} · {row.pointsSpent} echoes · {row.status}
-                    </p>
-                    <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.12em] text-[#cfc6b4] uppercase">
-                      {formatDate(row.createdAt)}
-                    </p>
-                  </div>
-                  {row.status === "pending_fulfillment" ? (
-                    <ActionForm
-                      action={setRedemptionStatus}
-                      className="flex gap-2 space-y-0"
-                    >
-                      <input type="hidden" name="id" value={row.id} />
-                      <input type="hidden" name="status" value="fulfilled" />
-                      <Button type="submit" size="sm">
-                        Fulfill
-                      </Button>
-                    </ActionForm>
-                  ) : null}
+              <li
+                key={row.id}
+                className="flex items-center justify-between gap-4 border-b border-[#d7d3c8]/15 py-5 last:border-b-0"
+              >
+                <div className="min-w-0">
+                  <p className="font-[family-name:var(--font-cormorant)] text-[22px] text-[#f3efe6] italic">
+                    {row.userName}
+                  </p>
+                  <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
+                    {row.rewardName} · {row.pointsSpent} echoes · {row.status}
+                    {` · ${formatDate(row.createdAt)}`}
+                  </p>
                 </div>
-              </SanctumCard>
+                {row.status === "pending_fulfillment" ? (
+                  <ActionForm
+                    action={setRedemptionStatus}
+                    className="shrink-0 space-y-0"
+                  >
+                    <input type="hidden" name="id" value={row.id} />
+                    <input type="hidden" name="status" value="fulfilled" />
+                    <Button type="submit">Fulfill</Button>
+                  </ActionForm>
+                ) : null}
+              </li>
             ))}
-          </div>
-        )}
-      </SanctumSection>
+          </ul>
+        </SanctumCard>
+      )}
     </main>
   );
 }

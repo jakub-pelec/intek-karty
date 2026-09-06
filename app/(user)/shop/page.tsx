@@ -6,9 +6,11 @@ import { liveCms } from "@/lib/cms/live";
 import { requireUser } from "@/lib/rbac";
 
 export default async function ShopPage() {
-  const user = await requireUser();
   const db = getDb();
-  const catalog = await db.select().from(rewards).where(liveCms(rewards));
+  const [user, catalog] = await Promise.all([
+    requireUser(),
+    db.select().from(rewards).where(liveCms(rewards)),
+  ]);
 
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">

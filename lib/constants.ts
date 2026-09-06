@@ -41,6 +41,13 @@ export const ACHIEVEMENT_CONDITION_LABELS: Record<AchievementCondition, string> 
   first_joker: "First Joker obtained",
   cards_collected_threshold: "Cards collected threshold",
   full_collection: "Full collection",
+  holo_collected_threshold: "Holo cards collected",
+  signed_collected_threshold: "Signed cards collected",
+  signed_holo_collected_threshold: "Signed holo cards collected",
+  signed_holo_legendary_threshold: "Signed holo legendaries collected",
+  collection_first_card: "First card in a set",
+  collection_complete: "Complete a set",
+  collection_holo_complete: "Complete a set in holo",
 };
 
 export const LEDGER_SOURCE_LABELS = {

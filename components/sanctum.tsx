@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactNode } from "react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export function SanctumCard({
@@ -42,5 +43,35 @@ export function SanctumEmpty({ children }: { children: ReactNode }) {
     <p className="py-8 text-center font-[family-name:var(--font-cormorant)] text-lg text-[#d7d3c8]/50 italic">
       {children}
     </p>
+  );
+}
+
+export function SanctumPager({
+  prevHref,
+  nextHref,
+}: {
+  prevHref?: string | null;
+  nextHref?: string | null;
+}) {
+  if (!prevHref && !nextHref) return null;
+  return (
+    <div className="mt-10 flex justify-center gap-10">
+      {prevHref ? (
+        <Link
+          href={prevHref}
+          className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+        >
+          Previous
+        </Link>
+      ) : null}
+      {nextHref ? (
+        <Link
+          href={nextHref}
+          className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+        >
+          Next
+        </Link>
+      ) : null}
+    </div>
   );
 }

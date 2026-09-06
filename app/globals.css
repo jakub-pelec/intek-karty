@@ -21,6 +21,15 @@
 html {
   color-scheme: dark;
   height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 body {
@@ -28,14 +37,24 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-a {
-  color: inherit;
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+@layer base {
+  a {
+    color: inherit;
+  }
 }
 
 .card-holo-foil {
-  background-image: url("/fx/holo-foil.png");
+  background-image: url("/fx/holo-foil.webp");
   background-size: 100% 100%;
   background-position: center;
   mix-blend-mode: overlay;
@@ -198,6 +217,39 @@ a {
   }
 }
 
+@keyframes ritualShimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.ritual-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    rgba(215, 211, 200, 0.05) 0%,
+    rgba(212, 179, 106, 0.2) 50%,
+    rgba(215, 211, 200, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: ritualShimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes ritualSkeletonFade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.ritual-skeleton-fade {
+  animation: ritualSkeletonFade 200ms ease-out forwards;
+}
+
 .collection-bound-card {
   transform-origin: center center;
   transition: transform 280ms ease;
@@ -237,10 +289,16 @@ button:hover > .collection-bound-card {
     text-shadow 0.35s ease;
 }
 
-a.ritual-ember:hover,
+a.ritual-ember:hover:not(.ritual-ember-solid),
 .ritual-ember-text:hover:not(:disabled) {
   color: #e8cf8a;
   text-shadow: 0 0 10px rgba(212, 179, 106, 0.45);
+}
+
+a.ritual-ember-solid,
+a.ritual-ember-solid:hover {
+  color: #1a1404;
+  text-shadow: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -249,7 +307,9 @@ a.ritual-ember:hover,
   .open-veil,
   .open-flash,
   .ritual-ember,
-  .collection-bound-card {
+  .collection-bound-card,
+  .ritual-shimmer,
+  .ritual-skeleton-fade {
     animation: none;
     transition: none;
   }

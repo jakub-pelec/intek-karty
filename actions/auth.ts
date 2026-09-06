@@ -2,8 +2,16 @@
 
 import { signIn, signOut } from "@/auth";
 
-export async function loginWithTwitch(callbackUrl?: string) {
-  await signIn("twitch", { redirectTo: callbackUrl || "/dashboard" });
+function safeCallbackUrl(raw: FormDataEntryValue | null) {
+  if (typeof raw !== "string") return "/dashboard";
+  if (!raw.startsWith("/") || raw.startsWith("//")) return "/dashboard";
+  return raw;
+}
+
+export async function loginWithTwitch(formData: FormData) {
+  await signIn("twitch", {
+    redirectTo: safeCallbackUrl(formData.get("callbackUrl")),
+  });
 }
 
 export async function logout() {

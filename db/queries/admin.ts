@@ -1,8 +1,9 @@
-import { and, eq, ilike, or } from "drizzle-orm";
+import { and, asc, eq, ilike, or, sql } from "drizzle-orm";
 import { getDb } from "@/db";
 import { boosterTypes, cards, draws, userBoosters, userCards, users } from "@/db/schema";
 import { creditPoints, evaluateAchievements } from "@/db/queries/achievements";
 import { liveCms } from "@/lib/cms/live";
+import { PAGE_SIZE } from "@/lib/constants";
 
 export class AdminActionError extends Error {
   constructor(message: string) {
@@ -17,14 +18,33 @@ function requireReason(reason: string) {
   return trimmed;
 }
 
-export async function searchUsers(query: string) {
+export async function listUsers(query = "", page = 1, pageSize = PAGE_SIZE) {
   const db = getDb();
-  const term = `%${query.trim()}%`;
-  return db
-    .select()
-    .from(users)
-    .where(or(ilike(users.name, term), ilike(users.twitchId, term)))
-    .limit(25);
+  const term = query.trim();
+  const where = term
+    ? or(ilike(users.name, `%${term}%`), ilike(users.twitchId, `%${term}%`))
+    : undefined;
+  const offset = (Math.max(1, page) - 1) * pageSize;
+
+  const [rows, countRows] = await Promise.all([
+    db
+      .select()
+      .from(users)
+      .where(where)
+      .orderBy(asc(sql`lower(${users.name})`))
+      .limit(pageSize)
+      .offset(offset),
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(users)
+      .where(where),
+  ]);
+
+  return {
+    rows,
+    total: Number(countRows[0]?.count ?? 0),
+    hasMore: offset + rows.length < Number(countRows[0]?.count ?? 0),
+  };
 }
 
 export async function grantCard(input: {

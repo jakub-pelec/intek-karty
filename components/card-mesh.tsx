@@ -5,7 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useSceneTimer } from "@/lib/three-compat";
 import type { Rarity } from "@/db/schema";
-import { PACK_SIZE } from "@/components/booster-pack-3d";
+import { PACK_SIZE } from "@/lib/pack-size";
 import { RARITIES } from "@/lib/constants";
 import { cardArtUrl, RARITY_LIGHT } from "@/lib/open-fx";
 
@@ -64,7 +64,7 @@ function loadFoilTexture() {
   if (foilTexture) return Promise.resolve(foilTexture);
   if (foilPromise) return foilPromise;
   foilPromise = new Promise((resolve) => {
-    new THREE.TextureLoader().load("/fx/holo-foil.png", (texture) => {
+    new THREE.TextureLoader().load("/fx/holo-foil.webp", (texture) => {
       texture.wrapS = THREE.MirroredRepeatWrapping;
       texture.wrapT = THREE.MirroredRepeatWrapping;
       texture.colorSpace = THREE.SRGBColorSpace;
@@ -335,7 +335,7 @@ function HoloFoil({ rarity }: { rarity: Rarity }) {
 
   return (
     <mesh position={[0, 0, 0.0016]} raycast={() => null}>
-      <planeGeometry args={[CARD_SIZE[0] * 0.992, CARD_SIZE[1] * 0.992]} />
+      <planeGeometry args={[CARD_SIZE[0], CARD_SIZE[1]]} />
       <primitive object={material} attach="material" />
     </mesh>
   );

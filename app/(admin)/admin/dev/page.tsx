@@ -41,6 +41,22 @@ type ShowcaseCard = {
   signed?: boolean;
 };
 
+function withCollectionBack(
+  card: ShowcaseCard | (typeof SEED_CARDS)[number],
+): ShowcaseCard {
+  return {
+    number: card.number,
+    name: card.name,
+    rarity: card.rarity,
+    imageUrl: card.imageUrl,
+    signed: card.signed,
+    backImageUrl:
+      "backImageUrl" in card && card.backImageUrl
+        ? card.backImageUrl
+        : ORIGIN_COLLECTION.backImageUrl,
+  };
+}
+
 export default async function AdminDevPage() {
   let catalog: ShowcaseCard[] = [];
   let packs: {
@@ -100,12 +116,13 @@ export default async function AdminDevPage() {
   const samples = [
     featured,
     featuredSigned,
-    ...SHOWCASE_RARITIES.map(
-      (rarity) =>
-        catalog.find((card) => card.rarity === rarity && !card.signed) ??
-        SEED_CARDS.find((card) => card.rarity === rarity && !card.signed),
-    ),
-  ].filter((card): card is NonNullable<typeof card> => Boolean(card));
+    ...SHOWCASE_RARITIES.map((rarity) => {
+      const card =
+        catalog.find((row) => row.rarity === rarity && !row.signed) ??
+        SEED_CARDS.find((row) => row.rarity === rarity && !row.signed);
+      return card ? withCollectionBack(card) : undefined;
+    }),
+  ].filter((card): card is ShowcaseCard => Boolean(card));
   const uniqueSamples = samples.filter(
     (card, index) =>
       samples.findIndex(
@@ -131,11 +148,12 @@ export default async function AdminDevPage() {
       catalog.find((row) => row.rarity === rarity && !row.signed) ??
       SEED_CARDS.find((row) => row.rarity === rarity && !row.signed);
     if (!card) return null;
+    const showcase = withCollectionBack(card);
     return {
-      name: card.name,
-      imageUrl: card.imageUrl,
-      backImageUrl: card.backImageUrl ?? ORIGIN_COLLECTION.backImageUrl,
-      rarity: card.rarity,
+      name: showcase.name,
+      imageUrl: showcase.imageUrl,
+      backImageUrl: showcase.backImageUrl,
+      rarity: showcase.rarity,
       holographic: false,
     };
   }).filter((card): card is NonNullable<typeof card> => Boolean(card));

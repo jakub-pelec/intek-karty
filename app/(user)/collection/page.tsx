@@ -4,11 +4,7 @@ import { getDb } from "@/db";
 import { cards, userCards } from "@/db/schema";
 import { listActiveCollections } from "@/db/queries/collections";
 import { isLiveCmsRow, liveCms } from "@/lib/cms/live";
-import {
-  arrangeCollection,
-  parseCollectionQuery,
-  type CollectionSlot,
-} from "@/lib/collection";
+import { parseCollectionQuery, type CollectionSlot } from "@/lib/collection";
 import { requireUser } from "@/lib/rbac";
 import { toRoman } from "@/lib/ritual";
 
@@ -25,23 +21,21 @@ export default async function CollectionPage({
 }) {
   const params = await searchParams;
   const parsed = parseCollectionQuery(params);
-  const user = await requireUser();
   const db = getDb();
-  const sets = await listActiveCollections();
+  const [user, sets] = await Promise.all([requireUser(), listActiveCollections()]);
   const selected = sets.find((set) => set.slug === parsed.set) ?? sets[0] ?? null;
   const query = { ...parsed, set: selected?.slug };
 
-  const catalog = selected
-    ? await db
-        .select()
-        .from(cards)
-        .where(and(eq(cards.collectionId, selected.id), liveCms(cards)))
-        .orderBy(cards.number, cards.signed)
-    : [];
-  const owned = await db
-    .select()
-    .from(userCards)
-    .where(eq(userCards.userId, user.id));
+  const [catalog, owned] = await Promise.all([
+    selected
+      ? db
+          .select()
+          .from(cards)
+          .where(and(eq(cards.collectionId, selected.id), liveCms(cards)))
+          .orderBy(cards.number, cards.signed)
+      : Promise.resolve([]),
+    db.select().from(userCards).where(eq(userCards.userId, user.id)),
+  ]);
   const ownedByCard = new Map(owned.map((row) => [row.cardId, row]));
 
   const slots: CollectionSlot[] = catalog.map((card) => {
@@ -70,10 +64,9 @@ export default async function CollectionPage({
   const activeCatalog = catalog.filter((card) => isLiveCmsRow(card));
   const ownedInSet = activeCatalog.filter((card) => ownedByCard.has(card.id)).length;
   const total = activeCatalog.length;
-  const visible = arrangeCollection(slots, query);
 
   return (
-    <main className="mx-auto w-full max-w-6xl pt-2 md:pt-6">
+    <main className="mx-auto w-full max-w-7xl pt-2 md:pt-6">
       <h1 className="mb-3 text-center font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide text-[#cfc6b4] italic md:text-[53px]">
         Collection
       </h1>
@@ -81,7 +74,8 @@ export default async function CollectionPage({
         {toRoman(ownedInSet)} of {toRoman(total)} relics bound
       </p>
       <CollectionBrowser
-        slots={visible}
+        key={query.set ?? "set"}
+        slots={slots}
         query={query}
         sets={sets.map((set) => ({ slug: set.slug, name: set.name }))}
         progress={{ owned: ownedInSet, total }}

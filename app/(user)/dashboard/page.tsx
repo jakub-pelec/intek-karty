@@ -11,78 +11,80 @@ import {
   draws,
   userAchievements,
 } from "@/db/schema";
-import { evaluateAchievementsForUser } from "@/db/queries/achievements";
 import {
   activeCardCount,
   collectionProgress,
   listActiveCollections,
 } from "@/db/queries/collections";
+import { CardBloom, rarityGlowColor } from "@/components/rarity-glow";
 import { requireUser } from "@/lib/rbac";
 import { toRoman } from "@/lib/ritual";
 import { formatDate } from "@/lib/utils";
 
 export default async function DashboardPage() {
   const user = await requireUser();
-  await evaluateAchievementsForUser(user.id);
   const db = getDb();
 
-  const [titleCount] = await db
-    .select({ count: sql<number>`count(*)::int` })
-    .from(userAchievements)
-    .where(eq(userAchievements.userId, user.id));
+  const [titleCountRows, sets, recentDraws, recentAchievements] = await Promise.all([
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(userAchievements)
+      .where(eq(userAchievements.userId, user.id)),
+    listActiveCollections(),
+    db
+      .select({
+        id: draws.id,
+        cardId: draws.cardId,
+        cardName: draws.cardName,
+        cardNumber: draws.cardNumber,
+        cardRarity: draws.cardRarity,
+        cardImageUrl: draws.cardImageUrl,
+        holographic: draws.holographic,
+        signature: draws.signature,
+        createdAt: draws.createdAt,
+      })
+      .from(draws)
+      .where(eq(draws.userId, user.id))
+      .orderBy(desc(draws.createdAt))
+      .limit(5),
+    db
+      .select({
+        name: achievements.name,
+        unlockedAt: userAchievements.unlockedAt,
+      })
+      .from(userAchievements)
+      .innerJoin(achievements, eq(userAchievements.achievementId, achievements.id))
+      .where(eq(userAchievements.userId, user.id))
+      .orderBy(desc(userAchievements.unlockedAt))
+      .limit(5),
+  ]);
 
-  const sets = await listActiveCollections();
   const defaultSet = sets[0] ?? null;
-  const relics = defaultSet
-    ? await collectionProgress(user.id, defaultSet.id)
-    : { owned: 0, total: 0 };
-
-  const recentDraws = await db
-    .select({
-      id: draws.id,
-      cardId: draws.cardId,
-      cardName: draws.cardName,
-      cardNumber: draws.cardNumber,
-      cardRarity: draws.cardRarity,
-      cardImageUrl: draws.cardImageUrl,
-      holographic: draws.holographic,
-      signature: draws.signature,
-      createdAt: draws.createdAt,
-    })
-    .from(draws)
-    .where(eq(draws.userId, user.id))
-    .orderBy(desc(draws.createdAt))
-    .limit(5);
-
-  const recentAchievements = await db
-    .select({
-      name: achievements.name,
-      unlockedAt: userAchievements.unlockedAt,
-    })
-    .from(userAchievements)
-    .innerJoin(achievements, eq(userAchievements.achievementId, achievements.id))
-    .where(eq(userAchievements.userId, user.id))
-    .orderBy(desc(userAchievements.unlockedAt))
-    .limit(5);
-
-  const titles = Number(titleCount?.count ?? 0);
   const latest = recentDraws[0];
+  const [relics, drawn] = await Promise.all([
+    defaultSet
+      ? collectionProgress(user.id, defaultSet.id)
+      : Promise.resolve({ owned: 0, total: 0 }),
+    latest?.cardId
+      ? db
+          .select({
+            collectionId: cards.collectionId,
+            backImageUrl: collections.backImageUrl,
+          })
+          .from(cards)
+          .innerJoin(collections, eq(cards.collectionId, collections.id))
+          .where(eq(cards.id, latest.cardId))
+          .limit(1)
+          .then((rows) => rows[0] ?? null)
+      : Promise.resolve(null),
+  ]);
+
+  const titles = Number(titleCountRows[0]?.count ?? 0);
   let latestTotal = relics.total;
   let latestBack: string | null = null;
-  if (latest?.cardId) {
-    const [drawn] = await db
-      .select({
-        collectionId: cards.collectionId,
-        backImageUrl: collections.backImageUrl,
-      })
-      .from(cards)
-      .innerJoin(collections, eq(cards.collectionId, collections.id))
-      .where(eq(cards.id, latest.cardId))
-      .limit(1);
-    if (drawn) {
-      latestTotal = await activeCardCount(drawn.collectionId);
-      latestBack = drawn.backImageUrl;
-    }
+  if (drawn) {
+    latestTotal = await activeCardCount(drawn.collectionId);
+    latestBack = drawn.backImageUrl;
   }
 
   return (
@@ -97,15 +99,19 @@ export default async function DashboardPage() {
         </p>
         {latest ? (
           <div className="flex flex-col items-center">
-            <CardInspect
-              className="w-[280px] md:w-[340px]"
-              name={latest.cardName}
-              imageUrl={latest.cardImageUrl}
-              backImageUrl={latestBack}
-              rarity={latest.cardRarity}
-              holographic={latest.holographic}
-              signature={latest.signature}
-            />
+            <div className="relative w-[280px] md:w-[340px]">
+              <CardBloom color={rarityGlowColor(latest.cardRarity)} />
+              <CardInspect
+                className="relative z-10 w-full"
+                name={latest.cardName}
+                imageUrl={latest.cardImageUrl}
+                backImageUrl={latestBack}
+                rarity={latest.cardRarity}
+                holographic={latest.holographic}
+                signature={latest.signature}
+                glow={false}
+              />
+            </div>
             <p className="mt-5 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d7d3c8]/40 uppercase">
               {toRoman(latest.cardNumber)} / {toRoman(latestTotal)}
             </p>

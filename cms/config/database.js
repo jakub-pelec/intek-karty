@@ -1,14 +1,16 @@
 const path = require("node:path");
 
-module.exports = ({ env }) => ({
-  connection: {
-    client: "sqlite",
+module.exports = ({ env }) => {
+  const filename = env("DATABASE_FILENAME", "data/data.db");
+  return {
     connection: {
-      filename: path.join(
-        process.cwd(),
-        env("DATABASE_FILENAME", "data/data.db"),
-      ),
+      client: "sqlite",
+      connection: {
+        filename: path.isAbsolute(filename)
+          ? filename
+          : path.join(process.cwd(), filename),
+      },
+      useNullAsDefault: true,
     },
-    useNullAsDefault: true,
-  },
-});
+  };
+};

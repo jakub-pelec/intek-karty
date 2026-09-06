@@ -4,7 +4,8 @@ import { getDb } from "@/db";
 import { boosterTypes, userBoosters, users } from "@/db/schema";
 import { RitualPageHeader } from "@/components/ritual-page-header";
 import { SanctumCard, SanctumEmpty } from "@/components/sanctum";
-import { formatDate } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { cn, formatDate } from "@/lib/utils";
 
 export default async function QueuePage() {
   const db = getDb();
@@ -51,7 +52,7 @@ export default async function QueuePage() {
                 </div>
                 <Link
                   href={`/admin/open/${row.id}`}
-                  className="ritual-ember shrink-0 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#d4b36a] uppercase"
+                  className={cn(buttonVariants(), "shrink-0")}
                 >
                   Open
                 </Link>

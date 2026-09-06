@@ -31,12 +31,22 @@
         "first_legendary",
         "first_joker",
         "cards_collected_threshold",
-        "full_collection"
+        "full_collection",
+        "holo_collected_threshold",
+        "signed_collected_threshold",
+        "signed_holo_collected_threshold",
+        "signed_holo_legendary_threshold",
+        "collection_first_card",
+        "collection_complete",
+        "collection_holo_complete"
       ],
       "required": true
     },
     "threshold": {
       "type": "integer"
+    },
+    "collectionSlug": {
+      "type": "string"
     },
     "pointReward": {
       "type": "integer",

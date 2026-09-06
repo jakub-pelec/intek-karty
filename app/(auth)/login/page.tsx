@@ -40,12 +40,14 @@ export default async function LoginPage({
             </p>
           ) : null}
           <div className="relic-plinth mt-14 flex w-[min(100%,420px)] flex-col items-center px-6 pt-8">
-            <form
-              action={async () => {
-                "use server";
-                await loginWithTwitch(params.callbackUrl);
-              }}
-            >
+            <form action={loginWithTwitch}>
+              {params.callbackUrl ? (
+                <input
+                  type="hidden"
+                  name="callbackUrl"
+                  value={params.callbackUrl}
+                />
+              ) : null}
               <Button variant="primary" size="lg" type="submit">
                 Enter
               </Button>

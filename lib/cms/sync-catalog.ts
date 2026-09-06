@@ -316,6 +316,7 @@ async function syncCatalogUnlocked() {
       description: row.description,
       conditionType: row.conditionType,
       threshold: row.threshold,
+      collectionSlug: row.collectionSlug,
       pointReward: row.pointReward,
       active: row.active,
       updatedAt: new Date(),

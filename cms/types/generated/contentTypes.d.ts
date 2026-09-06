@@ -387,6 +387,7 @@ export interface ApiAchievementAchievement extends Struct.CollectionTypeSchema {
     active: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
+    collectionSlug: Schema.Attribute.String;
     conditionType: Schema.Attribute.Enumeration<
       [
         'first_booster',
@@ -395,6 +396,13 @@ export interface ApiAchievementAchievement extends Struct.CollectionTypeSchema {
         'first_joker',
         'cards_collected_threshold',
         'full_collection',
+        'holo_collected_threshold',
+        'signed_collected_threshold',
+        'signed_holo_collected_threshold',
+        'signed_holo_legendary_threshold',
+        'collection_first_card',
+        'collection_complete',
+        'collection_holo_complete',
       ]
     > &
       Schema.Attribute.Required;

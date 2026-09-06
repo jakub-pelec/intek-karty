@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const viewerLinks = [
@@ -34,12 +35,66 @@ function sanctumActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+function DeferredLink({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className: string;
+  children: string;
+}) {
+  const router = useRouter();
+  return (
+    <Link
+      href={href}
+      prefetch={false}
+      className={className}
+      onMouseEnter={() => router.prefetch(href)}
+      onFocus={() => router.prefetch(href)}
+    >
+      {children}
+    </Link>
+  );
+}
+
 export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
   const pathname = usePathname();
+  const router = useRouter();
   const links = showAdmin
     ? [...viewerLinks, { href: "/admin/queue", label: "Inner Sanctum" }]
     : viewerLinks;
   const inSanctum = pathname.startsWith("/admin");
+
+  useEffect(() => {
+    const hrefs = [...viewerLinks.map((link) => link.href)];
+    if (showAdmin) hrefs.push("/admin/queue");
+    if (showAdmin && pathname.startsWith("/admin")) {
+      hrefs.push(...sanctumLinks.map((link) => link.href));
+    }
+
+    let cancelled = false;
+    const prefetchAll = () => {
+      if (cancelled) return;
+      for (const href of hrefs) router.prefetch(href);
+    };
+
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
+    if (typeof window.requestIdleCallback === "function") {
+      idleId = window.requestIdleCallback(prefetchAll, { timeout: 2000 });
+    } else {
+      timeoutId = window.setTimeout(prefetchAll, 1200);
+    }
+
+    return () => {
+      cancelled = true;
+      if (idleId !== undefined && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    };
+  }, [pathname, router, showAdmin]);
 
   return (
     <div className="flex flex-col items-center gap-5">
@@ -47,7 +102,7 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
         {links.map((link) => {
           const active = linkActive(pathname, link.href);
           return (
-            <Link
+            <DeferredLink
               key={link.href}
               href={link.href}
               className={cn(
@@ -56,7 +111,7 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
               )}
             >
               {link.label}
-            </Link>
+            </DeferredLink>
           );
         })}
       </nav>
@@ -65,7 +120,7 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
           {sanctumLinks.map((link) => {
             const active = sanctumActive(pathname, link.href);
             return (
-              <Link
+              <DeferredLink
                 key={link.href}
                 href={link.href}
                 className={cn(
@@ -74,7 +129,7 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
                 )}
               >
                 {link.label}
-              </Link>
+              </DeferredLink>
             );
           })}
         </nav>

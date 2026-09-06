@@ -53,3 +53,6 @@ next-env.d.ts
 /cms/.strapi
 /cms/data
 /cms/public/uploads/*
+
+.vercel
+.env*

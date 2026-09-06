@@ -65,6 +65,7 @@ export type StrapiAchievement = {
   description?: string;
   conditionType?: string;
   threshold?: number | null;
+  collectionSlug?: string | null;
   pointReward?: number;
   active?: boolean;
 };
@@ -85,6 +86,13 @@ const CONDITIONS = new Set<AchievementCondition>([
   "first_joker",
   "cards_collected_threshold",
   "full_collection",
+  "holo_collected_threshold",
+  "signed_collected_threshold",
+  "signed_holo_collected_threshold",
+  "signed_holo_legendary_threshold",
+  "collection_first_card",
+  "collection_complete",
+  "collection_holo_complete",
 ]);
 
 export class CmsSyncError extends Error {
@@ -282,6 +290,7 @@ export function mapAchievement(entry: StrapiAchievement) {
       entry.threshold === null || entry.threshold === undefined
         ? null
         : requireInt(entry.threshold, "achievement threshold"),
+    collectionSlug: entry.collectionSlug?.trim() || null,
     pointReward: requireInt(entry.pointReward ?? 0, "achievement pointReward"),
     active: entry.active !== false,
   };
