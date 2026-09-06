@@ -1,0 +1,289 @@
+{
+  "meta": {
+    "url": "https://www.eminguyen.com/riftbound",
+    "title": "Riftbound — Emi Nguyen",
+    "description": "",
+    "language": "en-US",
+    "viewport": "width=device-width, initial-scale=1",
+    "themeColor": null,
+    "ogImage": null,
+    "ogTitle": "Riftbound — Emi Nguyen",
+    "ogDescription": ""
+  },
+  "theme": {
+    "mode": "light",
+    "bodyBackground": "#ffffff",
+    "isDark": false,
+    "confidence": 0.9
+  },
+  "brand": {
+    "name": "Emi Nguyen",
+    "favicon": {
+      "href": "https://assets.squarespace.com/universal/default-favicon.ico",
+      "type": null
+    }
+  },
+  "colors": {
+    "dominant": [
+      {
+        "hex": "#000000",
+        "ratio": 0.936
+      },
+      {
+        "hex": "#ffffff",
+        "ratio": 0.046
+      },
+      {
+        "hex": "#bbbbbb",
+        "ratio": 0.008
+      },
+      {
+        "hex": "#253551",
+        "ratio": 0.007
+      },
+      {
+        "hex": "#000321",
+        "ratio": 0.002
+      }
+    ],
+    "palette": [
+      {
+        "hex": "#ffffff",
+        "role": "background",
+        "source": "computed"
+      },
+      {
+        "hex": "#000000",
+        "role": "foreground",
+        "source": "computed"
+      },
+      {
+        "hex": "#253551",
+        "role": "primary",
+        "source": "heuristic"
+      },
+      {
+        "hex": "#bbbbbb",
+        "role": "neutral",
+        "source": "heuristic"
+      }
+    ],
+    "cssVariables": {},
+    "gradients": []
+  },
+  "logo": {
+    "status": "confirmed",
+    "reason": null,
+    "best": {
+      "selector": "img",
+      "href": "https://images.squarespace-cdn.com/content/v1/5e3f8377769779685ac2e152/6b749d0d-9efb-4f6e-8e4a-b45075427c46/Emi_sig_white.png?format=1500w",
+      "type": "png?format=1500w",
+      "width": 303,
+      "height": 111,
+      "svgContent": null,
+      "colors": [],
+      "isLight": false,
+      "isDark": false,
+      "needsDarkBackground": false,
+      "needsLightBackground": false,
+      "ownership": "platform-cdn",
+      "headerScoped": true,
+      "variant": "light",
+      "brandNameOnLogo": "Emi",
+      "uploadedUrl": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/7d8bf1fc-5eeb-412d-b51d-5444063745e1.webp"
+    },
+    "candidates": [
+      {
+        "selector": "img",
+        "href": "https://images.squarespace-cdn.com/content/v1/5e3f8377769779685ac2e152/6b749d0d-9efb-4f6e-8e4a-b45075427c46/Emi_sig_white.png?format=1500w",
+        "type": "png?format=1500w",
+        "width": 303,
+        "height": 111,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "platform-cdn",
+        "headerScoped": true
+      },
+      {
+        "selector": "img",
+        "href": "https://images.squarespace-cdn.com/content/v1/5e3f8377769779685ac2e152/6b749d0d-9efb-4f6e-8e4a-b45075427c46/Emi_sig_white.png?format=1500w",
+        "type": "png?format=1500w",
+        "width": 303,
+        "height": 111,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "platform-cdn"
+      }
+    ]
+  },
+  "fonts": {
+    "computed": [
+      {
+        "family": "proxima-nova",
+        "weights": [
+          "400",
+          "800"
+        ],
+        "source": "web"
+      },
+      {
+        "family": "\"Work Sans\"",
+        "weights": [
+          "400",
+          "700"
+        ],
+        "source": "web"
+      },
+      {
+        "family": "sans-serif",
+        "weights": [
+          "400"
+        ],
+        "source": "web"
+      }
+    ],
+    "baseSizePx": 16
+  },
+  "confidence": {
+    "colorExtraction": 0.9,
+    "logoDetection": 0.95,
+    "fontDetection": 0.8
+  },
+  "screenshot": {
+    "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/screenshot.png",
+    "width": 1920,
+    "height": 1080,
+    "sizeBytes": 2857347,
+    "uploadedAt": "2026-09-05T12:47:55.295Z"
+  },
+  "assets": {
+    "7d8bf1fc-5eeb-412d-b51d-5444063745e1": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/7d8bf1fc-5eeb-412d-b51d-5444063745e1.webp",
+      "name": "Emi_sig_white.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "3.37 KB",
+        "mimeType": "image/webp",
+        "sizeBytes": 3450,
+        "uploadedAt": "2026-09-05T12:47:55.530Z"
+      }
+    },
+    "56887f99-afbb-40de-aee2-c1eb72f3d160": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/56887f99-afbb-40de-aee2-c1eb72f3d160.webp",
+      "name": "legend-card-gallery-stylized.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "4.23 MB",
+        "mimeType": "image/webp",
+        "sizeBytes": 4432066,
+        "uploadedAt": "2026-09-05T12:47:56.003Z"
+      }
+    },
+    "0610e07b-231f-48e3-873f-d3305b7f0d4c": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/0610e07b-231f-48e3-873f-d3305b7f0d4c.webp",
+      "name": "frames-spell.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "1.63 MB",
+        "mimeType": "image/webp",
+        "sizeBytes": 1705870,
+        "uploadedAt": "2026-09-05T12:47:55.683Z"
+      }
+    },
+    "8c25ca07-273b-41a8-9f0f-0526d409d029": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/8c25ca07-273b-41a8-9f0f-0526d409d029.webp",
+      "name": "frames-gear.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "1.62 MB",
+        "mimeType": "image/webp",
+        "sizeBytes": 1701756,
+        "uploadedAt": "2026-09-05T12:47:55.843Z"
+      }
+    },
+    "a54b1d5a-bb71-4595-a12b-3078984bc607": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/a54b1d5a-bb71-4595-a12b-3078984bc607.webp",
+      "name": "frames-unit.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "1.89 MB",
+        "mimeType": "image/webp",
+        "sizeBytes": 1985580,
+        "uploadedAt": "2026-09-05T12:47:55.824Z"
+      }
+    },
+    "047229b1-b16b-4a45-a772-ad0292e350ec": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/047229b1-b16b-4a45-a772-ad0292e350ec.webp",
+      "name": "Portfolio-Riftbound_LegendCardGallery-angled.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "1.25 MB",
+        "mimeType": "image/webp",
+        "sizeBytes": 1309224,
+        "uploadedAt": "2026-09-05T12:47:56.831Z"
+      }
+    },
+    "abe686b3-ecbc-466c-ac68-acb08035f5f1": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/abe686b3-ecbc-466c-ac68-acb08035f5f1.webp",
+      "name": "Portfolio-Riftbound-mainimg-Arcane1.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "855.19 KB",
+        "mimeType": "image/webp",
+        "sizeBytes": 875714,
+        "uploadedAt": "2026-09-05T12:47:56.608Z"
+      }
+    },
+    "f9177134-636e-4414-94cf-212ef0c5f689": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/f9177134-636e-4414-94cf-212ef0c5f689.webp",
+      "name": "Portfolio-Riftbound-mainimg-Arcane3.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "1.02 MB",
+        "mimeType": "image/webp",
+        "sizeBytes": 1070794,
+        "uploadedAt": "2026-09-05T12:47:56.606Z"
+      }
+    },
+    "2c12c4b6-8cf6-4db6-8289-6d50d6c79199": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/2c12c4b6-8cf6-4db6-8289-6d50d6c79199.webp",
+      "name": "Portfolio-Riftbound_0000_Group-1.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "1.15 MB",
+        "mimeType": "image/webp",
+        "sizeBytes": 1205594,
+        "uploadedAt": "2026-09-05T12:47:56.478Z"
+      }
+    },
+    "ea1c050d-8f1d-4bc3-a1d9-e9dc04beb4f5": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/802e0a4e-1109-49b8-aaec-9c089d8340d1/assets/ea1c050d-8f1d-4bc3-a1d9-e9dc04beb4f5.webp",
+      "name": "Portfolio-Riftbound_0004_remove-badge.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "689.97 KB",
+        "mimeType": "image/webp",
+        "sizeBytes": 706532,
+        "uploadedAt": "2026-09-05T12:47:56.263Z"
+      }
+    }
+  }
+}

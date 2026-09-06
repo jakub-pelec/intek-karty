@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420">
+  <defs>
+    <linearGradient id="jb" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a0e1a"/>
+      <stop offset="100%" stop-color="#12060c"/>
+    </linearGradient>
+  </defs>
+  <rect width="300" height="420" rx="18" fill="url(#jb)"/>
+  <rect x="16" y="16" width="268" height="388" rx="12" fill="none" stroke="#a33d62" stroke-width="2"/>
+  <text x="150" y="215" text-anchor="middle" fill="#ff7eac" font-size="20" font-family="serif">WILD CARD</text>
+</svg>

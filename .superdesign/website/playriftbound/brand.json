@@ -1,0 +1,663 @@
+{
+  "meta": {
+    "url": "https://playriftbound.com/en-us/",
+    "title": "Riftbound | League of Legends Trading Card Game",
+    "description": "Riftbound is a new collectable trading card game featuring a vast array of characters and locales from League of Legends. Learn more here!",
+    "language": "en-us",
+    "viewport": "width=device-width, initial-scale=1",
+    "themeColor": null,
+    "ogImage": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/6cf5ae382207a6569b542e215d49d0e4266fc617-1200x630.png?accountingTag=RB?w=1200&h=630&fm=webp&fit=crop&crop=center",
+    "ogTitle": "Riftbound | League of Legends Trading Card Game",
+    "ogDescription": "Riftbound is a new collectable trading card game featuring a vast array of characters and locales from League of Legends. Learn more here!"
+  },
+  "theme": {
+    "mode": "light",
+    "bodyBackground": "#293a4c",
+    "isDark": false,
+    "confidence": 0.6
+  },
+  "brand": {
+    "name": "mainLogoRiotFist21mainMenuDownNonHover",
+    "favicon": {
+      "href": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/content_organization/45270aab26c0d3f2f7377cba4147dd2ac01b473a-24x24.svg?accountingTag=RB",
+      "type": null
+    }
+  },
+  "colors": {
+    "dominant": [
+      {
+        "hex": "#ffffff",
+        "ratio": 0.342
+      },
+      {
+        "hex": "#000000",
+        "ratio": 0.299
+      },
+      {
+        "hex": "#013951",
+        "ratio": 0.109
+      },
+      {
+        "hex": "#0000ee",
+        "ratio": 0.1
+      },
+      {
+        "hex": "#f9f9f9",
+        "ratio": 0.088
+      },
+      {
+        "hex": "#1e3043",
+        "ratio": 0.026
+      },
+      {
+        "hex": "#101010",
+        "ratio": 0.014
+      },
+      {
+        "hex": "#111111",
+        "ratio": 0.005
+      },
+      {
+        "hex": "#c7c7c7",
+        "ratio": 0.003
+      },
+      {
+        "hex": "#7e7e7e",
+        "ratio": 0.003
+      },
+      {
+        "hex": "#141212",
+        "ratio": 0.002
+      },
+      {
+        "hex": "#dcdcdc",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#ef7d00",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#1a4c62",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#808080",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#f0f0f0",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#bcbcbc",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#050505",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#336073",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#293a4c",
+        "ratio": 0
+      },
+      {
+        "hex": "#1f1f1f",
+        "ratio": 0
+      },
+      {
+        "hex": "#0bc4e2",
+        "ratio": 0
+      },
+      {
+        "hex": "#2c8cc2",
+        "ratio": 0
+      },
+      {
+        "hex": "#343434",
+        "ratio": 0
+      },
+      {
+        "hex": "#333333",
+        "ratio": 0
+      },
+      {
+        "hex": "#292929",
+        "ratio": 0
+      },
+      {
+        "hex": "#00a0ba",
+        "ratio": 0
+      }
+    ],
+    "palette": [
+      {
+        "hex": "#ffffff",
+        "role": "background",
+        "source": "computed"
+      },
+      {
+        "hex": "#013951",
+        "role": "foreground",
+        "source": "computed"
+      },
+      {
+        "hex": "#0000ee",
+        "role": "primary",
+        "source": "heuristic"
+      },
+      {
+        "hex": "#ef7d00",
+        "role": "secondary",
+        "source": "heuristic"
+      },
+      {
+        "hex": "#00a0ba",
+        "role": "accent",
+        "source": "heuristic"
+      },
+      {
+        "hex": "#c7c7c7",
+        "role": "neutral",
+        "source": "heuristic"
+      }
+    ],
+    "cssVariables": {
+      "--osano-toggle-off-thumb-color-disabled": "#bfbfbf",
+      "--osano-link-color-contrast": "#dcdcdc",
+      "--osano-button-background-color-hover": "#dcdcdc",
+      "--osano-toggle-off-thumb-color": "#ffffff",
+      "--osano-info-dialog-toggle-off-track-color-hover": "#8e53ff",
+      "--osano-button-deny-background-color-hover": "#dcdcdc",
+      "--osano-toggle-on-thumb-color": "#ffffff",
+      "--osano-info-dialog-button-background-color-focus": "#282626",
+      "--osano-gpc-color": "#37cd84",
+      "--osano-button-reject-all-foreground-color": "#141212",
+      "--osano-toggle-on-thumb-color-disabled": "#bfbfbf",
+      "--osano-info-dialog-toggle-on-thumb-color-contrast": "#ebebeb",
+      "--osano-toggle-on-track-color-disabled": "#008d4f",
+      "--osano-info-dialog-button-foreground-color-contrast": "#282626",
+      "--osano-info-dialog-toggle-off-thumb-color-focus": "#8e53ff",
+      "--osano-button-accept-background-color-contrast": "#dcdcdc",
+      "--osano-toggle-off-track-color-disabled": "#ba7fff",
+      "--osano-info-dialog-button-foreground-color-focus": "#dcdcdc",
+      "--osano-info-dialog-toggle-off-track-color": "#7a3ff1",
+      "--osano-button-manage-foreground-color-hover": "#282626",
+      "--osano-toggle-off-thumb-color-hover": "#ebebeb",
+      "--osano-button-background-color": "#f0f0f0",
+      "--osano-button-manage-background-color-contrast": "#dcdcdc",
+      "--osano-button-deny-background-color-contrast": "#dcdcdc",
+      "--osano-toggle-off-background-color": "#d2cfff",
+      "--osano-info-dialog-button-background-color-hover": "#dcdcdc",
+      "--osano-button-accept-background-color": "#f0f0f0",
+      "--osano-info-dialog-button-background-color": "#f0f0f0",
+      "--osano-dialog-gpc-foreground-color": "#ffffff",
+      "--osano-toggle-on-thumb-color-hover": "#ebebeb",
+      "--osano-gpc-background-color-contrast": "#ebebeb",
+      "--osano-info-dialog-gpc-background-color": "#141212",
+      "--osano-gpc-foreground-color": "#058a5e",
+      "--osano-widget-outline-color": "#29246a",
+      "--osano-button-deny-foreground-color-contrast": "#282626",
+      "--osano-widget-color": "#37cd8f",
+      "--osano-toggle-on-track-color-hover": "#23b97b",
+      "--osano-button-accept-background-color-focus": "#282626",
+      "--osano-button-accept-foreground-color": "#141212",
+      "--osano-button-accept-border-color": "#fff",
+      "--osano-button-reject-all-foreground-color-hover": "#282626",
+      "--osano-button-manage-foreground-color": "#141212",
+      "--osano-button-reject-all-foreground-color-focus": "#dcdcdc",
+      "--osano-info-dialog-toggle-on-track-color-focus": "#ebebeb",
+      "--osano-info-dialog-button-foreground-color": "#141212",
+      "--osano-info-dialog-button-background-color-contrast": "#dcdcdc",
+      "--osano-button-foreground-color-focus": "#dcdcdc",
+      "--osano-dialog-gpc-color": "#37cd84",
+      "--osano-info-dialog-link-color-contrast": "#dcdcdc",
+      "--osano-info-dialog-toggle-on-thumb-color-hover": "#ebebeb",
+      "--osano-toggle-off-thumb-color-focus": "#8e53ff",
+      "--osano-button-deny-foreground-color-hover": "#282626",
+      "--osano-info-dialog-toggle-on-track-color-disabled": "#008d4f",
+      "--osano-info-dialog-toggle-off-track-color-contrast": "#8e53ff",
+      "--osano-button-manage-foreground-color-contrast": "#282626",
+      "--osano-button-accept-foreground-color-focus": "#dcdcdc",
+      "--osano-toggle-on-track-color-contrast": "#23b97b",
+      "--osano-info-dialog-button-close-color": "#ffffff",
+      "--osano-dialog-background-color": "#141212",
+      "--osano-info-dialog-link-color": "#f0f0f0",
+      "--osano-toggle-on-track-color-focus": "#ebebeb",
+      "--osano-toggle-on-thumb-color-focus": "#23b97b",
+      "--osano-info-dialog-toggle-on-track-color-contrast": "#23b97b",
+      "--osano-gpc-background-color": "#ffffff",
+      "--osano-info-dialog-toggle-on-track-color-hover": "#23b97b",
+      "--osano-toggle-on-background-color": "#37cd8f",
+      "--osano-info-dialog-overlay-color": "#000000",
+      "--osano-info-dialog-gpc-border-color": "#ffffff",
+      "--osano-toggle-off-track-color-focus": "#ebebeb",
+      "--osano-button-reject-all-background-color-focus": "#282626",
+      "--osano-button-foreground-color-hover": "#282626",
+      "--osano-dialog-background-color-contrast": "#282626",
+      "--osano-info-dialog-background-color": "#141212",
+      "--osano-info-dialog-button-foreground-color-hover": "#282626",
+      "--osano-dialog-gpc-background-color": "#141212",
+      "--osano-button-reject-all-background-color": "#f0f0f0",
+      "--osano-info-dialog-toggle-off-track-color-disabled": "#ba7fff",
+      "--osano-button-background-color-focus": "#282626",
+      "--osano-info-dialog-toggle-off-thumb-color-contrast": "#ebebeb",
+      "--osano-info-dialog-gpc-foreground-color": "#ffffff",
+      "--osano-info-dialog-toggle-on-thumb-color": "#ffffff",
+      "--osano-button-deny-foreground-color": "#141212",
+      "--osano-button-deny-background-color-focus": "#282626",
+      "--osano-toggle-off-track-color": "#7a3ff1",
+      "--osano-button-deny-foreground-color-focus": "#dcdcdc",
+      "--osano-button-deny-background-color": "#f0f0f0",
+      "--osano-link-color": "#f0f0f0",
+      "--osano-toggle-on-track-color": "#37cd8f",
+      "--osano-button-close-color": "#ffffff",
+      "--osano-dialog-foreground-color": "#ffffff",
+      "--osano-info-dialog-gpc-color": "#37cd84",
+      "--osano-info-dialog-button-border-color": "#141212",
+      "--osano-button-border-color": "#fff",
+      "--osano-toggle-off-thumb-color-contrast": "#ebebeb",
+      "--osano-button-foreground-color-contrast": "#282626",
+      "--osano-button-accept-background-color-hover": "#dcdcdc",
+      "--osano-button-background-color-contrast": "#dcdcdc",
+      "--osano-dialog-gpc-border-color": "#ffffff",
+      "--osano-toggle-on-thumb-color-contrast": "#ebebeb",
+      "--osano-toggle-off-track-color-contrast": "#8e53ff",
+      "--osano-button-manage-background-color": "#f0f0f0",
+      "--osano-gpc-border-color": "#058a5e",
+      "--osano-button-reject-all-background-color-contrast": "#dcdcdc",
+      "--osano-info-dialog-toggle-off-thumb-color-hover": "#ebebeb",
+      "--osano-info-dialog-toggle-on-thumb-color-disabled": "#bfbfbf",
+      "--osano-button-manage-background-color-focus": "#282626",
+      "--osano-info-dialog-toggle-off-thumb-color-disabled": "#bfbfbf",
+      "--osano-gpc-background-color-hover": "#ffffff",
+      "--osano-toggle-off-track-color-hover": "#8e53ff",
+      "--osano-info-dialog-foreground-color": "#ffffff",
+      "--osano-info-dialog-toggle-off-thumb-color": "#ffffff",
+      "--osano-button-manage-background-color-hover": "#dcdcdc",
+      "--osano-button-reject-all-border-color": "#fff",
+      "--osano-button-manage-border-color": "#fff",
+      "--osano-info-dialog-toggle-on-thumb-color-focus": "#23b97b",
+      "--osano-button-accept-foreground-color-hover": "#282626",
+      "--osano-info-dialog-toggle-on-track-color": "#37cd8f",
+      "--osano-button-deny-border-color": "#fff",
+      "--osano-button-manage-foreground-color-focus": "#dcdcdc",
+      "--osano-info-dialog-toggle-off-track-color-focus": "#ebebeb",
+      "--osano-toggle-button-off-color": "#ffffff",
+      "--osano-button-foreground-color": "#141212",
+      "--osano-button-reject-all-background-color-hover": "#dcdcdc",
+      "--osano-widget-fill-color": "#fff",
+      "--osano-button-accept-foreground-color-contrast": "#282626",
+      "--osano-toggle-button-on-color": "#f4f4f4",
+      "--osano-clear-dialog-background": "#000000",
+      "--osano-button-reject-all-foreground-color-contrast": "#282626",
+      "--osano-dialog-foreground-color-contrast": "#ebebeb",
+      "--cta-text-color": "#1e3043",
+      "--cta-bg-color": "#ffffff",
+      "--cta-disabled-text-color": "#4d7485",
+      "--cta-disabled-bg-color": "#1a4c62",
+      "--cta-hover-text-color": "#1e3043",
+      "--cta-hover-bg-color": "#ccc",
+      "--cta-ornamental-outline-color": "#ffffff",
+      "--cta-ornamental-outline-hover-color": "#ccc"
+    },
+    "gradients": [
+      {
+        "css": "linear-gradient(rgb(20, 18, 18) 40px, rgba(0, 0, 0, 0) 100%)",
+        "sampleColors": [
+          "#141212",
+          "#000000"
+        ]
+      },
+      {
+        "css": "linear-gradient(315deg, rgb(11, 196, 226) 0%, rgb(44, 140, 194) 100%)",
+        "sampleColors": [
+          "#0bc4e2",
+          "#2c8cc2"
+        ]
+      },
+      {
+        "css": "linear-gradient(to top, rgb(1, 57, 81) 0%, rgba(0, 0, 0, 0) 100%)",
+        "sampleColors": [
+          "#013951",
+          "#000000"
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "status": "confirmed",
+    "reason": null,
+    "best": {
+      "selector": "svg._4QbmucHkCfNI1ob1rB2Twg==",
+      "href": null,
+      "type": "svg",
+      "width": 85,
+      "height": 27,
+      "svgContent": "<svg width=\"85\" height=\"27\" class=\"_4QbmucHkCfNI1ob1rB2Twg==\" viewBox=\"0 0 587.93 165\"><title>mainLogoRiotFist21</title><path d=\"M98.77.33 0 46.07l24.61 93.66 18.73-2.3-5.15-58.89 6.15-2.74L54.96 136l32.01-3.93-5.69-65 6.09-2.71 11.68 66.23 32.38-3.98-6.23-71.25 6.16-2.74 12.77 72.43 32.01-3.93V19.71L98.77.33zm2.32 142.05 1.63 9.22 73.42 12.24v-30.68l-75.01 9.22h-.04zm144.49-19.22v12.63h15.57a14.84 14.84 0 0 1-1.92 7.31 13 13 0 0 1-5.6 5.11 20 20 0 0 1-8.9 1.8 17.53 17.53 0 0 1-10-2.8 17.87 17.87 0 0 1-6.44-8.14 33.06 33.06 0 0 1-2.27-12.93 31.81 31.81 0 0 1 2.32-12.81 18.14 18.14 0 0 1 6.5-8 17.27 17.27 0 0 1 9.82-2.78 19.31 19.31 0 0 1 5.36.71 14.15 14.15 0 0 1 4.33 2.09 12.92 12.92 0 0 1 3.18 3.29 15.61 15.61 0 0 1 2 4.44h17.27a27.22 27.22 0 0 0-3.46-10.28 28.84 28.84 0 0 0-7.05-8.1 32.6 32.6 0 0 0-9.91-5.29 37.91 37.91 0 0 0-12.06-1.86 37.32 37.32 0 0 0-14 2.6 32.6 32.6 0 0 0-11.36 7.61 35 35 0 0 0-7.61 12.21 46.15 46.15 0 0 0-2.73 16.44q0 11.94 4.54 20.59a32.4 32.4 0 0 0 12.69 13.27 39.84 39.84 0 0 0 35.84.84 28.39 28.39 0 0 0 11.67-11q4.25-7.19 4.24-17.2v-9.76Zm215.03 40.81V88.53h51.67v13.96h-34.62v16.76h27.99v13.96h-27.99v16.8h34.7v13.96h-51.75zm101.83-53.3a9 9 0 0 0-3.54-6.64c-2.09-1.59-5-2.38-8.69-2.38a16.63 16.63 0 0 0-6.26 1 8.62 8.62 0 0 0-3.83 2.78 6.74 6.74 0 0 0-1.33 4 6.2 6.2 0 0 0 .79 3.29 7.27 7.27 0 0 0 2.4 2.45 16.54 16.54 0 0 0 3.7 1.79 40.14 40.14 0 0 0 4.64 1.31l6.63 1.54a47.19 47.19 0 0 1 9.45 3.08 27.46 27.46 0 0 1 7.2 4.68 18.84 18.84 0 0 1 4.58 6.39 20.37 20.37 0 0 1 1.61 8.29 20.65 20.65 0 0 1-3.54 12.11 22.56 22.56 0 0 1-10.15 7.85 41.31 41.31 0 0 1-15.93 2.76 42.69 42.69 0 0 1-16.17-2.81 23.22 23.22 0 0 1-10.72-8.48q-3.83-5.66-4-14.12h16.43a10.68 10.68 0 0 0 7.05 9.94 19.37 19.37 0 0 0 7.24 1.26 18.44 18.44 0 0 0 6.66-1.09 10 10 0 0 0 4.33-3 7.22 7.22 0 0 0 1.57-4.48 6.16 6.16 0 0 0-1.42-4 10.86 10.86 0 0 0-4.14-2.81 42.07 42.07 0 0 0-6.89-2.14l-8.07-1.95q-9.65-2.3-15.23-7.26t-5.54-13.44a19.86 19.86 0 0 1 3.72-12.12 24.74 24.74 0 0 1 10.33-8.11 36.74 36.74 0 0 1 15-2.91 35.62 35.62 0 0 1 14.92 2.91 23.43 23.43 0 0 1 9.91 8.14 21.54 21.54 0 0 1 3.6 12.12Zm-113.99 53.3h-16.87v-57.35l-1.73-.02-17.04 57.37h-16.86l-16.58-57.37-2.15.02v57.35h-16.87V88.53h28.67l14.48 50.56h1.75l14.48-50.56h28.72v75.44zm-114.66 0h18.27l-25.33-75.43h-23.15l-25.37 75.43h18.3l4.93-16.54h27.42Zm-28.43-29.7 8.22-27.65h3.1l8.26 27.65Zm278.58-37.76a4 4 0 0 1-3.67-2.44 4 4 0 0 1 0-3.1 4 4 0 0 1 .85-1.27 4.25 4.25 0 0 1 1.27-.86 4.15 4.15 0 0 1 3.1 0 4.13 4.13 0 0 1 1.27.86 4.08 4.08 0 0 1 .86 1.27 4 4 0 0 1 0 3.1 4.08 4.08 0 0 1-.86 1.27 4 4 0 0 1-1.27.86 4 4 0 0 1-1.55.31Zm0-1.09a2.84 2.84 0 0 0 1.47-.39 2.94 2.94 0 0 0 1.05-1 2.93 2.93 0 0 0 0-2.92 3 3 0 0 0-1.06-1 2.93 2.93 0 0 0-2.92 0 3 3 0 0 0-1 1 2.86 2.86 0 0 0 0 2.92 3 3 0 0 0 1 1 2.83 2.83 0 0 0 1.46.39Zm-1.46-1.15V90.6h1.78a1.52 1.52 0 0 1 .69.15 1.13 1.13 0 0 1 .47.42 1.24 1.24 0 0 1 .17.66 1.16 1.16 0 0 1-.18.66 1 1 0 0 1-.48.41 1.56 1.56 0 0 1-.7.14h-1.2v-.72h1a.52.52 0 0 0 .36-.12.5.5 0 0 0 .14-.37.47.47 0 0 0-.14-.37.52.52 0 0 0-.36-.12h-.55v2.93Zm2.39-1.68.82 1.68h-1.11l-.75-1.68ZM282.41 1.03h17.05v75.44h-17.05zm98.02 37.72q0 12.42-4.71 21a32.67 32.67 0 0 1-12.79 13.17 38.57 38.57 0 0 1-36.31 0 32.75 32.75 0 0 1-12.79-13.2q-4.71-8.66-4.71-21t4.71-21.05a32.67 32.67 0 0 1 12.75-13.14 38.65 38.65 0 0 1 36.31 0 32.67 32.67 0 0 1 12.79 13.17q4.71 8.64 4.71 21.05m-17.35 0a33.35 33.35 0 0 0-2.23-13 17.47 17.47 0 0 0-6.33-8 18.57 18.57 0 0 0-19.45 0 17.57 17.57 0 0 0-6.35 8 38.59 38.59 0 0 0 0 26 17.49 17.49 0 0 0 6.35 8 18.57 18.57 0 0 0 19.45 0 17.39 17.39 0 0 0 6.33-8 33.4 33.4 0 0 0 2.23-13M246.58 50.17l8.76 26.3h18.71l-9.74-28.33h-13.23l-.79-2.44c2.52-.49 6.83-1.25 10.65-3.85a20 20 0 0 0 8.75-16.39 24.15 24.15 0 0 0-3.26-12.75 21.9 21.9 0 0 0-9.36-8.64 32.56 32.56 0 0 0-14.64-3H212v75.4h17.06v-26.3Zm-.32-15.61a19.35 19.35 0 0 1-7.26 1.18h-9.94V14.88h9.91a18.68 18.68 0 0 1 7.25 1.24 9.12 9.12 0 0 1 4.4 3.7 10 10 0 0 1 1.5 5.64 9.65 9.65 0 0 1-1.48 5.55 8.86 8.86 0 0 1-4.38 3.55M382.04 1.03v14h29.3l.8 2.45c-2.48.48-6.67 1.22-10.43 3.7v55.31h16.87v-61.5h19.62v-14Z\"></path></svg>",
+      "colors": [
+        "#f9f9f9"
+      ],
+      "isLight": true,
+      "isDark": false,
+      "needsDarkBackground": true,
+      "needsLightBackground": false,
+      "ownership": "first-party",
+      "headerScoped": true,
+      "variant": "light",
+      "brandNameOnLogo": "RIOT GAMES",
+      "standaloneSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"85\" height=\"27\" class=\"_4QbmucHkCfNI1ob1rB2Twg==\" viewBox=\"0 0 587.93 165\"><title>mainLogoRiotFist21</title><path d=\"M98.77.33 0 46.07l24.61 93.66 18.73-2.3-5.15-58.89 6.15-2.74L54.96 136l32.01-3.93-5.69-65 6.09-2.71 11.68 66.23 32.38-3.98-6.23-71.25 6.16-2.74 12.77 72.43 32.01-3.93V19.71L98.77.33zm2.32 142.05 1.63 9.22 73.42 12.24v-30.68l-75.01 9.22h-.04zm144.49-19.22v12.63h15.57a14.84 14.84 0 0 1-1.92 7.31 13 13 0 0 1-5.6 5.11 20 20 0 0 1-8.9 1.8 17.53 17.53 0 0 1-10-2.8 17.87 17.87 0 0 1-6.44-8.14 33.06 33.06 0 0 1-2.27-12.93 31.81 31.81 0 0 1 2.32-12.81 18.14 18.14 0 0 1 6.5-8 17.27 17.27 0 0 1 9.82-2.78 19.31 19.31 0 0 1 5.36.71 14.15 14.15 0 0 1 4.33 2.09 12.92 12.92 0 0 1 3.18 3.29 15.61 15.61 0 0 1 2 4.44h17.27a27.22 27.22 0 0 0-3.46-10.28 28.84 28.84 0 0 0-7.05-8.1 32.6 32.6 0 0 0-9.91-5.29 37.91 37.91 0 0 0-12.06-1.86 37.32 37.32 0 0 0-14 2.6 32.6 32.6 0 0 0-11.36 7.61 35 35 0 0 0-7.61 12.21 46.15 46.15 0 0 0-2.73 16.44q0 11.94 4.54 20.59a32.4 32.4 0 0 0 12.69 13.27 39.84 39.84 0 0 0 35.84.84 28.39 28.39 0 0 0 11.67-11q4.25-7.19 4.24-17.2v-9.76Zm215.03 40.81V88.53h51.67v13.96h-34.62v16.76h27.99v13.96h-27.99v16.8h34.7v13.96h-51.75zm101.83-53.3a9 9 0 0 0-3.54-6.64c-2.09-1.59-5-2.38-8.69-2.38a16.63 16.63 0 0 0-6.26 1 8.62 8.62 0 0 0-3.83 2.78 6.74 6.74 0 0 0-1.33 4 6.2 6.2 0 0 0 .79 3.29 7.27 7.27 0 0 0 2.4 2.45 16.54 16.54 0 0 0 3.7 1.79 40.14 40.14 0 0 0 4.64 1.31l6.63 1.54a47.19 47.19 0 0 1 9.45 3.08 27.46 27.46 0 0 1 7.2 4.68 18.84 18.84 0 0 1 4.58 6.39 20.37 20.37 0 0 1 1.61 8.29 20.65 20.65 0 0 1-3.54 12.11 22.56 22.56 0 0 1-10.15 7.85 41.31 41.31 0 0 1-15.93 2.76 42.69 42.69 0 0 1-16.17-2.81 23.22 23.22 0 0 1-10.72-8.48q-3.83-5.66-4-14.12h16.43a10.68 10.68 0 0 0 7.05 9.94 19.37 19.37 0 0 0 7.24 1.26 18.44 18.44 0 0 0 6.66-1.09 10 10 0 0 0 4.33-3 7.22 7.22 0 0 0 1.57-4.48 6.16 6.16 0 0 0-1.42-4 10.86 10.86 0 0 0-4.14-2.81 42.07 42.07 0 0 0-6.89-2.14l-8.07-1.95q-9.65-2.3-15.23-7.26t-5.54-13.44a19.86 19.86 0 0 1 3.72-12.12 24.74 24.74 0 0 1 10.33-8.11 36.74 36.74 0 0 1 15-2.91 35.62 35.62 0 0 1 14.92 2.91 23.43 23.43 0 0 1 9.91 8.14 21.54 21.54 0 0 1 3.6 12.12Zm-113.99 53.3h-16.87v-57.35l-1.73-.02-17.04 57.37h-16.86l-16.58-57.37-2.15.02v57.35h-16.87V88.53h28.67l14.48 50.56h1.75l14.48-50.56h28.72v75.44zm-114.66 0h18.27l-25.33-75.43h-23.15l-25.37 75.43h18.3l4.93-16.54h27.42Zm-28.43-29.7 8.22-27.65h3.1l8.26 27.65Zm278.58-37.76a4 4 0 0 1-3.67-2.44 4 4 0 0 1 0-3.1 4 4 0 0 1 .85-1.27 4.25 4.25 0 0 1 1.27-.86 4.15 4.15 0 0 1 3.1 0 4.13 4.13 0 0 1 1.27.86 4.08 4.08 0 0 1 .86 1.27 4 4 0 0 1 0 3.1 4.08 4.08 0 0 1-.86 1.27 4 4 0 0 1-1.27.86 4 4 0 0 1-1.55.31Zm0-1.09a2.84 2.84 0 0 0 1.47-.39 2.94 2.94 0 0 0 1.05-1 2.93 2.93 0 0 0 0-2.92 3 3 0 0 0-1.06-1 2.93 2.93 0 0 0-2.92 0 3 3 0 0 0-1 1 2.86 2.86 0 0 0 0 2.92 3 3 0 0 0 1 1 2.83 2.83 0 0 0 1.46.39Zm-1.46-1.15V90.6h1.78a1.52 1.52 0 0 1 .69.15 1.13 1.13 0 0 1 .47.42 1.24 1.24 0 0 1 .17.66 1.16 1.16 0 0 1-.18.66 1 1 0 0 1-.48.41 1.56 1.56 0 0 1-.7.14h-1.2v-.72h1a.52.52 0 0 0 .36-.12.5.5 0 0 0 .14-.37.47.47 0 0 0-.14-.37.52.52 0 0 0-.36-.12h-.55v2.93Zm2.39-1.68.82 1.68h-1.11l-.75-1.68ZM282.41 1.03h17.05v75.44h-17.05zm98.02 37.72q0 12.42-4.71 21a32.67 32.67 0 0 1-12.79 13.17 38.57 38.57 0 0 1-36.31 0 32.75 32.75 0 0 1-12.79-13.2q-4.71-8.66-4.71-21t4.71-21.05a32.67 32.67 0 0 1 12.75-13.14 38.65 38.65 0 0 1 36.31 0 32.67 32.67 0 0 1 12.79 13.17q4.71 8.64 4.71 21.05m-17.35 0a33.35 33.35 0 0 0-2.23-13 17.47 17.47 0 0 0-6.33-8 18.57 18.57 0 0 0-19.45 0 17.57 17.57 0 0 0-6.35 8 38.59 38.59 0 0 0 0 26 17.49 17.49 0 0 0 6.35 8 18.57 18.57 0 0 0 19.45 0 17.39 17.39 0 0 0 6.33-8 33.4 33.4 0 0 0 2.23-13M246.58 50.17l8.76 26.3h18.71l-9.74-28.33h-13.23l-.79-2.44c2.52-.49 6.83-1.25 10.65-3.85a20 20 0 0 0 8.75-16.39 24.15 24.15 0 0 0-3.26-12.75 21.9 21.9 0 0 0-9.36-8.64 32.56 32.56 0 0 0-14.64-3H212v75.4h17.06v-26.3Zm-.32-15.61a19.35 19.35 0 0 1-7.26 1.18h-9.94V14.88h9.91a18.68 18.68 0 0 1 7.25 1.24 9.12 9.12 0 0 1 4.4 3.7 10 10 0 0 1 1.5 5.64 9.65 9.65 0 0 1-1.48 5.55 8.86 8.86 0 0 1-4.38 3.55M382.04 1.03v14h29.3l.8 2.45c-2.48.48-6.67 1.22-10.43 3.7v55.31h16.87v-61.5h19.62v-14Z\"></path></svg>",
+      "uploadedUrl": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/logo/1e12f78d-383b-4349-bf5d-665e7fed0402.svg"
+    },
+    "candidates": [
+      {
+        "selector": "svg._4QbmucHkCfNI1ob1rB2Twg==",
+        "href": null,
+        "type": "svg",
+        "width": 85,
+        "height": 27,
+        "svgContent": "<svg width=\"85\" height=\"27\" class=\"_4QbmucHkCfNI1ob1rB2Twg==\" viewBox=\"0 0 587.93 165\"><title>mainLogoRiotFist21</title><path d=\"M98.77.33 0 46.07l24.61 93.66 18.73-2.3-5.15-58.89 6.15-2.74L54.96 136l32.01-3.93-5.69-65 6.09-2.71 11.68 66.23 32.38-3.98-6.23-71.25 6.16-2.74 12.77 72.43 32.01-3.93V19.71L98.77.33zm2.32 142.05 1.63 9.22 73.42 12.24v-30.68l-75.01 9.22h-.04zm144.49-19.22v12.63h15.57a14.84 14.84 0 0 1-1.92 7.31 13 13 0 0 1-5.6 5.11 20 20 0 0 1-8.9 1.8 17.53 17.53 0 0 1-10-2.8 17.87 17.87 0 0 1-6.44-8.14 33.06 33.06 0 0 1-2.27-12.93 31.81 31.81 0 0 1 2.32-12.81 18.14 18.14 0 0 1 6.5-8 17.27 17.27 0 0 1 9.82-2.78 19.31 19.31 0 0 1 5.36.71 14.15 14.15 0 0 1 4.33 2.09 12.92 12.92 0 0 1 3.18 3.29 15.61 15.61 0 0 1 2 4.44h17.27a27.22 27.22 0 0 0-3.46-10.28 28.84 28.84 0 0 0-7.05-8.1 32.6 32.6 0 0 0-9.91-5.29 37.91 37.91 0 0 0-12.06-1.86 37.32 37.32 0 0 0-14 2.6 32.6 32.6 0 0 0-11.36 7.61 35 35 0 0 0-7.61 12.21 46.15 46.15 0 0 0-2.73 16.44q0 11.94 4.54 20.59a32.4 32.4 0 0 0 12.69 13.27 39.84 39.84 0 0 0 35.84.84 28.39 28.39 0 0 0 11.67-11q4.25-7.19 4.24-17.2v-9.76Zm215.03 40.81V88.53h51.67v13.96h-34.62v16.76h27.99v13.96h-27.99v16.8h34.7v13.96h-51.75zm101.83-53.3a9 9 0 0 0-3.54-6.64c-2.09-1.59-5-2.38-8.69-2.38a16.63 16.63 0 0 0-6.26 1 8.62 8.62 0 0 0-3.83 2.78 6.74 6.74 0 0 0-1.33 4 6.2 6.2 0 0 0 .79 3.29 7.27 7.27 0 0 0 2.4 2.45 16.54 16.54 0 0 0 3.7 1.79 40.14 40.14 0 0 0 4.64 1.31l6.63 1.54a47.19 47.19 0 0 1 9.45 3.08 27.46 27.46 0 0 1 7.2 4.68 18.84 18.84 0 0 1 4.58 6.39 20.37 20.37 0 0 1 1.61 8.29 20.65 20.65 0 0 1-3.54 12.11 22.56 22.56 0 0 1-10.15 7.85 41.31 41.31 0 0 1-15.93 2.76 42.69 42.69 0 0 1-16.17-2.81 23.22 23.22 0 0 1-10.72-8.48q-3.83-5.66-4-14.12h16.43a10.68 10.68 0 0 0 7.05 9.94 19.37 19.37 0 0 0 7.24 1.26 18.44 18.44 0 0 0 6.66-1.09 10 10 0 0 0 4.33-3 7.22 7.22 0 0 0 1.57-4.48 6.16 6.16 0 0 0-1.42-4 10.86 10.86 0 0 0-4.14-2.81 42.07 42.07 0 0 0-6.89-2.14l-8.07-1.95q-9.65-2.3-15.23-7.26t-5.54-13.44a19.86 19.86 0 0 1 3.72-12.12 24.74 24.74 0 0 1 10.33-8.11 36.74 36.74 0 0 1 15-2.91 35.62 35.62 0 0 1 14.92 2.91 23.43 23.43 0 0 1 9.91 8.14 21.54 21.54 0 0 1 3.6 12.12Zm-113.99 53.3h-16.87v-57.35l-1.73-.02-17.04 57.37h-16.86l-16.58-57.37-2.15.02v57.35h-16.87V88.53h28.67l14.48 50.56h1.75l14.48-50.56h28.72v75.44zm-114.66 0h18.27l-25.33-75.43h-23.15l-25.37 75.43h18.3l4.93-16.54h27.42Zm-28.43-29.7 8.22-27.65h3.1l8.26 27.65Zm278.58-37.76a4 4 0 0 1-3.67-2.44 4 4 0 0 1 0-3.1 4 4 0 0 1 .85-1.27 4.25 4.25 0 0 1 1.27-.86 4.15 4.15 0 0 1 3.1 0 4.13 4.13 0 0 1 1.27.86 4.08 4.08 0 0 1 .86 1.27 4 4 0 0 1 0 3.1 4.08 4.08 0 0 1-.86 1.27 4 4 0 0 1-1.27.86 4 4 0 0 1-1.55.31Zm0-1.09a2.84 2.84 0 0 0 1.47-.39 2.94 2.94 0 0 0 1.05-1 2.93 2.93 0 0 0 0-2.92 3 3 0 0 0-1.06-1 2.93 2.93 0 0 0-2.92 0 3 3 0 0 0-1 1 2.86 2.86 0 0 0 0 2.92 3 3 0 0 0 1 1 2.83 2.83 0 0 0 1.46.39Zm-1.46-1.15V90.6h1.78a1.52 1.52 0 0 1 .69.15 1.13 1.13 0 0 1 .47.42 1.24 1.24 0 0 1 .17.66 1.16 1.16 0 0 1-.18.66 1 1 0 0 1-.48.41 1.56 1.56 0 0 1-.7.14h-1.2v-.72h1a.52.52 0 0 0 .36-.12.5.5 0 0 0 .14-.37.47.47 0 0 0-.14-.37.52.52 0 0 0-.36-.12h-.55v2.93Zm2.39-1.68.82 1.68h-1.11l-.75-1.68ZM282.41 1.03h17.05v75.44h-17.05zm98.02 37.72q0 12.42-4.71 21a32.67 32.67 0 0 1-12.79 13.17 38.57 38.57 0 0 1-36.31 0 32.75 32.75 0 0 1-12.79-13.2q-4.71-8.66-4.71-21t4.71-21.05a32.67 32.67 0 0 1 12.75-13.14 38.65 38.65 0 0 1 36.31 0 32.67 32.67 0 0 1 12.79 13.17q4.71 8.64 4.71 21.05m-17.35 0a33.35 33.35 0 0 0-2.23-13 17.47 17.47 0 0 0-6.33-8 18.57 18.57 0 0 0-19.45 0 17.57 17.57 0 0 0-6.35 8 38.59 38.59 0 0 0 0 26 17.49 17.49 0 0 0 6.35 8 18.57 18.57 0 0 0 19.45 0 17.39 17.39 0 0 0 6.33-8 33.4 33.4 0 0 0 2.23-13M246.58 50.17l8.76 26.3h18.71l-9.74-28.33h-13.23l-.79-2.44c2.52-.49 6.83-1.25 10.65-3.85a20 20 0 0 0 8.75-16.39 24.15 24.15 0 0 0-3.26-12.75 21.9 21.9 0 0 0-9.36-8.64 32.56 32.56 0 0 0-14.64-3H212v75.4h17.06v-26.3Zm-.32-15.61a19.35 19.35 0 0 1-7.26 1.18h-9.94V14.88h9.91a18.68 18.68 0 0 1 7.25 1.24 9.12 9.12 0 0 1 4.4 3.7 10 10 0 0 1 1.5 5.64 9.65 9.65 0 0 1-1.48 5.55 8.86 8.86 0 0 1-4.38 3.55M382.04 1.03v14h29.3l.8 2.45c-2.48.48-6.67 1.22-10.43 3.7v55.31h16.87v-61.5h19.62v-14Z\"></path></svg>",
+        "colors": [
+          "#f9f9f9"
+        ],
+        "isLight": true,
+        "isDark": false,
+        "needsDarkBackground": true,
+        "needsLightBackground": false,
+        "ownership": "first-party",
+        "headerScoped": true
+      },
+      {
+        "selector": "img",
+        "href": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/riotbar/aa495a705132bdd1af86d8d2fbfc58a4acf532ea-78x32.svg?&h=75&fit=max",
+        "type": "svg?&h=75&fit=max",
+        "width": 78,
+        "height": 32,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "third-party"
+      },
+      {
+        "selector": "img.sc-58849faf-0",
+        "href": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/23d41c7809a48a013f3d8a7204b81fb4d8bdb164-10000x4389.png?accountingTag=RB&auto=format&fit=fill&q=80&w=300",
+        "type": "png?accountingtag=rb&auto=format&fit=fill&q=80&w=300",
+        "width": 300,
+        "height": 132,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "third-party"
+      },
+      {
+        "selector": "img",
+        "href": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/riotbar/6222c5f038cd27fe9fc5aec17616e7ba0ea1c69e-2105x2105.svg?&h=50&fit=max",
+        "type": "svg?&h=50&fit=max",
+        "width": 2105,
+        "height": 2105,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "third-party",
+        "headerScoped": true
+      },
+      {
+        "selector": "img",
+        "href": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/riotbar/6222c5f038cd27fe9fc5aec17616e7ba0ea1c69e-2105x2105.svg?&h=50&fit=max",
+        "type": "svg?&h=50&fit=max",
+        "width": 2105,
+        "height": 2105,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "third-party"
+      },
+      {
+        "selector": "svg",
+        "href": null,
+        "type": "svg",
+        "width": 16,
+        "height": 16,
+        "svgContent": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\"><title>globeIcon</title><path d=\"M7.992 0C3.576 0 0 3.584 0 8s3.576 8 7.992 8C12.416 16 16 12.416 16 8s-3.584-8-8.008-8Zm5.544 4.8h-2.36c-.256-1-.624-1.96-1.104-2.848A6.424 6.424 0 0 1 13.536 4.8ZM8 1.632A11.27 11.27 0 0 1 9.528 4.8H6.472A11.27 11.27 0 0 1 8 1.632ZM1.808 9.6A6.594 6.594 0 0 1 1.6 8c0-.552.08-1.088.208-1.6h2.704A13.212 13.212 0 0 0 4.4 8c0 .544.048 1.072.112 1.6H1.808Zm.656 1.6h2.36c.256 1 .624 1.96 1.104 2.848A6.39 6.39 0 0 1 2.464 11.2Zm2.36-6.4h-2.36a6.39 6.39 0 0 1 3.464-2.848A12.52 12.52 0 0 0 4.824 4.8ZM8 14.368A11.27 11.27 0 0 1 6.472 11.2h3.056A11.27 11.27 0 0 1 8 14.368ZM9.872 9.6H6.128A11.77 11.77 0 0 1 6 8c0-.544.056-1.08.128-1.6h3.744C9.944 6.92 10 7.456 10 8s-.056 1.072-.128 1.6Zm.2 4.448a12.52 12.52 0 0 0 1.104-2.848h2.36a6.424 6.424 0 0 1-3.464 2.848ZM11.488 9.6c.064-.528.112-1.056.112-1.6s-.048-1.072-.112-1.6h2.704c.128.512.208 1.048.208 1.6s-.08 1.088-.208 1.6h-2.704Z\" fill=\"#E8E8E8\"></path></svg>",
+        "colors": [
+          "#000000",
+          "#E8E8E8"
+        ],
+        "isLight": false,
+        "isDark": false,
+        "headerScoped": true,
+        "ownership": "first-party"
+      },
+      {
+        "selector": "svg",
+        "href": null,
+        "type": "svg",
+        "width": 48,
+        "height": 48,
+        "svgContent": "<svg viewBox=\"0 0 48 48\"><title>burgerNavClose</title><path d=\"M125.6 119.08a18 18 0 0 1 18-18h12a18 18 0 0 1 18 18v12a18 18 0 0 1-18 18h-12a18 18 0 0 1-18-18Z\" transform=\"translate(-125.6 -101.08)\" style=\"fill:gray;fill-opacity:.2\"></path><path d=\"m156.6 119.49-1.41-1.41-5.59 5.59-5.6-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59Z\" transform=\"translate(-125.6 -101.08)\" style=\"fill:#fcfcfc\"></path></svg>",
+        "colors": [
+          "#000000",
+          "#808080",
+          "#FCFCFC"
+        ],
+        "isLight": false,
+        "isDark": false,
+        "headerScoped": true,
+        "ownership": "first-party"
+      },
+      {
+        "selector": "svg",
+        "href": null,
+        "type": "svg",
+        "width": 14,
+        "height": 28,
+        "svgContent": "<svg viewBox=\"0 0 5 9\"><title>subMenuRight</title><path d=\"m1.707 7.793 2.586-2.586a1 1 0 0 0 0-1.414L1.707 1.207C1.077.577 0 1.023 0 1.914v5.172c0 .89 1.077 1.337 1.707.707Z\" fill=\"#7E7E7E\"></path></svg>",
+        "colors": [
+          "#737373",
+          "#7E7E7E"
+        ],
+        "isLight": false,
+        "isDark": false,
+        "headerScoped": true,
+        "ownership": "first-party"
+      }
+    ]
+  },
+  "fonts": {
+    "computed": [
+      {
+        "family": "Helvetica, Arial, \"Hiragino Sans GB\", STXihei, \"Microsoft YaHei\", \"WenQuanYi Micro Hei\", Hind, \"MS Gothic\", \"Apple SD Gothic Neo\", NanumBarunGothic, sans-serif",
+        "weights": [
+          "400",
+          "700"
+        ],
+        "source": "web"
+      },
+      {
+        "family": "system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
+        "weights": [
+          "400"
+        ],
+        "source": "system"
+      },
+      {
+        "family": "Inter, Arial, sans-serif",
+        "weights": [
+          "400",
+          "700",
+          "600",
+          "500"
+        ],
+        "source": "web"
+      },
+      {
+        "family": "\"Beaufort for LOL\", sans-serif",
+        "weights": [
+          "900"
+        ],
+        "source": "web"
+      },
+      {
+        "family": "\"TT Norms Pro Compact\", sans-serif",
+        "weights": [
+          "400",
+          "500",
+          "600",
+          "700"
+        ],
+        "source": "web"
+      }
+    ],
+    "baseSizePx": 10
+  },
+  "confidence": {
+    "colorExtraction": 0.9,
+    "logoDetection": 0.95,
+    "fontDetection": 0.8
+  },
+  "screenshot": {
+    "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/screenshot.png",
+    "width": 1920,
+    "height": 1080,
+    "sizeBytes": 1356437,
+    "uploadedAt": "2026-09-05T12:47:56.463Z"
+  },
+  "assets": {
+    "2070512f-94a8-4d2b-87c8-d17689ac7bd6": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/assets/2070512f-94a8-4d2b-87c8-d17689ac7bd6.png",
+      "name": "443fa5735f9d994d748bb6d6e09f0ec2fa8ab43b-2560x1291.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "381 B",
+        "mimeType": "image/avif",
+        "sizeBytes": 381,
+        "uploadedAt": "2026-09-05T12:47:56.641Z"
+      }
+    },
+    "31278d22-8ac3-4074-897b-208bc3be6ab5": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/assets/31278d22-8ac3-4074-897b-208bc3be6ab5.png",
+      "name": "2d2bf39bb3b1c65497866b93f17c12e72c509efe-844x844.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "18.64 KB",
+        "mimeType": "image/avif",
+        "sizeBytes": 19085,
+        "uploadedAt": "2026-09-05T12:47:56.613Z"
+      }
+    },
+    "cedc4cc0-3e4a-425d-a4fa-396f47eb5ec1": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/assets/cedc4cc0-3e4a-425d-a4fa-396f47eb5ec1.webp",
+      "name": "7a74b12bab6461ad720ab47e98b908a38213580c-844x844.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "34.72 KB",
+        "mimeType": "image/webp",
+        "sizeBytes": 35556,
+        "uploadedAt": "2026-09-05T12:47:56.622Z"
+      }
+    },
+    "42479657-5402-4d9c-adc4-6eb80cb1e485": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/assets/42479657-5402-4d9c-adc4-6eb80cb1e485.png",
+      "name": "5b619415a462f599bc9905943be6a3e63ed19f03-844x844.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "20.43 KB",
+        "mimeType": "image/avif",
+        "sizeBytes": 20916,
+        "uploadedAt": "2026-09-05T12:47:56.647Z"
+      }
+    },
+    "1bd04b5d-a483-443d-b7ba-8303bf1a6f1c": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/assets/1bd04b5d-a483-443d-b7ba-8303bf1a6f1c.png",
+      "name": "da48b48ebce3dfbbd8d706c145c24eccc4fb9c31-844x844.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "28.13 KB",
+        "mimeType": "image/avif",
+        "sizeBytes": 28802,
+        "uploadedAt": "2026-09-05T12:47:56.650Z"
+      }
+    },
+    "12014da9-45e0-4f69-9a9f-f6a44ac9806f": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/assets/12014da9-45e0-4f69-9a9f-f6a44ac9806f.png",
+      "name": "c825c47fe404d19f50bc906e995097f82cce6bec-844x844.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "38.40 KB",
+        "mimeType": "image/avif",
+        "sizeBytes": 39324,
+        "uploadedAt": "2026-09-05T12:47:56.820Z"
+      }
+    },
+    "10871e32-7f85-462f-a7d5-c1138ff06c9f": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/assets/10871e32-7f85-462f-a7d5-c1138ff06c9f.png",
+      "name": "054e3b458bd724c1881c98f534caab421dbd4e2e-844x844.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "25.13 KB",
+        "mimeType": "image/avif",
+        "sizeBytes": 25728,
+        "uploadedAt": "2026-09-05T12:47:56.939Z"
+      }
+    },
+    "079925df-0d4f-4e87-b68c-bca5b154014a": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/assets/079925df-0d4f-4e87-b68c-bca5b154014a.png",
+      "name": "db7565d29a4099b9103e2ec780ecbcb7192cba3c-844x844.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "37.31 KB",
+        "mimeType": "image/avif",
+        "sizeBytes": 38210,
+        "uploadedAt": "2026-09-05T12:47:57.007Z"
+      }
+    },
+    "39234d23-9a33-4a03-84dc-545c92582c21": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/assets/39234d23-9a33-4a03-84dc-545c92582c21.png",
+      "name": "91a720561b6cd9c649a9148782f34d96e78cd894-4320x2430.jpg",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "7.43 KB",
+        "mimeType": "image/avif",
+        "sizeBytes": 7609,
+        "uploadedAt": "2026-09-05T12:47:56.808Z"
+      }
+    },
+    "ffcc27fa-900b-48e9-962e-d38181cfc4e9": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/538dfa2f-ab1a-41b1-97d4-cc58b8a35a38/assets/ffcc27fa-900b-48e9-962e-d38181cfc4e9.png",
+      "name": "9ec9e1121896e42aff94670e1a26320f45b8c01d-1440x810.jpg",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "9.82 KB",
+        "mimeType": "image/avif",
+        "sizeBytes": 10057,
+        "uploadedAt": "2026-09-05T12:47:56.811Z"
+      }
+    }
+  }
+}

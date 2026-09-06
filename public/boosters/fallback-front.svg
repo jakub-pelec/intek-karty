@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420">
+  <rect width="300" height="420" rx="18" fill="#211c2d"/>
+  <rect x="16" y="16" width="268" height="388" rx="12" fill="none" stroke="#d4b15f" stroke-width="3"/>
+  <text x="150" y="220" text-anchor="middle" fill="#d4b15f" font-size="28" font-family="serif">BOOSTER</text>
+</svg>

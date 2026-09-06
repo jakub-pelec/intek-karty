@@ -1,0 +1,90 @@
+import { eq } from "drizzle-orm";
+import { CollectionBrowser } from "@/components/collection-browser";
+import { getDb } from "@/db";
+import { cards, userCards } from "@/db/schema";
+import { listActiveCollections } from "@/db/queries/collections";
+import {
+  arrangeCollection,
+  parseCollectionQuery,
+  type CollectionSlot,
+} from "@/lib/collection";
+import { requireUser } from "@/lib/rbac";
+import { toRoman } from "@/lib/ritual";
+
+export default async function CollectionPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    set?: string | string[];
+    own?: string | string[];
+    rarity?: string | string[];
+    variant?: string | string[];
+    sort?: string | string[];
+  }>;
+}) {
+  const params = await searchParams;
+  const parsed = parseCollectionQuery(params);
+  const user = await requireUser();
+  const db = getDb();
+  const sets = await listActiveCollections();
+  const selected = sets.find((set) => set.slug === parsed.set) ?? sets[0] ?? null;
+  const query = { ...parsed, set: selected?.slug };
+
+  const catalog = selected
+    ? await db
+        .select()
+        .from(cards)
+        .where(eq(cards.collectionId, selected.id))
+        .orderBy(cards.number, cards.signed)
+    : [];
+  const owned = await db
+    .select()
+    .from(userCards)
+    .where(eq(userCards.userId, user.id));
+  const ownedByCard = new Map(owned.map((row) => [row.cardId, row]));
+
+  const slots: CollectionSlot[] = catalog.map((card) => {
+    const own = ownedByCard.get(card.id);
+    return {
+      id: card.id,
+      number: card.number,
+      name: card.name,
+      rarity: card.rarity,
+      signed: card.signed,
+      owned: own
+        ? {
+            id: card.id,
+            name: card.name,
+            description: card.description,
+            rarity: card.rarity,
+            imageUrl: card.imageUrl,
+            holographic: own.holographic,
+            signature: card.signed,
+            acquiredAt: own.acquiredAt,
+          }
+        : null,
+    };
+  });
+
+  const activeCatalog = catalog.filter((card) => card.active);
+  const ownedInSet = activeCatalog.filter((card) => ownedByCard.has(card.id)).length;
+  const total = activeCatalog.length;
+  const visible = arrangeCollection(slots, query);
+
+  return (
+    <main className="mx-auto w-full max-w-6xl pt-2 md:pt-6">
+      <h1 className="mb-3 text-center font-[family-name:var(--font-cormorant)] text-4xl tracking-wide text-[#cfc6b4] italic md:text-5xl">
+        Collection
+      </h1>
+      <p className="mb-10 text-center font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/70 uppercase">
+        {toRoman(ownedInSet)} of {toRoman(total)} relics bound
+      </p>
+      <CollectionBrowser
+        slots={visible}
+        query={query}
+        sets={sets.map((set) => ({ slug: set.slug, name: set.name }))}
+        progress={{ owned: ownedInSet, total }}
+      />
+    </main>
+  );
+}

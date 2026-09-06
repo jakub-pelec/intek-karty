@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "targets": {
+    "/dashboard": {
+      "targetKind": "existing-ui",
+      "projectId": "3ed0e679-57aa-4cfd-a582-97dd0941e7ca",
+      "activeDraftId": "2eff85da-3a8f-4408-9b68-94c434d2d937",
+      "designSystemPath": ".superdesign/design-system.md",
+      "referenceIds": [
+        "b3d78916-dee1-463d-9c91-f68bc25bc9f8",
+        "4af1fa24-72af-4151-8d3a-5e5b72c21cf8",
+        "bac5b994-a704-4f97-b55f-62cc24496647",
+        "dd5a2bb4-f93b-4bcf-8ee7-21740dd6ea01"
+      ],
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "app/(user)/dashboard/page.tsx"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "f3005b5b11adc02a71baefac9a0409f3951b3b23a3dd07d02b6527199832c3b7",
+        "app/(user)/dashboard/page.tsx": "c5b37d6d4b8eee72341490485d1545fa90a01ec28df5df47005a7bfc829a6f28"
+      },
+      "components": [],
+      "drafts": {
+        "2eff85da-3a8f-4408-9b68-94c434d2d937": {
+          "title": "INTEK BINDER — Void Altar (Riftbound Forged)",
+          "visualDirection": "void altar + Riftbound hextech filigree frames",
+          "parentDraftId": "e5403255-bb5c-41a9-8936-b8bc2226d3bd",
+          "currentVersion": 2
+        },
+        "78026582-2dc7-4862-aa62-b1f28c01a7bc": {
+          "title": "Intek Binder - Editorial",
+          "visualDirection": "table binder — ivory, Newsreader, no sidebar",
+          "currentVersion": 1
+        },
+        "e5403255-bb5c-41a9-8936-b8bc2226d3bd": {
+          "title": "INTEK BINDER Control Desk",
+          "visualDirection": "broadcast desk — black, Anton + Plex Mono, amber",
+          "currentVersion": 1
+        },
+        "deac9b88-851f-40e2-8da3-cc5257282b91": {
+          "title": "INTEK BINDER — The Grimoire",
+          "visualDirection": "arcane grimoire — soot, crimson, Cinzel + Garamond",
+          "parentDraftId": "e5403255-bb5c-41a9-8936-b8bc2226d3bd",
+          "currentVersion": 1
+        },
+        "0a20c453-20f5-45e7-b131-e0e7987c5faa": {
+          "title": "INTEK BINDER — Relic Vault",
+          "visualDirection": "relic vault — stone, verdigris, Baskerville",
+          "parentDraftId": "e5403255-bb5c-41a9-8936-b8bc2226d3bd",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-09-05T12:52:00.000Z"
+    }
+  }
+}
