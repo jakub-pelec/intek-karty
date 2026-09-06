@@ -64,11 +64,14 @@ function loadFoilTexture() {
   if (foilTexture) return Promise.resolve(foilTexture);
   if (foilPromise) return foilPromise;
   foilPromise = new Promise((resolve) => {
-    new THREE.TextureLoader().load("/fx/holo-foil.webp", (texture) => {
+    new THREE.TextureLoader().load("/fx/holo-foil.png", (texture) => {
       texture.wrapS = THREE.MirroredRepeatWrapping;
       texture.wrapT = THREE.MirroredRepeatWrapping;
       texture.colorSpace = THREE.SRGBColorSpace;
-      texture.anisotropy = 4;
+      texture.generateMipmaps = true;
+      texture.minFilter = THREE.LinearMipmapLinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      texture.anisotropy = 16;
       texture.needsUpdate = true;
       foilTexture = texture;
       resolve(texture);
@@ -234,22 +237,17 @@ const HOLO_FRAGMENT = /* glsl */ `
 
   void main() {
     vec2 drift = vec2(
-      sin(uTime * 0.58) * 0.08 + sin(uTime * 1.15) * 0.036,
-      cos(uTime * 0.48) * 0.072 + sin(uTime * 0.88) * 0.032
+      sin(uTime * 0.35) * 0.04,
+      cos(uTime * 0.28) * 0.03
     );
-    vec2 uv = vUv + vSlide * 0.95 + drift + vec2(vFresnel * 0.24, vFresnel * 0.12);
-    uv = abs(fract(uv * 0.5) * 2.0 - 1.0);
+    vec2 uv = vUv + vSlide * 0.35 + drift;
     vec3 foil = texture2D(uFoil, uv).rgb;
     float luma = dot(foil, vec3(0.299, 0.587, 0.114));
-    foil = mix(vec3(luma), foil, 2.35);
-    vec3 tinted = foil * mix(uRarity, vec3(1.0), uLift) * 1.5;
-    vec2 off = vSlide * 0.32 + drift * 0.8;
-    float d0 = length(vUv - (vec2(0.0, 0.0) + off));
-    float d1 = length(vUv - (vec2(1.0, 0.0) + vec2(-off.x, off.y)));
-    float d2 = length(vUv - (vec2(0.0, 1.0) + vec2(off.x, -off.y)));
-    float d3 = length(vUv - (vec2(1.0, 1.0) - off));
-    float corner = exp(-pow(min(min(d0, d1), min(d2, d3)) / 0.58, 2.0));
-    float wash = (0.36 + vFresnel * 0.2 + corner * 0.14) * uGain;
+    foil = mix(vec3(luma), foil, 1.25);
+    vec3 tinted = foil * mix(uRarity, vec3(1.0), uLift);
+    vec2 fromCenter = (vUv - 0.5) * vec2(1.0, 1.15);
+    float edge = smoothstep(0.02, 1.15, length(fromCenter) * 1.55);
+    float wash = (0.1 + edge * 0.4 + vFresnel * 0.08) * uGain;
     gl_FragColor = vec4(tinted, wash);
   }
 `;
@@ -402,8 +400,8 @@ function usePaintedCard(name: string, imageUrl: string | null, rarity: Rarity) {
 
     const finish = (draw: (ctx: CanvasRenderingContext2D, w: number, h: number) => void) => {
       const canvas = document.createElement("canvas");
-      canvas.width = 512;
-      canvas.height = 716;
+      canvas.width = 768;
+      canvas.height = 1075;
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
       ctx.fillStyle = "#0c0b12";

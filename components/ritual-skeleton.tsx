@@ -348,7 +348,7 @@ export function ListPageSkeleton({
 
 export function CollectionPageSkeleton() {
   return (
-    <SkeletonRoot className="mx-auto w-full max-w-7xl pt-2 md:pt-6">
+    <SkeletonRoot className="mx-auto w-full max-w-[104rem] pt-2 md:pt-6">
       <h1 className="mb-3 text-center font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide text-[#cfc6b4] italic md:text-[53px]">
         Collection
       </h1>
@@ -369,7 +369,7 @@ export function CollectionPageSkeleton() {
       <p className="mb-6 text-right font-[family-name:var(--font-cinzel)] text-[16px] tracking-[0.16em] uppercase">
         <TypeBone>Completed 12/40</TypeBone>
       </p>
-      <div className="grid grid-cols-2 gap-x-12 gap-y-[77px] sm:grid-cols-3 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-[64px] md:grid-cols-3 md:gap-x-10 md:gap-y-[80px] xl:grid-cols-4 xl:gap-x-12 xl:gap-y-[88px]">
         {Array.from({ length: 8 }, (_, index) => (
           <div key={index}>
             <RelicFrame sealed>
@@ -377,7 +377,7 @@ export function CollectionPageSkeleton() {
                 <div className="ritual-shimmer h-full w-full" />
               </div>
             </RelicFrame>
-            <p className="mt-3 text-center font-[family-name:var(--font-cormorant)] text-sm italic">
+            <p className="mt-3 text-center font-[family-name:var(--font-cormorant)] text-lg italic">
               <TypeBone>Relic name</TypeBone>
             </p>
           </div>

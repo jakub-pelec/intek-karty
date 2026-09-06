@@ -15,7 +15,7 @@ export type CardFaceProps = {
 };
 
 const GRID_SIZES =
-  "(max-width: 640px) 45vw, (max-width: 768px) 30vw, 20vw";
+  "(max-width: 768px) 46vw, (max-width: 1280px) 32vw, 22vw";
 
 export function CardFace(props: CardFaceProps) {
   const rarity = props.rarity ?? "common";

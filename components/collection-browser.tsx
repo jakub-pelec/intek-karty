@@ -226,7 +226,7 @@ export function CollectionBrowser({
           No relics match.
         </p>
       ) : (
-        <div className="grid grid-cols-2 gap-x-12 gap-y-[77px] sm:grid-cols-3 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-[64px] md:grid-cols-3 md:gap-x-10 md:gap-y-[80px] xl:grid-cols-4 xl:gap-x-12 xl:gap-y-[88px]">
           {visible.map((slot, index) => (
             <button
               key={slot.id}
@@ -279,7 +279,7 @@ export function CollectionBrowser({
               </div>
               <div className="mt-3 text-center">
                 {slot.owned ? (
-                  <p className="truncate font-[family-name:var(--font-cormorant)] text-sm text-[#d7d3c8] italic">
+                  <p className="truncate font-[family-name:var(--font-cormorant)] text-lg text-[#d7d3c8] italic">
                     {slot.owned.name}
                   </p>
                 ) : (
@@ -296,11 +296,11 @@ export function CollectionBrowser({
 
       {selected?.owned ? (
         <div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-[#05040a]/80 p-4 sm:items-center"
+          className="fixed inset-0 z-50 flex items-end justify-center bg-[#05040a]/80 p-3 sm:items-center sm:p-6"
           onClick={() => setSelected(null)}
         >
           <div
-            className="relative flex w-full max-w-3xl flex-col items-center gap-8 overflow-hidden border border-[#d4b36a]/35 bg-[#0c0b12] px-6 py-6 sm:flex-row sm:items-center sm:gap-10 sm:px-10 sm:py-9"
+            className="relative flex w-full max-w-7xl flex-col items-center gap-8 overflow-hidden border border-[#d4b36a]/35 bg-[#0c0b12] px-5 py-6 sm:flex-row sm:items-center sm:gap-14 sm:px-14 sm:py-14"
             onClick={(event) => event.stopPropagation()}
           >
             <div
@@ -311,7 +311,7 @@ export function CollectionBrowser({
               }}
             />
             <CardInspect
-              className="relative z-10 w-56 shrink-0 sm:w-72"
+              className="relative z-10 w-80 shrink-0 sm:w-[28rem] lg:w-[32rem]"
               name={selected.owned.name}
               imageUrl={selected.owned.imageUrl}
               backImageUrl={backImageUrl}
@@ -320,11 +320,11 @@ export function CollectionBrowser({
               signature={selected.owned.signature}
               glow={false}
             />
-            <div className="relative z-10 min-w-0 flex-1 space-y-4 text-center sm:text-left">
+            <div className="relative z-10 min-w-0 flex-1 space-y-6 text-center sm:text-left">
               <p className="font-[family-name:var(--font-cinzel)] text-xs tracking-[0.2em] text-[#d7d3c8]/70 uppercase">
                 {toRoman(selected.number)}
               </p>
-              <h2 className="font-[family-name:var(--font-cormorant)] text-[40px] text-[#f3efe6] italic sm:text-[53px]">
+              <h2 className="font-[family-name:var(--font-cormorant)] text-[48px] leading-none text-[#f3efe6] italic sm:text-[72px]">
                 {selected.owned.name}
               </h2>
               <p className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#d4b36a] uppercase">
@@ -333,7 +333,7 @@ export function CollectionBrowser({
                 {selected.owned.signature ? " · signed" : ""}
               </p>
               <div className="h-px bg-[#d4b36a]/40" />
-              <p className="text-lg leading-relaxed text-[#d7d3c8]">
+              <p className="text-xl leading-relaxed text-[#d7d3c8] sm:text-2xl">
                 {selected.owned.description}
               </p>
               <p className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.16em] text-[#d7d3c8]/75 uppercase">

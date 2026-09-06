@@ -1,43 +1,38 @@
-# Intek Binder — design system
+# Intek Binder — design system (shipped ritual)
 
-## Product (locked)
-Twitch stream collectible binder for Intek (Peleee). Viewers log in with Twitch, redeem Channel Points for boosters, streamer opens packs live. In-app collector points are separate. Jobs: watch, collect 37 cards, chase holo/signature, redeem shop rewards, open packs on air.
+## Product
+Twitch stream collectible binder. Viewers log in with Twitch, collect cards, chase holo/signed, earn titles, spend echoes in the shop. Streamer opens packs from Inner Sanctum.
 
-Wordmark is the text **Intek Binder**. No pictorial logo. Do not invent a mark. Do not use Riot, Riftbound, Arcane, or League wordmarks or champion art.
-
-## Chosen direction
-**Void Altar + Riftbound card craft.** Keep the hush of the Void Altar: abyss field, moon-silver type, one relic on a plinth, lots of night. Align every chrome piece with Riftbound-style card frames — hextech filigree, energy lines, notched double-borders, metal rarity, a gem at the foot of the card.
-
-This is inspiration, not a clone. Intek cards stay Intek. No League champions on the page.
+Wordmark is the text **Intek Binder** (Cinzel, letterspaced). No pictorial logo. Do not invent a mark.
 
 ## Color
-- Abyss: `#05040a`
-- Moon silver: `#d7d3c8`
-- Bone: `#cfc6b4`
-- Far indigo mist only in depth: `#1a1630`
-- Frame metals: bronze `#8a5a2b`, silver `#b8c0c8`, relic gold `#d4b36a` (filigree and gems only, not SaaS fill buttons)
-- Holo energy: cyan-teal along filigree, never a page wash
-- Twitch purple `#9146ff` only on login
+- Abyss page: `#05040a`
+- Moon silver body: `#d7d3c8`
+- Bone: `#cfc6b4` / `#f3efe6`
+- Surface panels: `#0c0b12`
+- Relic gold: `#d4b36a` (hairline borders, filled buttons, progress, active nav)
+- Bestowed green: `#7dbe72` (completed titles: bar, count, Bestowed label, row wash `bg-[#7dbe72]/10`)
+- Holo rarity label on Altar: `#00e5ff`
+- Danger: `#8b2e3a` / `#1a0a0c`
 
 ## Type
-- Display / greeting / card name: Cormorant Garamond (italic for the relic name)
-- Wordmark: Cinzel, letterspaced, small like a carved lintel — not Beaufort, not Inter
-- UI labels: Cinzel or Cormorant small caps. No IBM Plex Mono, Anton, Geist, Fraunces, Inter
+- Display / titles / card names: Cormorant Garamond italic
+- Wordmark + UI labels: Cinzel, wide tracking, uppercase
+- Body: Cormorant light / Georgia. No Inter, Fraunces, Geist, IBM Plex, Anton
 
-## Card language (from Riftbound frames)
-- Portrait relic, art-first. Hextech-like filigree around the edge — seamless energy lines, not a rounded-xl CSS card.
-- Notched / stepped corners like the Arcane×Riftbound box frame (inward notches at corners and mid-sides), gold double-stroke.
-- Rarity gem at the bottom center:
-  - common: bronze + circle
-  - rare: silver + triangle
-  - epic: gold + square
-  - legendary: foil gold + pentagon
-  - joker: hex gem
-- Holo = foil sheen on the filigree. Signed = a small inked signature on the art, not a candy pill.
-- UI chrome (nav rules, plinth, stat captions) uses the same notched hairline and metal — the page is one ritual object, not a dashboard around a card.
+## Shell (every logged-in page)
+- Full-bleed abyss + faint indigo glow + star dust
+- Header: Intek Binder left, `{name} · {echoes} · depart` right, max-w-5xl
+- Centered word-nav: Altar · Collection · Titles · Offerings · Chronicle · (admin) Inner Sanctum
+- On `/admin/*` a second gold-ruled sanctum nav: Queue · Users · Fulfillment · Draws · Dev
+- Active nav is gold; idle is moon silver. No sidebar.
 
-## Layout
-Keep Void Altar: centered vertical axis, extreme negative space, quiet top word-nav, stats as engraved captions under the plinth, memorial lists in the lower third. Do not return to a SaaS sidebar or three metric tiles.
+## Chrome
+- Filled gold buttons (`#d4b36a` on `#1a1404` text) for primary actions
+- List panels: `border border-[#d4b36a]/30 bg-[#0c0b12]`
+- Collection table: wider `max-w-7xl` frame, `border-[#d4b36a]/25`, inner dim `bg-[#05040a]/45`, “Completed x/y” top-right
+- Plinth stats: top gold hairline, three engraved captions
+- Cards are portrait relics in a frame, not rounded SaaS cards
 
 ## Anti
-Tech HUD, program clocks, amber ticks, glass, mesh blobs, Inter luxury dashboards, Riot/Arcane/Riftbound branding, copied champion illustrations as product content.
+SaaS sidebar, Inter dashboards, Riftbound/Riot/Arcane branding, hextech filigree invented over the current hairline ritual chrome.

@@ -68,7 +68,7 @@ export function CardInspectCanvas({
       {active ? (
         <Canvas
           camera={{ position: [0, 0, fitDistance()], fov: FIT_FOV }}
-          dpr={[1, 1.5]}
+          dpr={[1, holographic ? 2 : 1.5]}
           gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
           onCreated={({ gl }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping;

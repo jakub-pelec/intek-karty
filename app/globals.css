@@ -54,12 +54,14 @@ body::-webkit-scrollbar {
 }
 
 .card-holo-foil {
-  background-image: url("/fx/holo-foil.webp");
-  background-size: 100% 100%;
+  background-image: url("/fx/holo-foil.png");
+  background-size: cover;
   background-position: center;
   mix-blend-mode: overlay;
-  opacity: 0.92;
-  filter: saturate(2.9);
+  opacity: 0.62;
+  filter: saturate(1.2);
+  -webkit-mask-image: radial-gradient(ellipse 92% 82% at 50% 48%, transparent 0%, black 100%);
+  mask-image: radial-gradient(ellipse 92% 82% at 50% 48%, transparent 0%, black 100%);
 }
 
 .card-holo-foil::after {
@@ -68,7 +70,7 @@ body::-webkit-scrollbar {
   inset: 0;
   background: var(--holo-tint, #d7d3c8);
   mix-blend-mode: soft-light;
-  opacity: 0.16;
+  opacity: 0.12;
 }
 
 .card-face-holo {
@@ -303,6 +305,7 @@ a.ritual-ember-solid:hover {
 
 @media (prefers-reduced-motion: reduce) {
   .holo-anim,
+  .card-holo-foil,
   .card-ceremony,
   .open-veil,
   .open-flash,

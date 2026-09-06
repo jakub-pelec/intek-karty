@@ -66,7 +66,7 @@ export default async function CollectionPage({
   const total = activeCatalog.length;
 
   return (
-    <main className="mx-auto w-full max-w-7xl pt-2 md:pt-6">
+    <main className="mx-auto w-full max-w-[104rem] pt-2 md:pt-6">
       <h1 className="mb-3 text-center font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide text-[#cfc6b4] italic md:text-[53px]">
         Collection
       </h1>
