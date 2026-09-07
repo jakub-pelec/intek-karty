@@ -7,8 +7,7 @@
     "develop": "strapi develop",
     "start": "node scripts/start-hosted.mjs",
     "build": "strapi build",
-    "console": "strapi console",
-    "backfill-holo-maps": "node scripts/backfill-holo-maps.js"
+    "console": "strapi console"
   },
   "dependencies": {
     "@strapi/plugin-users-permissions": "5.15.1",

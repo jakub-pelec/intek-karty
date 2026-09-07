@@ -6,6 +6,7 @@ import { BoosterOpenPreview } from "@/components/booster-pack-preview";
 import type { OpenCard } from "@/components/booster-open-scene";
 import { preloadHoloAssets } from "@/components/card-mesh";
 import { openWashColor, type OpenPhase } from "@/lib/open-fx";
+import { useTranslations } from "next-intl";
 
 export function BoosterOpenOverlay({
   open,
@@ -30,6 +31,8 @@ export function BoosterOpenOverlay({
 }) {
   const [mounted, setMounted] = useState(false);
   const canDismiss = phase === "reveal" && Boolean(card);
+  const t = useTranslations("openPack");
+  const tCommon = useTranslations("common");
 
   useEffect(() => setMounted(true), []);
 
@@ -65,7 +68,7 @@ export function BoosterOpenOverlay({
       className="open-overlay fixed inset-0 z-[80] bg-[#05040a]"
       role="dialog"
       aria-modal
-      aria-label={card ? `${card.name} revealed` : `Opening ${name}`}
+      aria-label={card ? t("revealed", { name: card.name }) : t("openingName", { name })}
     >
       <div
         className="open-veil pointer-events-none absolute inset-0"
@@ -111,12 +114,12 @@ export function BoosterOpenOverlay({
             onClick={onDismiss}
             className="pointer-events-auto mt-2 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.28em] text-[#d7d3c8] uppercase transition-colors hover:text-[#d4b36a]"
           >
-            Continue
+            {tCommon("continue")}
           </button>
         </div>
       ) : (
         <p className="pointer-events-none absolute inset-x-0 bottom-10 z-20 text-center font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.28em] text-[#d7d3c8]/70 uppercase">
-          {phase === "charge" ? "The seal is breaking" : "The vision arrives"}
+          {phase === "charge" ? t("sealBreaking") : t("visionArrives")}
         </p>
       )}
     </div>,

@@ -4,6 +4,7 @@ import { BoosterOpenStage } from "@/components/booster-open-stage";
 import { RitualPageHeader } from "@/components/ritual-page-header";
 import { getDb } from "@/db";
 import { boosterTypes, cards, collections, draws, userBoosters, users } from "@/db/schema";
+import { getTranslations } from "next-intl/server";
 
 export default async function AdminOpenBoosterPage({
   params,
@@ -32,6 +33,7 @@ export default async function AdminOpenBoosterPage({
   if (!row || row.status === "cancelled") notFound();
 
   const viewerName = row.userName ?? `twitch:${row.twitchId}`;
+  const tOpen = await getTranslations("openPack");
   let initialDraw = null;
   if (row.status === "opened") {
     const [draw] = await db
@@ -65,8 +67,8 @@ export default async function AdminOpenBoosterPage({
         isDuplicate: draw.isDuplicate,
         pointsAwarded: draw.pointsAwarded,
         message: draw.isDuplicate
-          ? `Duplicate ${draw.cardName} — ${draw.pointsAwarded} points`
-          : `Opened ${draw.cardName}`,
+          ? tOpen("duplicateCard", { name: draw.cardName, points: draw.pointsAwarded })
+          : tOpen("openedCard", { name: draw.cardName }),
       };
     }
   }
@@ -74,7 +76,7 @@ export default async function AdminOpenBoosterPage({
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">
       <RitualPageHeader
-        title="Open"
+        title={tOpen("title")}
         eyebrow={row.note ? `${viewerName} · ${row.note}` : viewerName}
       />
       <BoosterOpenStage

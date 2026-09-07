@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { LandingAtmosphere, LandingPackAura } from "@/components/landing-atmosphere";
+import { LanguageSwitch } from "@/components/language-switch";
 import { SEED_BOOSTERS } from "@/db/seed-data/boosters";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -33,29 +35,32 @@ export default async function HomePage() {
   if (session?.user) {
     redirect("/dashboard");
   }
+  const t = await getTranslations();
 
   return (
     <div className="ritual relative flex min-h-dvh flex-col overflow-hidden">
       <LandingAtmosphere />
       <div className="relative z-10 flex min-h-dvh flex-col">
         <header className="flex flex-col items-center px-6 pt-10 pb-6 md:px-12 md:pt-12">
-          <span className="font-[family-name:var(--font-cinzel)] text-sm font-medium tracking-[0.5em] text-[#d4b36a] uppercase">
-            Intek Binder
-          </span>
+          <div className="flex w-full max-w-5xl items-start justify-between gap-4">
+            <span className="font-[family-name:var(--font-cinzel)] text-sm font-medium tracking-[0.5em] text-[#d4b36a] uppercase">
+              {t("brand")}
+            </span>
+            <LanguageSwitch />
+          </div>
         </header>
         <main className="flex flex-1 flex-col items-center justify-center px-6 pb-24">
           <div className="flex w-full max-w-5xl flex-col items-center gap-12 md:flex-row md:gap-20">
             <div className="flex w-full flex-1 flex-col items-center md:items-start">
               <div className="flex w-full max-w-md flex-col items-center text-center md:items-start md:text-left">
                 <p className="mb-4 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.3em] text-[#d4b36a] uppercase">
-                  Digital Collectibles
+                  {t("landing.eyebrow")}
                 </p>
                 <h1 className="mb-6 font-[family-name:var(--font-cormorant)] text-[48px] leading-tight tracking-wide text-[#cfc6b4] italic md:text-[64px]">
-                  Bind relics during the stream.
+                  {t("landing.title")}
                 </h1>
                 <p className="mb-12 font-[family-name:var(--font-cormorant)] text-[22px] tracking-wide text-[#d7d3c8]/80 italic md:text-[26px]">
-                  Collect cards, chase rare variants, and earn titles while
-                  watching.
+                  {t("landing.body")}
                 </p>
                 <div className="relic-plinth flex w-full flex-col items-center pt-8">
                   <Link
@@ -65,10 +70,10 @@ export default async function HomePage() {
                       "w-full max-w-[200px]",
                     )}
                   >
-                    Enter
+                    {t("landing.enter")}
                   </Link>
                   <p className="mt-4 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.22em] text-[#d7d3c8]/40 uppercase">
-                    Via Twitch
+                    {t("landing.viaTwitch")}
                   </p>
                 </div>
               </div>

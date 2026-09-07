@@ -20,9 +20,16 @@ import { rarityGlowColor } from "@/components/rarity-glow";
 import { requireUser } from "@/lib/rbac";
 import { toRoman } from "@/lib/ritual";
 import { cn, formatDate } from "@/lib/utils";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function DashboardPage() {
   const user = await requireUser();
+  const [t, tRarity, tCommon, locale] = await Promise.all([
+    getTranslations("altar"),
+    getTranslations("rarity"),
+    getTranslations("common"),
+    getLocale(),
+  ]);
   const db = getDb();
 
   const [titleCountRows, sets, recentDraws, recentAchievements] = await Promise.all([
@@ -95,7 +102,7 @@ export default async function DashboardPage() {
   return (
     <main className="flex flex-col items-center px-4 pt-2 pb-16 md:px-8 md:pt-8">
       <h1 className="mb-10 text-center font-[family-name:var(--font-cinzel)] text-[12px] font-medium tracking-[0.4em] text-[#d4b36a]/90 uppercase md:mb-12">
-        Welcome, {user.name}.
+        {t("welcome", { name: user.name })}
       </h1>
 
       <div className="relative mb-12 flex w-full max-w-7xl flex-col lg:mb-16 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(260px,380px)_minmax(0,1fr)] lg:gap-10 xl:gap-12">
@@ -106,10 +113,10 @@ export default async function DashboardPage() {
 
         <section className="order-2 flex flex-col pt-10 lg:order-1 lg:pt-12">
           <p className="mb-6 text-center font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
-            Recent Manifestations
+            {t("recentManifestations")}
           </p>
           {recentDraws.length === 0 ? (
-            <p className="text-center text-[17px] text-[#d7d3c8]/40 italic">None yet.</p>
+            <p className="text-center text-[17px] text-[#d7d3c8]/40 italic">{t("noneYet")}</p>
           ) : (
             <ul className="space-y-1">
               {recentDraws.map((draw, index) => (
@@ -128,13 +135,13 @@ export default async function DashboardPage() {
                       {String(draw.cardNumber).padStart(2, "0")} {draw.cardName}
                       {draw.signature ? (
                         <span className="ml-2 font-[family-name:var(--font-cinzel)] text-[8px] tracking-widest text-[#d4b36a]/70 not-italic uppercase">
-                          Signed
+                          {tCommon("signed")}
                         </span>
                       ) : null}
                     </span>
                   </div>
                   <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.1em] text-[#d7d3c8]/40 uppercase">
-                    {draw.cardRarity}
+                    {tRarity(draw.cardRarity)}
                   </span>
                 </li>
               ))}
@@ -144,7 +151,7 @@ export default async function DashboardPage() {
 
         <section className="relative order-1 mb-8 flex flex-col items-center lg:order-2 lg:mb-0">
           <p className="mb-6 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
-            The Latest Vision
+            {t("latestVision")}
           </p>
           <div className="altar-center-dust pointer-events-none absolute inset-0 -z-10 mt-10 opacity-50" />
           {latest ? (
@@ -179,19 +186,19 @@ export default async function DashboardPage() {
                 {latest.cardName}
               </h2>
               <span className="mt-3 font-[family-name:var(--font-cinzel)] text-[11px] font-semibold tracking-[0.3em] text-[#00e5ff] uppercase">
-                {latest.cardRarity}
-                {latest.holographic ? " holo" : ""}
-                {latest.signature ? " signed" : ""}
+                {tRarity(latest.cardRarity)}
+                {latest.holographic ? t("holoSuffix") : ""}
+                {latest.signature ? t("signedSuffix") : ""}
               </span>
               <span className="mt-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.1em] text-[#d7d3c8]/40 uppercase">
-                {formatDate(latest.createdAt)}
+                {formatDate(latest.createdAt, locale)}
               </span>
             </div>
           ) : (
             <RelicFrame sealed className="w-full max-w-[380px]">
               <div className="flex h-full items-center justify-center px-8 text-center">
                 <p className="font-[family-name:var(--font-cormorant)] text-[26px] text-[#d7d3c8]/40 italic">
-                  No vision yet. Watch the stream.
+                  {t("noVision")}
                 </p>
               </div>
             </RelicFrame>
@@ -200,11 +207,11 @@ export default async function DashboardPage() {
 
         <section className="order-3 flex flex-col pt-10 lg:pt-12">
           <p className="mb-6 text-center font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
-            Titles Bestowed
+            {t("titlesBestowed")}
           </p>
           {recentAchievements.length === 0 ? (
             <p className="text-center text-[17px] text-[#d7d3c8]/40 italic">
-              None unlocked yet.
+              {t("noneUnlocked")}
             </p>
           ) : (
             <ul className="space-y-1">
@@ -217,7 +224,7 @@ export default async function DashboardPage() {
                     {row.name}
                   </span>
                   <span className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.2em] text-[#d7d3c8]/30 uppercase">
-                    {formatDate(row.unlockedAt)}
+                    {formatDate(row.unlockedAt, locale)}
                   </span>
                 </li>
               ))}
@@ -235,9 +242,7 @@ export default async function DashboardPage() {
             {relics.owned} / {relics.total}
           </span>
           <span className="relative mt-2 max-w-full font-[family-name:var(--font-cinzel)] text-[9px] leading-[14px] tracking-[0.12em] text-[#d7d3c8]/40 uppercase transition-colors group-hover:text-[#d4b36a]/80 md:mt-3 md:text-[10px] md:tracking-[0.15em]">
-            Relics
-            <br />
-            Found
+            {t.rich("relicsFound", { br: () => <br /> })}
           </span>
         </Link>
         <Link
@@ -251,9 +256,7 @@ export default async function DashboardPage() {
             {user.pointsBalance}
           </span>
           <span className="relative mt-2 max-w-full font-[family-name:var(--font-cinzel)] text-[9px] leading-[14px] tracking-[0.12em] text-[#d7d3c8]/40 uppercase transition-colors group-hover:text-[#d4b36a]/80 md:mt-3 md:text-[10px] md:tracking-[0.15em]">
-            Echoes
-            <br />
-            Gathered
+            {t.rich("echoesGathered", { br: () => <br /> })}
           </span>
         </Link>
         <Link
@@ -264,9 +267,7 @@ export default async function DashboardPage() {
             {titles}
           </span>
           <span className="relative mt-2 max-w-full font-[family-name:var(--font-cinzel)] text-[9px] leading-[14px] tracking-[0.12em] text-[#d7d3c8]/40 uppercase transition-colors group-hover:text-[#d4b36a]/80 md:mt-3 md:text-[10px] md:tracking-[0.15em]">
-            Titles
-            <br />
-            Bestowed
+            {t.rich("titlesBestowedStat", { br: () => <br /> })}
           </span>
         </Link>
       </div>

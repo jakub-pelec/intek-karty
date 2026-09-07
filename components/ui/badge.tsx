@@ -1,4 +1,7 @@
+"use client";
+
 import type { HTMLAttributes } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import type { Rarity } from "@/db/schema";
 
@@ -32,26 +35,21 @@ export function MutationBadges({
   holographic?: boolean;
   signature?: boolean;
 }) {
+  const t = useTranslations("common");
   if (!holographic && !signature) return null;
   return (
     <span className="inline-flex flex-wrap gap-2">
       {holographic ? (
-        <Badge className="text-[#7ef0e0]">Holo</Badge>
+        <Badge className="text-[#7ef0e0]">{t("holo")}</Badge>
       ) : null}
       {signature ? (
-        <Badge className="text-[#d4b36a]">Signed</Badge>
+        <Badge className="text-[#d4b36a]">{t("signed")}</Badge>
       ) : null}
     </span>
   );
 }
 
 export function RarityBadge({ rarity }: { rarity: Rarity }) {
-  const labels = {
-    common: "Common",
-    rare: "Rare",
-    epic: "Epic",
-    legendary: "Legendary",
-    joker: "Joker",
-  };
-  return <Badge className={rarityClass[rarity]}>{labels[rarity]}</Badge>;
+  const t = useTranslations("rarity");
+  return <Badge className={rarityClass[rarity]}>{t(rarity)}</Badge>;
 }

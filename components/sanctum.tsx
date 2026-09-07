@@ -1,5 +1,8 @@
+"use client";
+
 import type { HTMLAttributes, ReactNode } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 export function SanctumCard({
@@ -53,6 +56,7 @@ export function SanctumPager({
   prevHref?: string | null;
   nextHref?: string | null;
 }) {
+  const t = useTranslations("common");
   if (!prevHref && !nextHref) return null;
   return (
     <div className="mt-10 flex justify-center gap-10">
@@ -61,7 +65,7 @@ export function SanctumPager({
           href={prevHref}
           className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
         >
-          Previous
+          {t("previous")}
         </Link>
       ) : null}
       {nextHref ? (
@@ -69,7 +73,7 @@ export function SanctumPager({
           href={nextHref}
           className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
         >
-          Next
+          {t("next")}
         </Link>
       ) : null}
     </div>

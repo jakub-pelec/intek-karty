@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 
@@ -9,6 +10,7 @@ const DEBOUNCE_MS = 320;
 export function AdminUserSearch({ query }: { query: string }) {
   const router = useRouter();
   const [value, setValue] = useState(query);
+  const t = useTranslations("users");
 
   useEffect(() => {
     setValue(query);
@@ -31,8 +33,8 @@ export function AdminUserSearch({ query }: { query: string }) {
     <Input
       value={value}
       onChange={(event) => setValue(event.target.value)}
-      placeholder="Search by nickname"
-      aria-label="Search users by nickname"
+      placeholder={t("searchPlaceholder")}
+      aria-label={t("searchLabel")}
       autoComplete="off"
     />
   );

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Cinzel, Cormorant_Garamond, Fraunces, Geist } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { cmsPublicOrigin } from "@/lib/cms-origin";
 import "./globals.css";
 
@@ -29,17 +31,22 @@ const cormorant = Cormorant_Garamond({
   preload: false,
 });
 
-export const metadata: Metadata = {
-  title: "Intek Binder",
-  description: "Twitch stream card collection",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+  return {
+    title: t("brand"),
+    description: t("meta.description"),
+  };
+}
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
   const cmsOrigin = cmsPublicOrigin();
+  const locale = await getLocale();
+  const messages = await getMessages();
 
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${geist.variable} ${fraunces.variable} ${cinzel.variable} ${cormorant.variable} h-dvh antialiased`}
     >
       <head>
@@ -51,7 +58,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         ) : null}
       </head>
       <body className="min-h-dvh" suppressHydrationWarning>
-        {children}
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -71,26 +71,21 @@ describe("cms mapper", () => {
         documentId: "card1",
         number: 4,
         name: "Ember",
-        lore: "A spark.",
         rarity: "rare",
         signed: true,
         image: { url: "/uploads/ember.png" },
-        holoMap: { url: "/uploads/ember-holo.png" },
         collection: { documentId: "col1" },
       },
       "http://cms.test",
     );
     expect(card.uniqueKey).toBe("col1:4:true");
     expect(card.imageUrl).toBe("http://cms.test/uploads/ember.png");
-    expect(card.holoMapUrl).toBe("http://cms.test/uploads/ember-holo.png");
-    expect(card.description).toBe("A spark.");
 
     const booster = mapBooster(
       {
         documentId: "b1",
         slug: "booster",
         name: "Booster",
-        twitchChannelPointCost: 4000,
         holographicChancePercent: 3,
         collection: { documentId: "col1" },
         dropRates: [

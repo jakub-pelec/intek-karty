@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { X } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { CardFace } from "@/components/card-face";
 import { CardInspect } from "@/components/card-inspect";
 import { RelicFrame } from "@/components/relic-frame";
@@ -18,28 +20,21 @@ import {
   type CollectionQuery,
   type CollectionSlot,
 } from "@/lib/collection";
-import { RARITIES, RARITY_LABELS } from "@/lib/constants";
+import { RARITIES } from "@/lib/constants";
 import { RARITY_LIGHT } from "@/lib/open-fx";
 import { toRoman } from "@/lib/ritual";
 import { cn, formatDate } from "@/lib/utils";
 
-const OWN_LABELS: Record<(typeof OWNERSHIP_FILTERS)[number], string> = {
-  all: "All",
-  owned: "Bound",
-  missing: "Unseen",
-};
+const OWN_KEYS = {
+  all: "all",
+  owned: "bound",
+  missing: "unseen",
+} as const;
 
-const VARIANT_LABELS: Record<(typeof VARIANT_FILTERS)[number], string> = {
-  holo: "Holo",
-  signed: "Signed",
-};
-
-const SORT_LABELS: Record<(typeof COLLECTION_SORTS)[number], string> = {
-  number: "Number",
-  rarity: "Rarity",
-  name: "Name",
-  newest: "Newest",
-};
+const VARIANT_KEYS = {
+  holo: "holo",
+  signed: "signed",
+} as const;
 
 function InspectLedgerRow({
   label,
@@ -67,6 +62,28 @@ function InspectLedgerRow({
   );
 }
 
+function RelicsBound({
+  owned,
+  total,
+  className,
+}: {
+  owned: number;
+  total: number;
+  className?: string;
+}) {
+  const t = useTranslations("collection");
+  return (
+    <p
+      className={cn(
+        "font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.3em] text-[#d4b36a] uppercase",
+        className,
+      )}
+    >
+      {t("relicsBound", { owned: toRoman(owned), total: toRoman(total) })}
+    </p>
+  );
+}
+
 function FilterLink({
   active,
   href,
@@ -90,7 +107,7 @@ function FilterLink({
         onSelect();
       }}
       className={cn(
-        "ritual-ember self-start border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase",
+        "ritual-ember self-center border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.16em] uppercase md:self-start md:text-[11px] md:tracking-[0.24em]",
         active
           ? "border-[#d4b36a] text-[#d4b36a]"
           : "border-transparent text-[#d7d3c8]/40 hover:border-[#d4b36a]/50",
@@ -98,6 +115,27 @@ function FilterLink({
     >
       {children}
     </Link>
+  );
+}
+
+function FilterGroup({
+  label,
+  children,
+  className,
+}: {
+  label: string;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn("flex min-w-0 flex-col items-center gap-1.5 md:items-start md:gap-3", className)}>
+      <span className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.24em] text-[#d7d3c8]/40 uppercase">
+        {label}
+      </span>
+      <div className="flex flex-row flex-wrap items-center justify-center gap-x-3 gap-y-1.5 md:flex-col md:items-start md:justify-start md:gap-3">
+        {children}
+      </div>
+    </div>
   );
 }
 
@@ -116,6 +154,10 @@ export function CollectionBrowser({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const locale = useLocale();
+  const t = useTranslations("collection");
+  const tRarity = useTranslations("rarity");
+  const tCommon = useTranslations("common");
   const search = searchParams.toString();
   const [selected, setSelected] = useState<CollectionSlot | null>(null);
   const [optimistic, setOptimistic] = useState<CollectionQuery | null>(null);
@@ -177,13 +219,32 @@ export function CollectionBrowser({
   }
 
   return (
-    <div className="relative flex flex-col items-start gap-10 lg:flex-row lg:gap-16">
-      <aside className="relative z-10 flex w-full shrink-0 flex-col gap-10 md:min-h-[600px] lg:w-56 lg:border-r lg:border-[#d4b36a]/25 lg:pr-10">
+    <>
+    <div className="relative grid grid-cols-1 items-start gap-5 md:grid-cols-[12rem_minmax(0,1fr)] md:gap-x-10 md:gap-y-0 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-x-16">
+      <div className="relative z-10 min-w-0 text-center md:col-start-2 md:row-start-1 md:mb-1 md:text-left">
+        <div className="flex flex-col justify-between md:flex-row md:items-end">
+          <h1 className="font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide text-[#cfc6b4] italic md:text-[53px]">
+            {t("title")}
+          </h1>
+          <RelicsBound
+            owned={progress.owned}
+            total={progress.total}
+            className="hidden md:block"
+          />
+        </div>
+      </div>
+
+      <aside className="relative z-10 flex w-full min-w-0 flex-col items-center gap-3 md:col-start-1 md:row-span-2 md:row-start-1 md:items-start md:gap-0 md:pr-8 lg:pr-10">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 right-0 hidden w-px bg-gradient-to-b from-transparent via-[#d4b36a] to-transparent md:block"
+        />
+        <h2 className="hidden font-[family-name:var(--font-cormorant)] text-[53px] tracking-wide text-[#cfc6b4] italic md:mb-1 md:block">
+          {t("filters")}
+        </h2>
+        <div className="flex w-full flex-col items-center gap-3 md:items-start md:gap-10">
         {sets.length > 0 ? (
-          <div className="flex flex-col items-start gap-3">
-            <span className="mb-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.24em] text-[#d7d3c8]/40 uppercase">
-              Set
-            </span>
+          <FilterGroup label={t("set")}>
             {sets.map((set) => (
               <FilterLink
                 key={set.slug}
@@ -194,12 +255,9 @@ export function CollectionBrowser({
                 {set.name}
               </FilterLink>
             ))}
-          </div>
+          </FilterGroup>
         ) : null}
-        <div className="flex flex-col items-start gap-3">
-          <span className="mb-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.24em] text-[#d7d3c8]/40 uppercase">
-            Status
-          </span>
+        <FilterGroup label={t("status")} className="hidden md:flex">
           {OWNERSHIP_FILTERS.map((own) => (
             <FilterLink
               key={own}
@@ -207,20 +265,17 @@ export function CollectionBrowser({
               active={viewQuery.own === own}
               onSelect={() => applyFilter((current) => ({ ...current, own }))}
             >
-              {OWN_LABELS[own]}
+              {t(OWN_KEYS[own])}
             </FilterLink>
           ))}
-        </div>
-        <div className="flex flex-col items-start gap-3">
-          <span className="mb-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.24em] text-[#d7d3c8]/40 uppercase">
-            Rarity
-          </span>
+        </FilterGroup>
+        <FilterGroup label={t("rarity")} className="hidden md:flex">
           <FilterLink
             href={collectionHref({ ...viewQuery, rarities: [] })}
             active={viewQuery.rarities.length === 0}
             onSelect={() => applyFilter((current) => ({ ...current, rarities: [] }))}
           >
-            Any rarity
+            {t("anyRarity")}
           </FilterLink>
           {RARITIES.map((rarity) => (
             <FilterLink
@@ -229,20 +284,17 @@ export function CollectionBrowser({
               active={viewQuery.rarities.includes(rarity)}
               onSelect={() => applyFilter((current) => toggleRarity(current, rarity))}
             >
-              {RARITY_LABELS[rarity]}
+              {tRarity(rarity)}
             </FilterLink>
           ))}
-        </div>
-        <div className="flex flex-col items-start gap-3">
-          <span className="mb-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.24em] text-[#d7d3c8]/40 uppercase">
-            Mark
-          </span>
+        </FilterGroup>
+        <FilterGroup label={t("mark")} className="hidden md:flex">
           <FilterLink
             href={collectionHref({ ...viewQuery, variants: [] })}
             active={viewQuery.variants.length === 0}
             onSelect={() => applyFilter((current) => ({ ...current, variants: [] }))}
           >
-            Any mark
+            {t("anyMark")}
           </FilterLink>
           {VARIANT_FILTERS.map((variant) => (
             <FilterLink
@@ -251,14 +303,11 @@ export function CollectionBrowser({
               active={viewQuery.variants.includes(variant)}
               onSelect={() => applyFilter((current) => toggleVariant(current, variant))}
             >
-              {VARIANT_LABELS[variant]}
+              {t(VARIANT_KEYS[variant])}
             </FilterLink>
           ))}
-        </div>
-        <div className="flex flex-col items-start gap-3">
-          <span className="mb-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.24em] text-[#d7d3c8]/40 uppercase">
-            Sort
-          </span>
+        </FilterGroup>
+        <FilterGroup label={t("sort")} className="hidden md:flex">
           {COLLECTION_SORTS.map((sort) => (
             <FilterLink
               key={sort}
@@ -266,42 +315,26 @@ export function CollectionBrowser({
               active={viewQuery.sort === sort}
               onSelect={() => applyFilter((current) => ({ ...current, sort }))}
             >
-              {SORT_LABELS[sort]}
+              {t(sort)}
             </FilterLink>
           ))}
+        </FilterGroup>
         </div>
       </aside>
 
-      <div className="relative min-w-0 flex-1">
-        <div className="collection-vault-well pointer-events-none absolute -inset-10 z-0" />
-        <div className="relative z-10 mb-8 flex flex-col justify-between md:flex-row md:items-end">
-          <div>
-            <h1 className="font-[family-name:var(--font-cormorant)] text-[40px] leading-none tracking-wide text-[#cfc6b4] italic md:text-[53px]">
-              Collection
-            </h1>
-            <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.3em] text-[#d4b36a]/70 uppercase">
-              {toRoman(progress.owned)} of {toRoman(progress.total)} relics bound
-            </p>
-          </div>
-          <p
-            className={cn(
-              "mt-4 font-[family-name:var(--font-cinzel)] text-[16px] tracking-[0.16em] uppercase tabular-nums md:mt-0",
-              progress.total > 0 && progress.owned >= progress.total
-                ? "text-[#7dbe72]"
-                : "text-[#d4b36a]",
-            )}
-          >
-            Completed {progress.owned}/{progress.total}
-          </p>
-        </div>
-
-        <div className="relative z-10 border border-[#d4b36a]/25 bg-[#05040a]/45 px-5 py-8 sm:px-10 sm:py-12">
+      <div className="relative min-w-0 md:col-start-2 md:row-start-2">
+        <RelicsBound
+          owned={progress.owned}
+          total={progress.total}
+          className="mb-1 text-right md:hidden"
+        />
+        <div className="relative z-10 border border-[#d4b36a]/25 bg-[#05040a]/45 px-4 py-6 sm:px-10 sm:py-12">
           {visible.length === 0 ? (
             <p className="py-16 text-center font-[family-name:var(--font-cormorant)] text-lg text-[#d7d3c8]/50 italic">
-              No relics match.
+              {t("noMatch")}
             </p>
           ) : (
-            <div className="grid grid-cols-2 gap-x-6 gap-y-[64px] md:grid-cols-3 md:gap-x-10 md:gap-y-[80px] xl:grid-cols-4 xl:gap-x-12 xl:gap-y-[88px]">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-[64px] lg:grid-cols-3 lg:gap-x-10 lg:gap-y-[80px] xl:grid-cols-4 xl:gap-x-12 xl:gap-y-[88px]">
               {visible.map((slot, index) => (
                 <button
                   key={slot.id}
@@ -359,7 +392,7 @@ export function CollectionBrowser({
                       </p>
                     ) : (
                       <p className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.18em] text-[#8a8578] uppercase">
-                        {slot.signed ? "Unseen signed" : "Unseen"}
+                        {slot.signed ? t("unseenSigned") : t("unseen")}
                       </p>
                     )}
                   </div>
@@ -369,16 +402,25 @@ export function CollectionBrowser({
           )}
         </div>
       </div>
+    </div>
 
       {selected?.owned ? (
         <div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-[#05040a]/80 p-3 sm:items-center sm:p-6"
+          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain bg-[#05040a]/80 p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:items-center sm:p-6"
           onClick={() => setSelected(null)}
         >
           <div
-            className="relative flex w-full max-w-6xl flex-col items-center gap-8 overflow-hidden border border-[#d4b36a]/35 bg-[#0c0b12] px-5 py-6 sm:flex-row sm:items-center sm:gap-14 sm:px-14 sm:py-14"
+            className="relative my-auto flex w-full max-w-6xl flex-col items-center gap-5 overflow-y-auto border border-[#d4b36a]/35 bg-[#0c0b12] px-5 py-5 sm:max-h-none sm:flex-row sm:items-center sm:gap-14 sm:overflow-visible sm:px-14 sm:py-14"
             onClick={(event) => event.stopPropagation()}
           >
+            <button
+              type="button"
+              aria-label={tCommon("close")}
+              className="absolute top-3 right-3 z-20 p-1 text-[#d4b36a] hover:text-[#e8cf8a] sm:top-5 sm:right-5"
+              onClick={() => setSelected(null)}
+            >
+              <X className="h-5 w-5" strokeWidth={1.5} />
+            </button>
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0 z-0"
@@ -387,7 +429,7 @@ export function CollectionBrowser({
               }}
             />
             <CardInspect
-              className="relative z-10 w-80 shrink-0 sm:w-[28rem] lg:w-[32rem]"
+              className="relative z-10 w-[min(16rem,70vw)] shrink-0 sm:w-[28rem] lg:w-[32rem]"
               name={selected.owned.name}
               number={selected.number}
               imageUrl={selected.owned.imageUrl}
@@ -398,24 +440,24 @@ export function CollectionBrowser({
               signature={selected.owned.signature}
               glow={false}
             />
-            <div className="relative z-10 min-w-0 w-full flex-1 space-y-8 text-center sm:text-left">
-              <div className="space-y-4">
+            <div className="relative z-10 min-w-0 w-full flex-1 space-y-5 text-center sm:space-y-8 sm:text-left">
+              <div className="space-y-3 sm:space-y-4">
                 <p className="font-[family-name:var(--font-cinzel)] text-xs tracking-[0.2em] text-[#d7d3c8]/70 uppercase">
                   {toRoman(selected.number)}
                 </p>
-                <h2 className="font-[family-name:var(--font-cormorant)] text-[48px] leading-none text-[#f3efe6] italic sm:text-[72px]">
+                <h2 className="font-[family-name:var(--font-cormorant)] text-[40px] leading-none text-[#f3efe6] italic sm:text-[72px]">
                   {selected.owned.name}
                 </h2>
               </div>
               <div className="mx-auto flex w-full max-w-sm flex-col border-y border-[#d4b36a]/30 sm:mx-0">
                 <InspectLedgerRow
-                  label="Rarity"
-                  value={RARITY_LABELS[selected.owned.rarity]}
+                  label={t("inspect.rarity")}
+                  value={tRarity(selected.owned.rarity)}
                   valueClassName="text-[#d4b36a]"
                 />
                 <InspectLedgerRow
-                  label="Mark"
-                  value={selected.owned.holographic ? "Holo" : "—"}
+                  label={t("inspect.mark")}
+                  value={selected.owned.holographic ? t("inspect.holo") : t("inspect.none")}
                   valueClassName={
                     selected.owned.holographic
                       ? "text-[#00e5ff] drop-shadow-[0_0_5px_rgba(0,229,255,0.3)]"
@@ -423,12 +465,12 @@ export function CollectionBrowser({
                   }
                 />
                 <InspectLedgerRow
-                  label="Seal"
-                  value={selected.owned.signature ? "Signed" : "—"}
+                  label={t("inspect.seal")}
+                  value={selected.owned.signature ? t("inspect.signed") : t("inspect.none")}
                 />
                 <InspectLedgerRow
-                  label="Bound"
-                  value={formatDate(selected.owned.acquiredAt)}
+                  label={t("inspect.bound")}
+                  value={formatDate(selected.owned.acquiredAt, locale)}
                 />
               </div>
               <button
@@ -436,13 +478,13 @@ export function CollectionBrowser({
                 className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#f3efe6] uppercase hover:text-[#d4b36a]"
                 onClick={() => setSelected(null)}
               >
-                Close
+                {tCommon("close")}
               </button>
             </div>
           </div>
         </div>
       ) : null}
-    </div>
+    </>
   );
 }
 

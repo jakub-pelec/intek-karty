@@ -3,6 +3,7 @@ import { listUsers } from "@/db/queries/admin";
 import { AdminUserSearch } from "@/components/admin-user-search";
 import { RitualPageHeader } from "@/components/ritual-page-header";
 import { SanctumCard, SanctumEmpty, SanctumPager } from "@/components/sanctum";
+import { getTranslations } from "next-intl/server";
 function usersHref(query: string, page: number) {
   const params = new URLSearchParams();
   if (query) params.set("q", query);
@@ -20,15 +21,16 @@ export default async function AdminUsersPage({
   const query = q.trim();
   const page = Math.max(1, Number(rawPage ?? 1) || 1);
   const { rows, total, hasMore } = await listUsers(query, page);
+  const t = await getTranslations("users");
 
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">
       <RitualPageHeader
-        title="Users"
+        title={t("title")}
         eyebrow={
           query
-            ? `${total} matching · A–Z`
-            : `${total} in the ledger · A–Z`
+            ? t("matching", { total })
+            : t("inLedger", { total })
         }
       />
       <SanctumCard className="mb-6">
@@ -36,7 +38,7 @@ export default async function AdminUsersPage({
       </SanctumCard>
       {rows.length === 0 ? (
         <SanctumEmpty>
-          {query ? "No one matches that name." : "No users yet."}
+          {query ? t("noMatch") : t("none")}
         </SanctumEmpty>
       ) : (
         <SanctumCard className="px-6 py-0">
@@ -52,7 +54,7 @@ export default async function AdminUsersPage({
                       {user.name}
                     </p>
                     <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
-                      {user.role} · {user.pointsBalance} echoes
+                      {t("roleEchoes", { role: user.role, points: user.pointsBalance })}
                     </p>
                   </div>
                 </Link>

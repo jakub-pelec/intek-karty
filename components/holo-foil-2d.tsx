@@ -17,11 +17,14 @@ const MAX_EDGE = 384;
 
 type Layer = {
   canvas: HTMLCanvasElement;
+  source: CanvasImageSource | null;
+  srcWidth: number;
+  srcHeight: number;
   rarity: Rarity;
-  tiltX: number;
-  tiltY: number;
   visible: boolean;
   texture: SizedTexture | null;
+  coverW: number;
+  coverH: number;
 };
 
 type SizedTexture = WebGLTexture & { imageWidth: number; imageHeight: number };
@@ -123,10 +126,32 @@ function ensureGL(): GL | null {
   return gpu;
 }
 
-function uploadArt(img: HTMLImageElement): SizedTexture | null {
+function coverCanvas(
+  source: CanvasImageSource,
+  srcW: number,
+  srcH: number,
+  destW: number,
+  destH: number,
+) {
+  const canvas = document.createElement("canvas");
+  canvas.width = destW;
+  canvas.height = destH;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+  const scale = Math.max(destW / srcW, destH / srcH);
+  const dw = srcW * scale;
+  const dh = srcH * scale;
+  ctx.drawImage(source, (destW - dw) / 2, (destH - dh) / 2, dw, dh);
+  return canvas;
+}
+
+function uploadCover(layer: Layer, width: number, height: number): SizedTexture | null {
   const ready = gpu;
-  if (!ready || !img.naturalWidth) return null;
+  if (!ready || !layer.source || !layer.srcWidth || !layer.srcHeight) return null;
+  const cropped = coverCanvas(layer.source, layer.srcWidth, layer.srcHeight, width, height);
+  if (!cropped) return null;
   const { gl } = ready;
+  if (layer.texture) gl.deleteTexture(layer.texture);
   const texture = gl.createTexture() as SizedTexture | null;
   if (!texture) return null;
   gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -136,13 +161,15 @@ function uploadArt(img: HTMLImageElement): SizedTexture | null {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
   try {
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cropped);
   } catch {
     gl.deleteTexture(texture);
     return null;
   }
-  texture.imageWidth = img.naturalWidth;
-  texture.imageHeight = img.naturalHeight;
+  texture.imageWidth = width;
+  texture.imageHeight = height;
+  layer.coverW = width;
+  layer.coverH = height;
   return texture;
 }
 
@@ -157,9 +184,17 @@ function sizeFor(canvas: HTMLCanvasElement) {
 
 function drawLayer(layer: Layer, time: number) {
   const ready = gpu;
-  if (!ready || !layer.texture || !layer.visible) return;
-  const { gl, program, buffer, aPos, aUv, uniforms, canvas } = ready;
+  if (!ready || !layer.visible || !layer.source) return;
   const size = sizeFor(layer.canvas);
+  if (
+    !layer.texture ||
+    layer.coverW !== size.width ||
+    layer.coverH !== size.height
+  ) {
+    layer.texture = uploadCover(layer, size.width, size.height);
+  }
+  if (!layer.texture) return;
+  const { gl, program, buffer, aPos, aUv, uniforms, canvas } = ready;
   if (layer.canvas.width !== size.width || layer.canvas.height !== size.height) {
     layer.canvas.width = size.width;
     layer.canvas.height = size.height;
@@ -181,11 +216,7 @@ function drawLayer(layer: Layer, time: number) {
   gl.activeTexture(gl.TEXTURE0);
   gl.bindTexture(gl.TEXTURE_2D, layer.texture);
   gl.uniform1i(uniforms.uArt, 0);
-  gl.uniform2f(
-    uniforms.uTexel,
-    1 / layer.texture.imageWidth,
-    1 / layer.texture.imageHeight,
-  );
+  gl.uniform2f(uniforms.uTexel, 1 / layer.texture.imageWidth, 1 / layer.texture.imageHeight);
   gl.uniform2f(uniforms.uTilt, 0, 0);
   gl.uniform1f(uniforms.uTime, time);
   gl.uniform1f(uniforms.uFlipX, 0);
@@ -193,8 +224,8 @@ function drawLayer(layer: Layer, time: number) {
   gl.uniform3f(uniforms.uRarity, r, g, b);
   gl.uniform1f(uniforms.uLift, HOLO_LIFT[layer.rarity]);
   gl.uniform1f(uniforms.uGain, HOLO_GAIN[layer.rarity]);
-  gl.uniform1f(uniforms.uSaturation, HOLO_SATURATION[layer.rarity] * 0.88);
-  gl.uniform1f(uniforms.uStrength, HOLO_STRENGTH[layer.rarity] * 0.5);
+  gl.uniform1f(uniforms.uSaturation, HOLO_SATURATION[layer.rarity]);
+  gl.uniform1f(uniforms.uStrength, HOLO_STRENGTH[layer.rarity] * 0.18);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   const ctx = layer.canvas.getContext("2d");
   if (!ctx) return;
@@ -237,11 +268,14 @@ export function HoloFoil2D({
 
     const layer: Layer = {
       canvas,
+      source: null,
+      srcWidth: 0,
+      srcHeight: 0,
       rarity,
-      tiltX: 0,
-      tiltY: 0,
       visible: true,
       texture: null,
+      coverW: 0,
+      coverH: 0,
     };
     layers.add(layer);
     startLoop();
@@ -252,11 +286,12 @@ export function HoloFoil2D({
     fallback.crossOrigin = "anonymous";
 
     function bindArt(target: HTMLImageElement) {
-      if (layer.texture) {
-        gpu?.gl.deleteTexture(layer.texture);
-        layer.texture = null;
-      }
-      layer.texture = uploadArt(target);
+      if (!target.naturalWidth) return;
+      layer.source = target;
+      layer.srcWidth = target.naturalWidth;
+      layer.srcHeight = target.naturalHeight;
+      layer.coverW = 0;
+      layer.coverH = 0;
     }
 
     function onImgReady() {
@@ -296,7 +331,7 @@ export function HoloFoil2D({
       ref={canvasRef}
       aria-hidden
       className="pointer-events-none absolute inset-0 z-[2] h-full w-full"
-      style={{ mixBlendMode: "screen" }}
+      style={{ mixBlendMode: "plus-lighter" }}
     />
   );
 }

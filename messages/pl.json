@@ -1,0 +1,297 @@
+{
+  "brand": "Intek Binder",
+  "meta": {
+    "description": "Kolekcja kart ze streamu na Twitchu"
+  },
+  "common": {
+    "previous": "Poprzednie",
+    "next": "Następne",
+    "close": "Zamknij",
+    "continue": "Dalej",
+    "loading": "Ładowanie",
+    "all": "Wszystkie",
+    "filter": "Filtruj",
+    "cancel": "Anuluj",
+    "open": "Otwórz",
+    "depart": "odejdź",
+    "echoes": "echa",
+    "holo": "Holo",
+    "signed": "Podpis",
+    "echo": "Echo",
+    "manual": "Ręcznie",
+    "none": "—"
+  },
+  "language": {
+    "en": "EN",
+    "pl": "PL",
+    "switch": "Język"
+  },
+  "roles": {
+    "admin": "admin",
+    "viewer": "widz"
+  },
+  "rarity": {
+    "common": "Zwykła",
+    "rare": "Rzadka",
+    "epic": "Epicka",
+    "legendary": "Legendarna",
+    "joker": "Joker"
+  },
+  "nav": {
+    "altar": "Ołtarz",
+    "collection": "Kolekcja",
+    "titles": "Tytuły",
+    "offerings": "Dary",
+    "chronicle": "Kronika",
+    "innerSanctum": "Sanktuarium",
+    "queue": "Kolejka",
+    "users": "Użytkownicy",
+    "fulfillment": "Realizacja",
+    "draws": "Losowania",
+    "dev": "Dev"
+  },
+  "error": {
+    "title": "Coś poszło nie tak",
+    "tryAgain": "Spróbuj ponownie"
+  },
+  "landing": {
+    "eyebrow": "Cyfrowe kolekcje",
+    "title": "Wiąż relikwie podczas streamu.",
+    "body": "Zbieraj karty, trop rzadkie warianty i zdobywaj tytuły, oglądając transmisję.",
+    "enter": "Wejdź",
+    "viaTwitch": "Przez Twitch"
+  },
+  "login": {
+    "title": "Próg",
+    "eyebrow": "Kolekcja ze streamu",
+    "body": "Przystąp, by wiązać relikwie, zbierać echa i otrzymywać tytuły.",
+    "enter": "Wejdź",
+    "viaTwitch": "Przez Twitch",
+    "errors": {
+      "AccessDenied": "Logowanie przez Twitch zostało anulowane. Możesz spróbować ponownie.",
+      "Configuration": "Logowanie jest źle skonfigurowane. Sprawdź dane aplikacji Twitch.",
+      "OAuthCallback": "Twitch zwrócił błąd. Spróbuj ponownie.",
+      "Default": "Coś poszło nie tak podczas logowania. Spróbuj ponownie."
+    }
+  },
+  "altar": {
+    "welcome": "Witaj, {name}.",
+    "recentManifestations": "Ostatnie objawienia",
+    "noneYet": "Jeszcze nic.",
+    "latestVision": "Najnowsza wizja",
+    "noVision": "Brak wizji. Oglądaj stream.",
+    "titlesBestowed": "Nadane tytuły",
+    "noneUnlocked": "Jeszcze nic nie odblokowano.",
+    "relicsFound": "Relikwie<br></br>odnalezione",
+    "echoesGathered": "Echa<br></br>zebrane",
+    "titlesBestowedStat": "Tytuły<br></br>nadane",
+    "holoSuffix": " holo",
+    "signedSuffix": " podpis"
+  },
+  "collection": {
+    "title": "Kolekcja",
+    "filters": "Filtry",
+    "relicsBound": "{owned} z {total} relikwii związanych",
+    "set": "Zestaw",
+    "status": "Status",
+    "rarity": "Rzadkość",
+    "mark": "Znak",
+    "sort": "Sortuj",
+    "anyRarity": "Dowolna rzadkość",
+    "anyMark": "Dowolny znak",
+    "all": "Wszystkie",
+    "bound": "Związane",
+    "unseen": "Niewidziane",
+    "holo": "Holo",
+    "signed": "Podpis",
+    "number": "Numer",
+    "name": "Nazwa",
+    "newest": "Najnowsze",
+    "noMatch": "Brak pasujących relikwii.",
+    "unseenSigned": "Niewidziana z podpisem",
+    "inspect": {
+      "rarity": "Rzadkość",
+      "mark": "Znak",
+      "seal": "Pieczęć",
+      "bound": "Związano",
+      "holo": "Holo",
+      "signed": "Podpis",
+      "none": "—"
+    }
+  },
+  "titles": {
+    "title": "Tytuły",
+    "eyebrow": "{completed} z {total} nadanych",
+    "hideBestowed": "Ukryj nadane",
+    "showBestowed": "Pokaż nadane",
+    "allBestowed": "Wszystkie pozostałe tytuły są nadane.",
+    "bestowed": "Nadany",
+    "sealed": "Zapieczętowany",
+    "echoesMeta": "{points, plural, one {# echo} few {# echa} many {# ech} other {# echa}}",
+    "unlockedMeta": "{date} · {points, plural, one {# echo} few {# echa} many {# ech} other {# echa}}"
+  },
+  "offerings": {
+    "title": "Dary",
+    "eyebrow": "{points, plural, one {zebrano # echo} few {zebrano # echa} many {zebrano # ech} other {zebrano # echa}}",
+    "none": "Brak darów.",
+    "echoes": "{count, plural, one {# echo} few {# echa} many {# ech} other {# echa}}",
+    "remaining": "{count, plural, one {pozostała #} few {pozostały #} many {pozostało #} other {pozostało #}}",
+    "exhausted": "Wyczerpane",
+    "notEnough": "Za mało ech",
+    "claim": "Odbierz",
+    "binding": "Wiązanie…"
+  },
+  "chronicle": {
+    "title": "Kronika",
+    "eyebrow": "{points, plural, one {zebrano # echo} few {zebrano # echa} many {zebrano # ech} other {zebrano # echa}}",
+    "manifestations": "Objawienia",
+    "echoes": "Echa",
+    "noneYet": "Jeszcze nic.",
+    "noEchoes": "Brak ech."
+  },
+  "ledger": {
+    "duplicate": "Duplikat karty",
+    "achievement": "Tytuł",
+    "shop_redeem": "Wymiana daru",
+    "admin_adjust": "Korekta admina"
+  },
+  "shopActions": {
+    "redeemed": "Dar odebrany. Admin zrealizuje go poza systemem.",
+    "invalidFulfillment": "Nieprawidłowa zmiana realizacji",
+    "markedFulfilled": "Oznaczono jako zrealizowane",
+    "updated": "Zaktualizowano"
+  },
+  "adminActions": {
+    "cardGranted": "Karta nadana",
+    "cardRevoked": "Karta odebrana",
+    "pointsUpdated": "Echa zaktualizowane",
+    "boosterQueued": "Booster dodany do kolejki"
+  },
+  "errors": {
+    "reasonRequired": "Wymagany jest powód",
+    "cardNotLive": "Karty nie ma w żywym katalogu",
+    "alreadyOwnsCard": "Użytkownik już ma tę kartę",
+    "doesNotOwnCard": "Użytkownik nie ma tej karty",
+    "invalidAmount": "Kwota musi być niezerową liczbą całkowitą",
+    "userNotFound": "Nie znaleziono użytkownika",
+    "boosterNotLive": "Boostera nie ma w żywym katalogu",
+    "rewardUnavailable": "Dar jest niedostępny",
+    "rewardSoldOut": "Ten dar jest wyprzedany",
+    "notEnoughPoints": "Za mało punktów kolekcjonera",
+    "boosterNotPending": "Booster nie oczekuje albo został już otwarty",
+    "viewerUnresolved": "Nie udało się odnaleźć konta widza dla tego boostera",
+    "boosterInactive": "Typ boostera nie istnieje albo jest nieaktywny",
+    "couldNotOpen": "Nie udało się otworzyć boostera"
+  },
+  "queue": {
+    "title": "Kolejka",
+    "waiting": "{count, plural, one {# oczekuje · od najstarszych} few {# oczekują · od najstarszych} many {# oczekuje · od najstarszych} other {# oczekuje · od najstarszych}}",
+    "noneWaiting": "Nikt nie oczekuje",
+    "empty": "Kolejka jest pusta.",
+    "open": "Otwórz"
+  },
+  "openPack": {
+    "title": "Otwórz",
+    "forViewer": "Dla {name}",
+    "openPack": "Otwórz paczkę",
+    "opening": "Otwieranie…",
+    "openingPack": "Otwieranie paczki",
+    "packBursting": "Paczka pęka",
+    "revealed": "Objawiono {name}",
+    "openingName": "Otwieranie {name}",
+    "couldNotOpen": "Nie udało się otworzyć boostera",
+    "opened": "Otwarto",
+    "duplicatePoints": "Duplikat — przyznano {points, plural, one {# echo} few {# echa} many {# ech} other {# echa}}",
+    "echoAwarded": "Echo — przyznano {points, plural, one {# echo} few {# echa} many {# ech} other {# echa}}",
+    "backToQueue": "Wróć do kolejki",
+    "duplicateCard": "Duplikat {name} — {points, plural, one {# echo} few {# echa} many {# ech} other {# echa}}",
+    "openedCard": "Otwarto {name}",
+    "sealBreaking": "Pieczęć pęka",
+    "visionArrives": "Nadchodzi wizja",
+    "playOpening": "Odtwórz otwarcie",
+    "holoSparks": "Iskry holo",
+    "unknown": "Nieznana"
+  },
+  "users": {
+    "title": "Użytkownicy",
+    "matching": "{total} pasuje · A–Z",
+    "inLedger": "{total} w księdze · A–Z",
+    "noMatch": "Nikt nie pasuje do tej nazwy.",
+    "none": "Brak użytkowników.",
+    "roleEchoes": "{role} · {points, plural, one {# echo} few {# echa} many {# ech} other {# echa}}",
+    "searchPlaceholder": "Szukaj po nicku",
+    "searchLabel": "Szukaj użytkowników po nicku"
+  },
+  "userDetail": {
+    "eyebrow": "Twitch {twitchId} · {role} · {points, plural, one {# echo} few {# echa} many {# ech} other {# echa}}",
+    "grantCard": "Nadaj kartę",
+    "revokeCard": "Odbierz kartę",
+    "adjustEchoes": "Skoryguj echa",
+    "addBooster": "Dodaj booster do kolejki",
+    "grant": "Nadaj",
+    "revoke": "Odbierz",
+    "apply": "Zastosuj",
+    "addToQueue": "Dodaj do kolejki",
+    "reasonPlaceholder": "Powód (wymagany)",
+    "amountPlaceholder": "np. 10 lub -5",
+    "signedSuffix": " (podpis)",
+    "collection": "Kolekcja",
+    "titles": "Tytuły",
+    "recentManifestations": "Ostatnie objawienia",
+    "echoes": "Echa",
+    "noRelics": "Brak związanych relikwii.",
+    "noneBestowed": "Brak nadanych.",
+    "noneYet": "Jeszcze nic.",
+    "noEchoes": "Brak ech."
+  },
+  "fulfillment": {
+    "title": "Realizacja",
+    "eyebrow": "Dary edytuje się w Strapi",
+    "none": "Brak zgłoszeń.",
+    "fulfill": "Zrealizuj",
+    "meta": "{reward} · {points, plural, one {# echo} few {# echa} many {# ech} other {# echa}} · {status}"
+  },
+  "draws": {
+    "title": "Losowania",
+    "eyebrow": "Każde otwarcie i nadanie",
+    "viewer": "Widz",
+    "booster": "Booster",
+    "from": "Od",
+    "to": "Do",
+    "nickname": "Nick",
+    "noMatch": "Brak pasujących objawień.",
+    "echo": " · echo"
+  },
+  "dev": {
+    "title": "Dev",
+    "eyebrow": "Folia, podpisy i paczki",
+    "openingRehearsal": "Próba otwarcia",
+    "boosterPacks": "Paczki boosterów",
+    "standard": "Zwykła",
+    "holographic": "Holograficzna",
+    "rehearsal": "Próba · {rarity}"
+  },
+  "reveal": {
+    "waiting": "Czekam na losowanie…",
+    "duplicate": "Duplikat — przyznano echa"
+  },
+  "redemptionStatus": {
+    "pending_fulfillment": "oczekuje na realizację",
+    "fulfilled": "zrealizowano",
+    "cancelled": "anulowano"
+  },
+  "skeleton": {
+    "welcome": "Witaj, Widzu.",
+    "relicName": "Nazwa relikwii",
+    "relicsBound": "XII z XX relikwii związanych",
+    "relicsFound": "Relikwie odnalezione",
+    "echoesGathered": "Echa zebrane",
+    "titlesBestowed": "Tytuły nadane",
+    "hideBestowed": "Ukryj nadane",
+    "firstOffering": "Pierwsza ofiara",
+    "titleDescription": "Tytuł nadawany po związaniu pierwszej relikwii.",
+    "signedPrint": "Podpisany print",
+    "offeringBlurb": "Dar z ołtarza.",
+    "redeem": "Odbierz"
+  }
+}

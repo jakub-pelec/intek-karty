@@ -1,0 +1,297 @@
+{
+  "brand": "Intek Binder",
+  "meta": {
+    "description": "Twitch stream card collection"
+  },
+  "common": {
+    "previous": "Previous",
+    "next": "Next",
+    "close": "Close",
+    "continue": "Continue",
+    "loading": "Loading",
+    "all": "All",
+    "filter": "Filter",
+    "cancel": "Cancel",
+    "open": "Open",
+    "depart": "depart",
+    "echoes": "echoes",
+    "holo": "Holo",
+    "signed": "Signed",
+    "echo": "Echo",
+    "manual": "Manual",
+    "none": "—"
+  },
+  "language": {
+    "en": "EN",
+    "pl": "PL",
+    "switch": "Language"
+  },
+  "roles": {
+    "admin": "admin",
+    "viewer": "viewer"
+  },
+  "rarity": {
+    "common": "Common",
+    "rare": "Rare",
+    "epic": "Epic",
+    "legendary": "Legendary",
+    "joker": "Joker"
+  },
+  "nav": {
+    "altar": "Altar",
+    "collection": "Collection",
+    "titles": "Titles",
+    "offerings": "Offerings",
+    "chronicle": "Chronicle",
+    "innerSanctum": "Inner Sanctum",
+    "queue": "Queue",
+    "users": "Users",
+    "fulfillment": "Fulfillment",
+    "draws": "Draws",
+    "dev": "Dev"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "tryAgain": "Try again"
+  },
+  "landing": {
+    "eyebrow": "Digital Collectibles",
+    "title": "Bind relics during the stream.",
+    "body": "Collect cards, chase rare variants, and earn titles while watching.",
+    "enter": "Enter",
+    "viaTwitch": "Via Twitch"
+  },
+  "login": {
+    "title": "The Threshold",
+    "eyebrow": "Stream collection",
+    "body": "Approach to bind relics, gather echoes, and receive titles.",
+    "enter": "Enter",
+    "viaTwitch": "Via Twitch",
+    "errors": {
+      "AccessDenied": "Twitch login was cancelled. You can try again.",
+      "Configuration": "Login is misconfigured. Check Twitch app credentials.",
+      "OAuthCallback": "Twitch returned an error. Please retry.",
+      "Default": "Something went wrong during login. Please retry."
+    }
+  },
+  "altar": {
+    "welcome": "Welcome, {name}.",
+    "recentManifestations": "Recent Manifestations",
+    "noneYet": "None yet.",
+    "latestVision": "The Latest Vision",
+    "noVision": "No vision yet. Watch the stream.",
+    "titlesBestowed": "Titles Bestowed",
+    "noneUnlocked": "None unlocked yet.",
+    "relicsFound": "Relics<br></br>Found",
+    "echoesGathered": "Echoes<br></br>Gathered",
+    "titlesBestowedStat": "Titles<br></br>Bestowed",
+    "holoSuffix": " holo",
+    "signedSuffix": " signed"
+  },
+  "collection": {
+    "title": "Collection",
+    "filters": "Filters",
+    "relicsBound": "{owned} of {total} relics bound",
+    "set": "Set",
+    "status": "Status",
+    "rarity": "Rarity",
+    "mark": "Mark",
+    "sort": "Sort",
+    "anyRarity": "Any rarity",
+    "anyMark": "Any mark",
+    "all": "All",
+    "bound": "Bound",
+    "unseen": "Unseen",
+    "holo": "Holo",
+    "signed": "Signed",
+    "number": "Number",
+    "name": "Name",
+    "newest": "Newest",
+    "noMatch": "No relics match.",
+    "unseenSigned": "Unseen signed",
+    "inspect": {
+      "rarity": "Rarity",
+      "mark": "Mark",
+      "seal": "Seal",
+      "bound": "Bound",
+      "holo": "Holo",
+      "signed": "Signed",
+      "none": "—"
+    }
+  },
+  "titles": {
+    "title": "Titles",
+    "eyebrow": "{completed} of {total} bestowed",
+    "hideBestowed": "Hide bestowed",
+    "showBestowed": "Show bestowed",
+    "allBestowed": "Every remaining title is bestowed.",
+    "bestowed": "Bestowed",
+    "sealed": "Sealed",
+    "echoesMeta": "{points} echoes",
+    "unlockedMeta": "{date} · {points} echoes"
+  },
+  "offerings": {
+    "title": "Offerings",
+    "eyebrow": "{points} echoes gathered",
+    "none": "No offerings yet.",
+    "echoes": "{count} echoes",
+    "remaining": "{count} remaining",
+    "exhausted": "Exhausted",
+    "notEnough": "Not enough echoes",
+    "claim": "Claim",
+    "binding": "Binding…"
+  },
+  "chronicle": {
+    "title": "Chronicle",
+    "eyebrow": "{points} echoes gathered",
+    "manifestations": "Manifestations",
+    "echoes": "Echoes",
+    "noneYet": "None yet.",
+    "noEchoes": "No echoes yet."
+  },
+  "ledger": {
+    "duplicate": "Duplicate card",
+    "achievement": "Achievement",
+    "shop_redeem": "Shop redemption",
+    "admin_adjust": "Admin adjustment"
+  },
+  "shopActions": {
+    "redeemed": "Reward redeemed. An admin will fulfill it out of band.",
+    "invalidFulfillment": "Invalid fulfillment update",
+    "markedFulfilled": "Marked fulfilled",
+    "updated": "Updated"
+  },
+  "adminActions": {
+    "cardGranted": "Card granted",
+    "cardRevoked": "Card revoked",
+    "pointsUpdated": "Points updated",
+    "boosterQueued": "Booster added to queue"
+  },
+  "errors": {
+    "reasonRequired": "A reason is required",
+    "cardNotLive": "Card is not in the live catalog",
+    "alreadyOwnsCard": "User already owns this card",
+    "doesNotOwnCard": "User does not own this card",
+    "invalidAmount": "Amount must be a non-zero integer",
+    "userNotFound": "User not found",
+    "boosterNotLive": "Booster is not in the live catalog",
+    "rewardUnavailable": "Reward is not available",
+    "rewardSoldOut": "This reward is sold out",
+    "notEnoughPoints": "Not enough collector points",
+    "boosterNotPending": "Booster is not pending or was already opened",
+    "viewerUnresolved": "Could not resolve viewer account for this booster",
+    "boosterInactive": "Booster type is missing or inactive",
+    "couldNotOpen": "Could not open booster"
+  },
+  "queue": {
+    "title": "Queue",
+    "waiting": "{count} waiting · oldest first",
+    "noneWaiting": "None waiting",
+    "empty": "The queue is empty.",
+    "open": "Open"
+  },
+  "openPack": {
+    "title": "Open",
+    "forViewer": "For {name}",
+    "openPack": "Open pack",
+    "opening": "Opening…",
+    "openingPack": "Opening pack",
+    "packBursting": "Pack bursting",
+    "revealed": "{name} revealed",
+    "openingName": "Opening {name}",
+    "couldNotOpen": "Could not open booster",
+    "opened": "Opened",
+    "duplicatePoints": "Duplicate — {points} points awarded",
+    "echoAwarded": "Echo — {points} echoes awarded",
+    "backToQueue": "Back to queue",
+    "duplicateCard": "Duplicate {name} — {points} points",
+    "openedCard": "Opened {name}",
+    "sealBreaking": "The seal is breaking",
+    "visionArrives": "The vision arrives",
+    "playOpening": "Play opening",
+    "holoSparks": "Holo sparks",
+    "unknown": "Unknown"
+  },
+  "users": {
+    "title": "Users",
+    "matching": "{total} matching · A–Z",
+    "inLedger": "{total} in the ledger · A–Z",
+    "noMatch": "No one matches that name.",
+    "none": "No users yet.",
+    "roleEchoes": "{role} · {points} echoes",
+    "searchPlaceholder": "Search by nickname",
+    "searchLabel": "Search users by nickname"
+  },
+  "userDetail": {
+    "eyebrow": "Twitch {twitchId} · {role} · {points} echoes",
+    "grantCard": "Grant card",
+    "revokeCard": "Revoke card",
+    "adjustEchoes": "Adjust echoes",
+    "addBooster": "Add booster to queue",
+    "grant": "Grant",
+    "revoke": "Revoke",
+    "apply": "Apply",
+    "addToQueue": "Add to queue",
+    "reasonPlaceholder": "Reason (required)",
+    "amountPlaceholder": "e.g. 10 or -5",
+    "signedSuffix": " (signed)",
+    "collection": "Collection",
+    "titles": "Titles",
+    "recentManifestations": "Recent manifestations",
+    "echoes": "Echoes",
+    "noRelics": "No relics bound.",
+    "noneBestowed": "None bestowed.",
+    "noneYet": "None yet.",
+    "noEchoes": "No echoes yet."
+  },
+  "fulfillment": {
+    "title": "Fulfillment",
+    "eyebrow": "Offerings are edited in Strapi",
+    "none": "No claims yet.",
+    "fulfill": "Fulfill",
+    "meta": "{reward} · {points} echoes · {status}"
+  },
+  "draws": {
+    "title": "Draws",
+    "eyebrow": "Every open and grant",
+    "viewer": "Viewer",
+    "booster": "Booster",
+    "from": "From",
+    "to": "To",
+    "nickname": "Nickname",
+    "noMatch": "No manifestations match.",
+    "echo": " · echo"
+  },
+  "dev": {
+    "title": "Dev",
+    "eyebrow": "Foil, signed art, and packs",
+    "openingRehearsal": "Opening rehearsal",
+    "boosterPacks": "Booster packs",
+    "standard": "Standard",
+    "holographic": "Holographic",
+    "rehearsal": "Rehearsal · {rarity}"
+  },
+  "reveal": {
+    "waiting": "Waiting for a draw…",
+    "duplicate": "Duplicate — points awarded"
+  },
+  "redemptionStatus": {
+    "pending_fulfillment": "pending fulfillment",
+    "fulfilled": "fulfilled",
+    "cancelled": "cancelled"
+  },
+  "skeleton": {
+    "welcome": "Welcome, Viewer.",
+    "relicName": "Relic name",
+    "relicsBound": "XII of XX relics bound",
+    "relicsFound": "Relics Found",
+    "echoesGathered": "Echoes Gathered",
+    "titlesBestowed": "Titles Bestowed",
+    "hideBestowed": "Hide bestowed",
+    "firstOffering": "First Offering",
+    "titleDescription": "A title granted after the first relic is bound.",
+    "signedPrint": "Signed print",
+    "offeringBlurb": "A relic offering from the altar.",
+    "redeem": "Redeem"
+  }
+}

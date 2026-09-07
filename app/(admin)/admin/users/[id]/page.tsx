@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Label, Select, Textarea } from "@/components/ui/input";
 import { MutationBadges, RarityBadge } from "@/components/ui/badge";
 import { formatCardNumber, formatDate } from "@/lib/utils";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function AdminUserDetailPage({
   params,
@@ -96,19 +97,30 @@ export default async function AdminUserDetailPage({
 
   const liveOwned = owned.filter((row) => isLiveCmsRow(row.card));
   const ownedIds = new Set(liveOwned.map((row) => row.card.id));
+  const [t, tRoles, tLedger, tCommon, locale] = await Promise.all([
+    getTranslations("userDetail"),
+    getTranslations("roles"),
+    getTranslations("ledger"),
+    getTranslations("common"),
+    getLocale(),
+  ]);
 
   return (
     <main className="mx-auto w-full max-w-4xl pt-2 md:pt-6">
       <RitualPageHeader
         title={user.name}
-        eyebrow={`Twitch ${user.twitchId} · ${user.role} · ${user.pointsBalance} echoes`}
+        eyebrow={t("eyebrow", {
+          twitchId: user.twitchId,
+          role: tRoles(user.role),
+          points: user.pointsBalance,
+        })}
       />
 
       <div className="grid gap-5 lg:grid-cols-2">
         <SanctumCard>
           <ActionForm action={grantCardAction}>
             <input type="hidden" name="userId" value={user.id} />
-            <Label>Grant card</Label>
+            <Label>{t("grantCard")}</Label>
             <Select name="cardId" required>
               {groupByCollection(
                 catalog.filter((card) => !ownedIds.has(card.id)),
@@ -117,21 +129,21 @@ export default async function AdminUserDetailPage({
                   {group.items.map((card) => (
                     <option key={card.id} value={card.id}>
                       {formatCardNumber(card.number)} {card.name}
-                      {card.signed ? " (signed)" : ""}
+                      {card.signed ? t("signedSuffix") : ""}
                     </option>
                   ))}
                 </optgroup>
               ))}
             </Select>
-            <Textarea name="reason" required placeholder="Reason (required)" />
-            <Button type="submit">Grant</Button>
+            <Textarea name="reason" required placeholder={t("reasonPlaceholder")} />
+            <Button type="submit">{t("grant")}</Button>
           </ActionForm>
         </SanctumCard>
 
         <SanctumCard>
           <ActionForm action={revokeCardAction}>
             <input type="hidden" name="userId" value={user.id} />
-            <Label>Revoke card</Label>
+            <Label>{t("revokeCard")}</Label>
             <Select name="cardId" required>
               {liveOwned.map((row) => (
                 <option key={row.card.id} value={row.card.id}>
@@ -139,9 +151,9 @@ export default async function AdminUserDetailPage({
                 </option>
               ))}
             </Select>
-            <Textarea name="reason" required placeholder="Reason (required)" />
+            <Textarea name="reason" required placeholder={t("reasonPlaceholder")} />
             <Button type="submit" variant="danger">
-              Revoke
+              {t("revoke")}
             </Button>
           </ActionForm>
         </SanctumCard>
@@ -149,17 +161,17 @@ export default async function AdminUserDetailPage({
         <SanctumCard>
           <ActionForm action={adjustPointsAction}>
             <input type="hidden" name="userId" value={user.id} />
-            <Label>Adjust echoes</Label>
-            <Input name="amount" type="number" required placeholder="e.g. 10 or -5" />
-            <Textarea name="reason" required placeholder="Reason (required)" />
-            <Button type="submit">Apply</Button>
+            <Label>{t("adjustEchoes")}</Label>
+            <Input name="amount" type="number" required placeholder={t("amountPlaceholder")} />
+            <Textarea name="reason" required placeholder={t("reasonPlaceholder")} />
+            <Button type="submit">{t("apply")}</Button>
           </ActionForm>
         </SanctumCard>
 
         <SanctumCard>
           <ActionForm action={addBoosterAction}>
             <input type="hidden" name="userId" value={user.id} />
-            <Label>Add booster to queue</Label>
+            <Label>{t("addBooster")}</Label>
             <Select name="boosterTypeId" required>
               {boosters.map((booster) => (
                 <option key={booster.id} value={booster.id}>
@@ -167,15 +179,15 @@ export default async function AdminUserDetailPage({
                 </option>
               ))}
             </Select>
-            <Textarea name="reason" required placeholder="Reason (required)" />
-            <Button type="submit">Add to queue</Button>
+            <Textarea name="reason" required placeholder={t("reasonPlaceholder")} />
+            <Button type="submit">{t("addToQueue")}</Button>
           </ActionForm>
         </SanctumCard>
       </div>
 
-      <SanctumSection title="Collection" className="mt-16">
+      <SanctumSection title={t("collection")} className="mt-16">
         {liveOwned.length === 0 ? (
-          <SanctumEmpty>No relics bound.</SanctumEmpty>
+          <SanctumEmpty>{t("noRelics")}</SanctumEmpty>
         ) : (
           <ul className="space-y-3">
             {liveOwned.map((row) => (
@@ -196,9 +208,9 @@ export default async function AdminUserDetailPage({
         )}
       </SanctumSection>
 
-      <SanctumSection title="Titles" className="mt-16">
+      <SanctumSection title={t("titles")} className="mt-16">
         {unlocked.length === 0 ? (
-          <SanctumEmpty>None bestowed.</SanctumEmpty>
+          <SanctumEmpty>{t("noneBestowed")}</SanctumEmpty>
         ) : (
           <ul className="space-y-3">
             {unlocked.map((row) => (
@@ -210,7 +222,7 @@ export default async function AdminUserDetailPage({
                   {row.name}
                 </span>
                 <span className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-widest text-[#d7d3c8]/30">
-                  {formatDate(row.unlockedAt)}
+                  {formatDate(row.unlockedAt, locale)}
                 </span>
               </li>
             ))}
@@ -218,9 +230,9 @@ export default async function AdminUserDetailPage({
         )}
       </SanctumSection>
 
-      <SanctumSection title="Recent manifestations" className="mt-16">
+      <SanctumSection title={t("recentManifestations")} className="mt-16">
         {userDraws.length === 0 ? (
-          <SanctumEmpty>None yet.</SanctumEmpty>
+          <SanctumEmpty>{t("noneYet")}</SanctumEmpty>
         ) : (
           <ul className="space-y-3">
             {userDraws.map((draw) => (
@@ -232,13 +244,13 @@ export default async function AdminUserDetailPage({
                   {draw.cardName}
                   {draw.isDuplicate ? (
                     <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[9px] text-[#d4b36a]/60 not-italic uppercase">
-                      (Echo)
+                      ({tCommon("echo")})
                     </span>
                   ) : null}
                 </span>
                 <span className="flex items-center gap-3 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.12em] text-[#d7d3c8]/40 uppercase">
                   <MutationBadges holographic={draw.holographic} signature={draw.signature} />
-                  {formatDate(draw.createdAt)}
+                  {formatDate(draw.createdAt, locale)}
                 </span>
               </li>
             ))}
@@ -246,9 +258,9 @@ export default async function AdminUserDetailPage({
         )}
       </SanctumSection>
 
-      <SanctumSection title="Echoes" className="mt-16">
+      <SanctumSection title={t("echoes")} className="mt-16">
         {ledger.length === 0 ? (
-          <SanctumEmpty>No echoes yet.</SanctumEmpty>
+          <SanctumEmpty>{t("noEchoes")}</SanctumEmpty>
         ) : (
           <ul className="space-y-3">
             {ledger.map((row) => (
@@ -258,7 +270,7 @@ export default async function AdminUserDetailPage({
               >
                 <span className="font-[family-name:var(--font-cinzel)] text-sm text-[#f3efe6]">
                   {row.amount > 0 ? `+${row.amount}` : row.amount}{" "}
-                  <span className="text-[#d7d3c8]/70">{row.source}</span>
+                  <span className="text-[#d7d3c8]/70">{tLedger(row.source)}</span>
                   {row.note ? (
                     <span className="ml-2 font-[family-name:var(--font-cormorant)] text-[#d7d3c8]/50 italic">
                       {row.note}

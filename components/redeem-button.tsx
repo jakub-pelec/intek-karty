@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { redeemRewardAction } from "@/actions/shop";
 import { Button } from "@/components/ui/button";
 
@@ -13,6 +14,7 @@ export function RedeemButton({
 }) {
   const [pending, start] = useTransition();
   const [message, setMessage] = useState<string | null>(null);
+  const t = useTranslations("offerings");
 
   return (
     <div className="space-y-1">
@@ -28,7 +30,7 @@ export function RedeemButton({
           })
         }
       >
-        {pending ? "Binding…" : "Claim"}
+        {pending ? t("binding") : t("claim")}
       </Button>
       {message ? (
         <p className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] text-[#d7d3c8]/70 uppercase">

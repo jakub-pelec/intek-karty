@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import {
   addBoosterToUser,
   adjustPoints,
@@ -8,6 +9,7 @@ import {
   grantCard,
   revokeCard,
 } from "@/db/queries/admin";
+import { translateAdminError } from "@/lib/i18n-errors";
 import { requireAdmin } from "@/lib/rbac";
 
 export async function grantCardAction(formData: FormData) {
@@ -20,9 +22,13 @@ export async function grantCardAction(formData: FormData) {
       reason: String(formData.get("reason") ?? ""),
     });
     revalidatePath("/admin/users");
-    return { success: "Card granted" };
+    const t = await getTranslations("adminActions");
+    return { success: t("cardGranted") };
   } catch (error) {
-    if (error instanceof AdminActionError) return { error: error.message };
+    if (error instanceof AdminActionError) {
+      const t = await getTranslations("errors");
+      return { error: translateAdminError(t, error.message) };
+    }
     throw error;
   }
 }
@@ -36,9 +42,13 @@ export async function revokeCardAction(formData: FormData) {
       reason: String(formData.get("reason") ?? ""),
     });
     revalidatePath("/admin/users");
-    return { success: "Card revoked" };
+    const t = await getTranslations("adminActions");
+    return { success: t("cardRevoked") };
   } catch (error) {
-    if (error instanceof AdminActionError) return { error: error.message };
+    if (error instanceof AdminActionError) {
+      const t = await getTranslations("errors");
+      return { error: translateAdminError(t, error.message) };
+    }
     throw error;
   }
 }
@@ -53,9 +63,13 @@ export async function adjustPointsAction(formData: FormData) {
       reason: String(formData.get("reason") ?? ""),
     });
     revalidatePath("/admin/users");
-    return { success: "Points updated" };
+    const t = await getTranslations("adminActions");
+    return { success: t("pointsUpdated") };
   } catch (error) {
-    if (error instanceof AdminActionError) return { error: error.message };
+    if (error instanceof AdminActionError) {
+      const t = await getTranslations("errors");
+      return { error: translateAdminError(t, error.message) };
+    }
     throw error;
   }
 }
@@ -70,9 +84,13 @@ export async function addBoosterAction(formData: FormData) {
     });
     revalidatePath("/admin/queue");
     revalidatePath("/admin/users");
-    return { success: "Booster added to queue" };
+    const t = await getTranslations("adminActions");
+    return { success: t("boosterQueued") };
   } catch (error) {
-    if (error instanceof AdminActionError) return { error: error.message };
+    if (error instanceof AdminActionError) {
+      const t = await getTranslations("errors");
+      return { error: translateAdminError(t, error.message) };
+    }
     throw error;
   }
 }

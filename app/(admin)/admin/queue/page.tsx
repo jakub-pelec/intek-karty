@@ -6,6 +6,7 @@ import { RitualPageHeader } from "@/components/ritual-page-header";
 import { SanctumCard, SanctumEmpty } from "@/components/sanctum";
 import { buttonVariants } from "@/components/ui/button";
 import { cn, formatDate } from "@/lib/utils";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function QueuePage() {
   const db = getDb();
@@ -24,14 +25,19 @@ export default async function QueuePage() {
     .where(eq(userBoosters.status, "pending"))
     .orderBy(asc(userBoosters.createdAt));
 
+  const [t, locale] = await Promise.all([
+    getTranslations("queue"),
+    getLocale(),
+  ]);
+
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">
       <RitualPageHeader
-        title="Queue"
-        eyebrow={rows.length ? `${rows.length} waiting · oldest first` : "None waiting"}
+        title={t("title")}
+        eyebrow={rows.length ? t("waiting", { count: rows.length }) : t("noneWaiting")}
       />
       {rows.length === 0 ? (
-        <SanctumEmpty>The queue is empty.</SanctumEmpty>
+        <SanctumEmpty>{t("empty")}</SanctumEmpty>
       ) : (
         <SanctumCard className="px-6 py-0">
           <ul>
@@ -47,14 +53,14 @@ export default async function QueuePage() {
                   <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
                     {row.boosterName}
                     {row.note ? ` · ${row.note}` : ""}
-                    {` · ${formatDate(row.createdAt)}`}
+                    {` · ${formatDate(row.createdAt, locale)}`}
                   </p>
                 </div>
                 <Link
                   href={`/admin/open/${row.id}`}
                   className={cn(buttonVariants(), "shrink-0")}
                 >
-                  Open
+                  {t("open")}
                 </Link>
               </li>
             ))}

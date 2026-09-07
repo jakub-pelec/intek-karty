@@ -4,22 +4,24 @@ import { RedeemButton } from "@/components/redeem-button";
 import { RitualPageHeader } from "@/components/ritual-page-header";
 import { liveCms } from "@/lib/cms/live";
 import { requireUser } from "@/lib/rbac";
+import { getTranslations } from "next-intl/server";
 
 export default async function ShopPage() {
   const db = getDb();
-  const [user, catalog] = await Promise.all([
+  const [user, catalog, t] = await Promise.all([
     requireUser(),
     db.select().from(rewards).where(liveCms(rewards)),
+    getTranslations("offerings"),
   ]);
 
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">
       <RitualPageHeader
-        title="Offerings"
-        eyebrow={`${user.pointsBalance} echoes gathered`}
+        title={t("title")}
+        eyebrow={t("eyebrow", { points: user.pointsBalance })}
       />
       {catalog.length === 0 ? (
-        <p className="text-center text-[#d7d3c8]/60 italic">No offerings yet.</p>
+        <p className="text-center text-[#d7d3c8]/60 italic">{t("none")}</p>
       ) : (
         <ul className="space-y-5">
           {catalog.map((reward) => {
@@ -35,7 +37,7 @@ export default async function ShopPage() {
                     {reward.name}
                   </h2>
                   <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d4b36a] uppercase">
-                    {reward.pointCost} echoes
+                    {t("echoes", { count: reward.pointCost })}
                   </span>
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-[#d7d3c8]">
@@ -43,13 +45,13 @@ export default async function ShopPage() {
                 </p>
                 {reward.stock !== null ? (
                   <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] text-[#d7d3c8]/70 uppercase">
-                    {reward.stock} remaining
+                    {t("remaining", { count: reward.stock })}
                   </p>
                 ) : null}
                 <div className="mt-4">
                   {soldOut ? (
                     <p className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d7d3c8]/50 uppercase">
-                      Exhausted
+                      {t("exhausted")}
                     </p>
                   ) : (
                     <RedeemButton
@@ -59,7 +61,7 @@ export default async function ShopPage() {
                   )}
                   {unaffordable && !soldOut ? (
                     <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] text-[#d7d3c8]/55 uppercase">
-                      Not enough echoes
+                      {t("notEnough")}
                     </p>
                   ) : null}
                 </div>

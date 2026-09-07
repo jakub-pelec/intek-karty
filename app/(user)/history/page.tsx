@@ -5,8 +5,9 @@ import { boosterTypes, draws, pointsLedger } from "@/db/schema";
 import { RitualPageHeader } from "@/components/ritual-page-header";
 import { RarityGem } from "@/components/rarity-gem";
 import { requireUser } from "@/lib/rbac";
-import { LEDGER_SOURCE_LABELS, PAGE_SIZE } from "@/lib/constants";
+import { PAGE_SIZE } from "@/lib/constants";
 import { cn, formatDate } from "@/lib/utils";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function HistoryPage({
   searchParams,
@@ -14,6 +15,12 @@ export default async function HistoryPage({
   searchParams: Promise<{ tab?: string; page?: string }>;
 }) {
   const user = await requireUser();
+  const [t, tLedger, tCommon, locale] = await Promise.all([
+    getTranslations("chronicle"),
+    getTranslations("ledger"),
+    getTranslations("common"),
+    getLocale(),
+  ]);
   const params = await searchParams;
   const tab = params.tab === "points" ? "points" : "cards";
   const page = Math.max(1, Number(params.page ?? 1) || 1);
@@ -59,8 +66,8 @@ export default async function HistoryPage({
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">
       <RitualPageHeader
-        title="Chronicle"
-        eyebrow={`${user.pointsBalance} echoes gathered`}
+        title={t("title")}
+        eyebrow={t("eyebrow", { points: user.pointsBalance })}
       />
       <div className="mb-8 flex justify-center gap-10">
         <Link
@@ -72,7 +79,7 @@ export default async function HistoryPage({
               : "border-transparent text-[#d7d3c8]",
           )}
         >
-          Manifestations
+          {t("manifestations")}
         </Link>
         <Link
           href="/history?tab=points"
@@ -83,13 +90,13 @@ export default async function HistoryPage({
               : "border-transparent text-[#d7d3c8]",
           )}
         >
-          Echoes
+          {t("echoes")}
         </Link>
       </div>
 
       {tab === "cards" ? (
         cardRows.length === 0 ? (
-          <p className="text-center text-[#d7d3c8] italic">None yet.</p>
+          <p className="text-center text-[#d7d3c8] italic">{t("noneYet")}</p>
         ) : (
           <ul className="border border-[#d4b36a]/30 bg-[#0c0b12] px-6">
             {cardRows.map((row) => (
@@ -105,25 +112,25 @@ export default async function HistoryPage({
                     {String(row.cardNumber).padStart(2, "0")} {row.cardName}
                     {row.isDuplicate ? (
                       <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[12px] text-[#d4b36a] not-italic uppercase">
-                        (Echo)
+                        ({tCommon("echo")})
                       </span>
                     ) : null}
                     {row.signature ? (
                       <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[12px] text-[#d4b36a] not-italic uppercase">
-                        (Signed)
+                        ({tCommon("signed")})
                       </span>
                     ) : null}
                   </span>
                 </div>
                 <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-xs tracking-[0.12em] text-[#cfc6b4] uppercase">
-                  {formatDate(row.createdAt)}
+                  {formatDate(row.createdAt, locale)}
                 </span>
               </li>
             ))}
           </ul>
         )
       ) : ledgerRows.length === 0 ? (
-        <p className="text-center text-[#d7d3c8] italic">No echoes yet.</p>
+        <p className="text-center text-[#d7d3c8] italic">{t("noEchoes")}</p>
       ) : (
         <ul className="border border-[#d4b36a]/30 bg-[#0c0b12] px-6">
           {ledgerRows.map((row) => (
@@ -135,7 +142,7 @@ export default async function HistoryPage({
                 <p className="font-[family-name:var(--font-cinzel)] text-lg text-[#f3efe6]">
                   {row.amount > 0 ? `+${row.amount}` : row.amount}{" "}
                   <span className="text-[#d7d3c8]">
-                    {LEDGER_SOURCE_LABELS[row.source]}
+                    {tLedger(row.source)}
                   </span>
                 </p>
                 {row.note ? (
@@ -143,7 +150,7 @@ export default async function HistoryPage({
                 ) : null}
               </div>
               <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-xs tracking-[0.12em] text-[#cfc6b4] uppercase">
-                {formatDate(row.createdAt)}
+                {formatDate(row.createdAt, locale)}
               </span>
             </li>
           ))}
@@ -157,7 +164,7 @@ export default async function HistoryPage({
               href={`/history?tab=${tab}&page=${page - 1}`}
               className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
             >
-              Previous
+              {tCommon("previous")}
             </Link>
           ) : null}
           {hasMore ? (
@@ -165,7 +172,7 @@ export default async function HistoryPage({
               href={`/history?tab=${tab}&page=${page + 1}`}
               className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
             >
-              Next
+              {tCommon("next")}
             </Link>
           ) : null}
         </div>

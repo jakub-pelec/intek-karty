@@ -3,23 +3,24 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 const viewerLinks = [
-  { href: "/dashboard", label: "Altar" },
-  { href: "/collection", label: "Collection" },
-  { href: "/achievements", label: "Titles" },
-  { href: "/shop", label: "Offerings" },
-  { href: "/history", label: "Chronicle" },
-];
+  { href: "/dashboard", key: "altar" },
+  { href: "/collection", key: "collection" },
+  { href: "/achievements", key: "titles" },
+  { href: "/shop", key: "offerings" },
+  { href: "/history", key: "chronicle" },
+] as const;
 
 const sanctumLinks = [
-  { href: "/admin/queue", label: "Queue" },
-  { href: "/admin/users", label: "Users" },
-  { href: "/admin/rewards", label: "Fulfillment" },
-  { href: "/admin/history", label: "Draws" },
-  { href: "/admin/dev", label: "Dev" },
-];
+  { href: "/admin/queue", key: "queue" },
+  { href: "/admin/users", key: "users" },
+  { href: "/admin/rewards", key: "fulfillment" },
+  { href: "/admin/history", key: "draws" },
+  { href: "/admin/dev", key: "dev" },
+] as const;
 
 function linkActive(pathname: string, href: string) {
   if (href === "/admin/queue") {
@@ -61,13 +62,14 @@ function DeferredLink({
 export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslations("nav");
   const links = showAdmin
-    ? [...viewerLinks, { href: "/admin/queue", label: "Inner Sanctum" }]
+    ? [...viewerLinks, { href: "/admin/queue", key: "innerSanctum" as const }]
     : viewerLinks;
   const inSanctum = pathname.startsWith("/admin");
 
   useEffect(() => {
-    const hrefs = [...viewerLinks.map((link) => link.href)];
+    const hrefs: string[] = viewerLinks.map((link) => link.href);
     if (showAdmin) hrefs.push("/admin/queue");
     if (showAdmin && pathname.startsWith("/admin")) {
       hrefs.push(...sanctumLinks.map((link) => link.href));
@@ -97,8 +99,8 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
   }, [pathname, router, showAdmin]);
 
   return (
-    <div className="flex flex-col items-center gap-5">
-      <nav className="flex flex-wrap justify-center gap-x-8 gap-y-3 md:gap-x-16">
+    <div className="flex flex-col items-center gap-4 md:gap-5">
+      <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2 md:gap-x-16 md:gap-y-3">
         {links.map((link) => {
           const active = linkActive(pathname, link.href);
           return (
@@ -106,11 +108,11 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
               key={link.href}
               href={link.href}
               className={cn(
-                "ritual-ember font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] uppercase",
+                "ritual-ember font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.14em] uppercase md:text-[11px] md:tracking-[0.2em]",
                 active ? "text-[#d4b36a]" : "text-[#d7d3c8]",
               )}
             >
-              {link.label}
+              {t(link.key)}
             </DeferredLink>
           );
         })}
@@ -128,7 +130,7 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
                   active ? "text-[#d4b36a]" : "text-[#cfc6b4]",
                 )}
               >
-                {link.label}
+                {t(link.key)}
               </DeferredLink>
             );
           })}

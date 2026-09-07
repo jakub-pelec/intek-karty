@@ -12,11 +12,14 @@ import { liveCms } from "@/lib/cms/live";
 import { requireUser } from "@/lib/rbac";
 import { toRoman } from "@/lib/ritual";
 import { formatDate } from "@/lib/utils";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function AchievementsPage() {
   const user = await requireUser();
   const db = getDb();
-  const [catalog, unlocked, evalState] = await Promise.all([
+  const [t, locale, catalog, unlocked, evalState] = await Promise.all([
+    getTranslations("titles"),
+    getLocale(),
     db.select().from(achievements).where(liveCms(achievements)),
     db.select().from(userAchievements).where(eq(userAchievements.userId, user.id)),
     loadAchievementEvalState(user.id),
@@ -44,8 +47,11 @@ export default async function AchievementsPage() {
         description: achievement.description,
         meta:
           got
-            ? `${formatDate(got.unlockedAt)} · ${achievement.pointReward} echoes`
-            : `${achievement.pointReward} echoes`,
+            ? t("unlockedMeta", {
+                date: formatDate(got.unlockedAt, locale),
+                points: achievement.pointReward,
+              })
+            : t("echoesMeta", { points: achievement.pointReward }),
         done: Boolean(got),
         current: progress.current,
         required: progress.required,
@@ -55,14 +61,17 @@ export default async function AchievementsPage() {
     .sort((a, b) => {
       if (b.ratio !== a.ratio) return b.ratio - a.ratio;
       if (a.done !== b.done) return Number(b.done) - Number(a.done);
-      return a.name.localeCompare(b.name, "pl");
+      return a.name.localeCompare(b.name, locale);
     });
 
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">
       <RitualPageHeader
-        title="Titles"
-        eyebrow={`${toRoman(completed)} of ${toRoman(catalog.length)} bestowed`}
+        title={t("title")}
+        eyebrow={t("eyebrow", {
+          completed: toRoman(completed),
+          total: toRoman(catalog.length),
+        })}
       />
       <TitlesCatalog rows={rows} />
     </main>

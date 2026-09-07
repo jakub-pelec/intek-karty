@@ -36,12 +36,10 @@ export type StrapiCard = {
   documentId: string;
   number?: number;
   name?: string;
-  lore?: string;
   rarity?: string;
   signed?: boolean;
   active?: boolean;
   image?: StrapiMedia;
-  holoMap?: StrapiMedia;
   collection?: StrapiRelation;
 };
 
@@ -49,8 +47,6 @@ export type StrapiBooster = {
   documentId: string;
   slug?: string;
   name?: string;
-  twitchChannelPointCost?: number;
-  twitchRewardId?: string | null;
   holographicChancePercent?: number;
   active?: boolean;
   frontImage?: StrapiMedia;
@@ -246,12 +242,10 @@ export function mapCard(entry: StrapiCard, strapiUrl: string) {
     collectionCmsId,
     number,
     name: requireString(entry.name, "card name"),
-    description: requireString(entry.lore, "card lore"),
     rarity: entry.rarity,
     signed,
     active: entry.active !== false,
     imageUrl: mediaUrl(strapiUrl, entry.image),
-    holoMapUrl: mediaUrl(strapiUrl, entry.holoMap),
     uniqueKey: cardUniqueKey(collectionCmsId, number, signed),
   };
 }
@@ -264,11 +258,6 @@ export function mapBooster(entry: StrapiBooster, strapiUrl: string) {
     collectionCmsId,
     slug: requireString(entry.slug, "booster slug"),
     name: requireString(entry.name, "booster name"),
-    twitchChannelPointCost: requireInt(
-      entry.twitchChannelPointCost,
-      "twitchChannelPointCost",
-    ),
-    twitchRewardId: entry.twitchRewardId?.trim() || null,
     holographicChanceBp: percentToBp(Number(entry.holographicChancePercent ?? 0)),
     active: entry.active !== false,
     frontImageUrl: mediaUrl(strapiUrl, entry.frontImage),

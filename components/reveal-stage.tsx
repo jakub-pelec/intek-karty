@@ -6,6 +6,7 @@ import type { Rarity } from "@/db/schema";
 import { CardInspect } from "@/components/card-inspect";
 import { MutationBadges, RarityBadge } from "@/components/ui/badge";
 import { formatCardNumber } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type RevealPayload = {
   id: string;
@@ -67,6 +68,7 @@ export function RevealStage({
   const [current, setCurrent] = useState<RevealPayload | null>(null);
   const [phase, setPhase] = useState<"idle" | "mystery" | "reveal">("idle");
   const lastId = useRef<string | null>(null);
+  const t = useTranslations("reveal");
 
   function play(payload: RevealPayload) {
     if (lastId.current === payload.id) return;
@@ -140,7 +142,7 @@ export function RevealStage({
   return (
     <div className="flex min-h-screen items-center justify-center p-8">
       {!current || phase === "idle" ? (
-        <p className="text-white/40">Waiting for a draw…</p>
+        <p className="text-white/40">{t("waiting")}</p>
       ) : (
         <div className="text-center">
           <p className="mb-3 text-lg text-white/80">{current.viewerName}</p>
@@ -180,7 +182,7 @@ export function RevealStage({
                 />
               </div>
               {current.isDuplicate ? (
-                <p className="text-sm text-amber-200">Duplicate — points awarded</p>
+                <p className="text-sm text-amber-200">{t("duplicate")}</p>
               ) : null}
             </div>
           ) : null}

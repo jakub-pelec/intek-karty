@@ -18,6 +18,7 @@ import { ORIGIN_COLLECTION } from "@/db/seed-data/collections";
 import type { Rarity } from "@/db/schema";
 import { RARITIES } from "@/lib/constants";
 import { formatCardNumber } from "@/lib/utils";
+import { getTranslations } from "next-intl/server";
 
 const SHOWCASE_RARITIES: Rarity[] = [
   "common",
@@ -28,8 +29,8 @@ const SHOWCASE_RARITIES: Rarity[] = [
 ];
 
 const HOLO_VARIANTS = [
-  { label: "Standard", holographic: false },
-  { label: "Holographic", holographic: true },
+  { key: "standard" as const, holographic: false },
+  { key: "holographic" as const, holographic: true },
 ] as const;
 
 type ShowcaseCard = {
@@ -165,14 +166,15 @@ export default async function AdminDevPage() {
       holographic: false,
     };
   }).filter((card): card is NonNullable<typeof card> => Boolean(card));
+  const t = await getTranslations("dev");
 
   return (
     <main className="mx-auto w-full max-w-5xl pt-2 md:pt-6">
       <RitualPageHeader
-        title="Dev"
-        eyebrow="Foil, signed art, and packs"
+        title={t("title")}
+        eyebrow={t("eyebrow")}
       />
-      <SanctumSection title="Opening rehearsal" className="mb-16" rule={false}>
+      <SanctumSection title={t("openingRehearsal")} className="mb-16" rule={false}>
         <div className="mx-auto max-w-xl">
           <BoosterOpenDemo
             name={packs[0]?.name ?? "Booster"}
@@ -182,7 +184,7 @@ export default async function AdminDevPage() {
           />
         </div>
       </SanctumSection>
-      <SanctumSection title="Booster packs" className="mb-16" rule={false}>
+      <SanctumSection title={t("boosterPacks")} className="mb-16" rule={false}>
         <div className="grid gap-8 md:grid-cols-3">
           {packs.map((pack) => (
             <article key={pack.name} className="text-center">
@@ -215,7 +217,7 @@ export default async function AdminDevPage() {
             </div>
             <div className="mx-auto grid max-w-2xl grid-cols-2 gap-8">
               {HOLO_VARIANTS.map((variant) => (
-                <article key={variant.label} className="space-y-3 text-center">
+                <article key={variant.key} className="space-y-3 text-center">
                   <CardInspect
                     name={card.name}
                     number={card.number}
@@ -229,7 +231,7 @@ export default async function AdminDevPage() {
                   />
                   <div className="flex flex-wrap items-center justify-center gap-2">
                     <p className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.18em] text-[#d7d3c8]/55 uppercase">
-                      {variant.label}
+                      {t(variant.key)}
                     </p>
                     <MutationBadges
                       holographic={variant.holographic}

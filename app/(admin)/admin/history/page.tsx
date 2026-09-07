@@ -9,6 +9,7 @@ import { MutationBadges, RarityBadge } from "@/components/ui/badge";
 import { liveCms } from "@/lib/cms/live";
 import { PAGE_SIZE } from "@/lib/constants";
 import { formatCardNumber, formatDate } from "@/lib/utils";
+import { getLocale, getTranslations } from "next-intl/server";
 
 function drawsHref(
   params: { user?: string; booster?: string; from?: string; to?: string },
@@ -73,20 +74,25 @@ export default async function AdminHistoryPage({
     .offset((page - 1) * PAGE_SIZE);
 
   const hasMore = rows.length === PAGE_SIZE;
+  const [t, tCommon, locale] = await Promise.all([
+    getTranslations("draws"),
+    getTranslations("common"),
+    getLocale(),
+  ]);
 
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">
-      <RitualPageHeader title="Draws" eyebrow="Every open and grant" />
+      <RitualPageHeader title={t("title")} eyebrow={t("eyebrow")} />
       <SanctumCard className="mb-6">
         <form className="grid gap-4 sm:grid-cols-2">
           <div>
-            <Label>Viewer</Label>
-            <Input name="user" defaultValue={params.user} placeholder="Nickname" />
+            <Label>{t("viewer")}</Label>
+            <Input name="user" defaultValue={params.user} placeholder={t("nickname")} />
           </div>
           <div>
-            <Label>Booster</Label>
+            <Label>{t("booster")}</Label>
             <Select name="booster" defaultValue={params.booster ?? ""}>
-              <option value="">All</option>
+              <option value="">{tCommon("all")}</option>
               {types.map((type) => (
                 <option key={type.id} value={type.id}>
                   {type.name}
@@ -95,20 +101,20 @@ export default async function AdminHistoryPage({
             </Select>
           </div>
           <div>
-            <Label>From</Label>
+            <Label>{t("from")}</Label>
             <Input name="from" type="date" defaultValue={params.from} />
           </div>
           <div>
-            <Label>To</Label>
+            <Label>{t("to")}</Label>
             <Input name="to" type="date" defaultValue={params.to} />
           </div>
           <div className="sm:col-span-2">
-            <Button type="submit">Filter</Button>
+            <Button type="submit">{tCommon("filter")}</Button>
           </div>
         </form>
       </SanctumCard>
       {rows.length === 0 ? (
-        <SanctumEmpty>No manifestations match.</SanctumEmpty>
+        <SanctumEmpty>{t("noMatch")}</SanctumEmpty>
       ) : (
         <SanctumCard className="px-6 py-0">
           <ul>
@@ -123,10 +129,10 @@ export default async function AdminHistoryPage({
                   </p>
                   <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
                     {formatCardNumber(row.cardNumber)} {row.cardName}
-                    {row.isDuplicate ? " · echo" : ""}
-                    {` · ${row.boosterName ?? "Manual"}`}
+                    {row.isDuplicate ? t("echo") : ""}
+                    {` · ${row.boosterName ?? tCommon("manual")}`}
                     {row.triggeredByName ? ` · ${row.triggeredByName}` : ""}
-                    {` · ${formatDate(row.createdAt)}`}
+                    {` · ${formatDate(row.createdAt, locale)}`}
                   </p>
                 </div>
                 <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">

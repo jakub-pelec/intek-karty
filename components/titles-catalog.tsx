@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { TitleProgress } from "@/components/title-progress";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,7 @@ export type TitleRow = {
 export function TitlesCatalog({ rows }: { rows: TitleRow[] }) {
   const [hideBestowed, setHideBestowed] = useState(false);
   const visible = hideBestowed ? rows.filter((row) => !row.done) : rows;
+  const t = useTranslations("titles");
 
   return (
     <>
@@ -28,13 +30,13 @@ export function TitlesCatalog({ rows }: { rows: TitleRow[] }) {
           aria-pressed={hideBestowed}
           onClick={() => setHideBestowed((value) => !value)}
         >
-          {hideBestowed ? "Show bestowed" : "Hide bestowed"}
+          {hideBestowed ? t("showBestowed") : t("hideBestowed")}
         </Button>
       </div>
       <ul className="overflow-hidden border border-[#d4b36a]/30 bg-[#0c0b12]">
         {visible.length === 0 ? (
           <li className="px-6 py-8 text-center text-lg text-[#d7d3c8]">
-            Every remaining title is bestowed.
+            {t("allBestowed")}
           </li>
         ) : (
           visible.map((row) => (
@@ -60,7 +62,7 @@ export function TitlesCatalog({ rows }: { rows: TitleRow[] }) {
                     row.done ? "text-[#7dbe72]" : "text-[#d7d3c8]",
                   )}
                 >
-                  {row.done ? "Bestowed" : "Sealed"}
+                  {row.done ? t("bestowed") : t("sealed")}
                 </span>
               </div>
               <p className="mt-2 text-lg leading-relaxed text-[#d7d3c8]">

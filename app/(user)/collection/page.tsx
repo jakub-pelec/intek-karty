@@ -66,7 +66,7 @@ export default async function CollectionPage({
   const total = activeCatalog.length;
 
   return (
-    <main className="mx-auto w-full max-w-[104rem] px-4 pt-2 pb-16 md:px-8 md:pt-6">
+    <main className="mx-auto w-full max-w-[104rem] px-4 pt-8 pb-16 md:px-8 md:pt-6">
       <CollectionBrowser
         key={query.set ?? "set"}
         slots={slots}

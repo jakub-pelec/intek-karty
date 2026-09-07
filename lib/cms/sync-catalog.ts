@@ -116,18 +116,17 @@ async function upsertCard(values: {
   collectionId: string;
   number: number;
   name: string;
-  description: string;
   rarity: (typeof cards.$inferInsert)["rarity"];
   signed: boolean;
   active: boolean;
   imageUrl: string | null;
-  holoMapUrl: string | null;
   updatedAt: Date;
 }) {
   const db = getDb();
+  const row = { ...values, description: "" };
   const existing = await findIdByCmsId(cards, values.cmsId);
   if (existing) {
-    await db.update(cards).set(values).where(eq(cards.id, existing));
+    await db.update(cards).set(row).where(eq(cards.id, existing));
     return;
   }
 
@@ -135,27 +134,27 @@ async function upsertCard(values: {
   if (slot && slot.cmsId && slot.cmsId !== values.cmsId) {
     await retireCardRow(slot.id, values.collectionId, values.signed);
   } else if (slot) {
-    await db.update(cards).set(values).where(eq(cards.id, slot.id));
+    await db.update(cards).set(row).where(eq(cards.id, slot.id));
     return;
   }
 
   try {
-    await db.insert(cards).values(values);
+    await db.insert(cards).values(row);
   } catch (error) {
     if (!isUniqueViolation(error)) throw error;
     const again = await findIdByCmsId(cards, values.cmsId);
     if (again) {
-      await db.update(cards).set(values).where(eq(cards.id, again));
+      await db.update(cards).set(row).where(eq(cards.id, again));
       return;
     }
     const taken = await findCardSlot(values.collectionId, values.number, values.signed);
     if (taken && taken.cmsId && taken.cmsId !== values.cmsId) {
       await retireCardRow(taken.id, values.collectionId, values.signed);
-      await db.insert(cards).values(values);
+      await db.insert(cards).values(row);
       return;
     }
     if (taken) {
-      await db.update(cards).set(values).where(eq(cards.id, taken.id));
+      await db.update(cards).set(row).where(eq(cards.id, taken.id));
       return;
     }
     throw error;
@@ -240,12 +239,10 @@ async function syncCatalogUnlocked() {
       collectionId,
       number: row.number,
       name: row.name,
-      description: row.description,
       rarity: row.rarity,
       signed: row.signed,
       active: row.active,
       imageUrl: row.imageUrl,
-      holoMapUrl: row.holoMapUrl,
       updatedAt: new Date(),
     });
   }
@@ -264,8 +261,6 @@ async function syncCatalogUnlocked() {
       collectionId,
       slug: row.slug,
       name: row.name,
-      twitchChannelPointCost: row.twitchChannelPointCost,
-      twitchRewardId: row.twitchRewardId,
       holographicChanceBp: row.holographicChanceBp,
       frontImageUrl: row.frontImageUrl,
       backImageUrl: row.backImageUrl,
@@ -292,7 +287,14 @@ async function syncCatalogUnlocked() {
           .where(eq(boosterTypes.id, conflict.id));
       }
       boosterId = (
-        await db.insert(boosterTypes).values(values).returning({ id: boosterTypes.id })
+        await db
+          .insert(boosterTypes)
+          .values({
+            ...values,
+            twitchChannelPointCost: 0,
+            twitchRewardId: null,
+          })
+          .returning({ id: boosterTypes.id })
       )[0].id;
     }
     await db.delete(boosterDropRates).where(eq(boosterDropRates.boosterTypeId, boosterId));

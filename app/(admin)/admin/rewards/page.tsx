@@ -7,8 +7,14 @@ import { Button } from "@/components/ui/button";
 import { getDb } from "@/db";
 import { rewards, shopRedemptions, users } from "@/db/schema";
 import { formatDate } from "@/lib/utils";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function AdminRewardsPage() {
+  const [t, tStatus, locale] = await Promise.all([
+    getTranslations("fulfillment"),
+    getTranslations("redemptionStatus"),
+    getLocale(),
+  ]);
   const queue = await getDb()
     .select({
       id: shopRedemptions.id,
@@ -27,11 +33,11 @@ export default async function AdminRewardsPage() {
   return (
     <main className="mx-auto w-full max-w-3xl pt-2 md:pt-6">
       <RitualPageHeader
-        title="Fulfillment"
-        eyebrow="Offerings are edited in Strapi"
+        title={t("title")}
+        eyebrow={t("eyebrow")}
       />
       {queue.length === 0 ? (
-        <SanctumEmpty>No claims yet.</SanctumEmpty>
+        <SanctumEmpty>{t("none")}</SanctumEmpty>
       ) : (
         <SanctumCard className="px-6 py-0">
           <ul>
@@ -45,8 +51,12 @@ export default async function AdminRewardsPage() {
                     {row.userName}
                   </p>
                   <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
-                    {row.rewardName} · {row.pointsSpent} echoes · {row.status}
-                    {` · ${formatDate(row.createdAt)}`}
+                    {t("meta", {
+                      reward: row.rewardName,
+                      points: row.pointsSpent,
+                      status: tStatus(row.status),
+                    })}
+                    {` · ${formatDate(row.createdAt, locale)}`}
                   </p>
                 </div>
                 {row.status === "pending_fulfillment" ? (
@@ -56,7 +66,7 @@ export default async function AdminRewardsPage() {
                   >
                     <input type="hidden" name="id" value={row.id} />
                     <input type="hidden" name="status" value="fulfilled" />
-                    <Button type="submit">Fulfill</Button>
+                    <Button type="submit">{t("fulfill")}</Button>
                   </ActionForm>
                 ) : null}
               </li>

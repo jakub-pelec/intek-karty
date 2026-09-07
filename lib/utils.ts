@@ -9,9 +9,9 @@ export function formatCardNumber(n: number) {
   return `#${String(n).padStart(3, "0")}`;
 }
 
-export function formatDate(value: Date | string) {
+export function formatDate(value: Date | string, locale = "en") {
   const date = typeof value === "string" ? new Date(value) : value;
-  return new Intl.DateTimeFormat("en", {
+  return new Intl.DateTimeFormat(locale, {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(date);

@@ -31,10 +31,6 @@
       "type": "string",
       "required": true
     },
-    "lore": {
-      "type": "text",
-      "required": true
-    },
     "rarity": {
       "type": "enumeration",
       "enum": ["common", "rare", "epic", "legendary", "joker"],
@@ -54,12 +50,6 @@
       "type": "media",
       "multiple": false,
       "required": true,
-      "allowedTypes": ["images"]
-    },
-    "holoMap": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
       "allowedTypes": ["images"]
     }
   }

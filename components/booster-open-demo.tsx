@@ -7,8 +7,9 @@ import { BoosterPackPreview } from "@/components/booster-pack-preview";
 import { useOpenSequence } from "@/components/use-open-sequence";
 import type { OpenCard } from "@/components/booster-open-scene";
 import type { Rarity } from "@/db/schema";
-import { RARITIES, RARITY_LABELS } from "@/lib/constants";
+import { RARITIES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export function BoosterOpenDemo({
   name,
@@ -24,6 +25,9 @@ export function BoosterOpenDemo({
   const [dismissed, setDismissed] = useState(false);
   const [rarity, setRarity] = useState<Rarity>("legendary");
   const [holographic, setHolographic] = useState(false);
+  const t = useTranslations("openPack");
+  const tRarity = useTranslations("rarity");
+  const tDev = useTranslations("dev");
   const { phase, card: shown, started, begin, resolve, reset, isBusy } =
     useOpenSequence<OpenCard>();
 
@@ -31,14 +35,14 @@ export function BoosterOpenDemo({
     const match = cards.find((card) => card.rarity === rarity) ?? cards[0];
     if (!match) {
       return {
-        name: "Unknown",
+        name: t("unknown"),
         imageUrl: `/cards/${rarity}.svg`,
         rarity,
         holographic,
       } satisfies OpenCard;
     }
     return { ...match, holographic };
-  }, [cards, rarity, holographic]);
+  }, [cards, rarity, holographic, t]);
 
   function play() {
     setDismissed(false);
@@ -67,7 +71,7 @@ export function BoosterOpenDemo({
         card={shown}
         frontImageUrl={frontImageUrl}
         backImageUrl={backImageUrl}
-        eyebrow={`Rehearsal · ${RARITY_LABELS[shown?.rarity ?? rarity]}`}
+        eyebrow={tDev("rehearsal", { rarity: tRarity(shown?.rarity ?? rarity) })}
         onDismiss={dismiss}
         details={
           shown ? (
@@ -89,7 +93,7 @@ export function BoosterOpenDemo({
               rarity === value ? "text-[#d4b36a]" : "text-[#cfc6b4] hover:text-[#d4b36a]",
             )}
           >
-            {RARITY_LABELS[value]}
+            {tRarity(value)}
           </button>
         ))}
       </div>
@@ -102,10 +106,10 @@ export function BoosterOpenDemo({
             onChange={(event) => setHolographic(event.target.checked)}
             className="accent-[#d4b36a]"
           />
-          Holo sparks
+          {t("holoSparks")}
         </label>
         <Button size="sm" disabled={isBusy || cards.length === 0} onClick={play}>
-          {isBusy ? "Opening…" : "Play opening"}
+          {isBusy ? t("opening") : t("playOpening")}
         </Button>
       </div>
     </div>

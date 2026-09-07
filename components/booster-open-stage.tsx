@@ -10,6 +10,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { useOpenSequence } from "@/components/use-open-sequence";
 import type { Rarity } from "@/db/schema";
 import { cn, formatCardNumber } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type DrawnCard = {
   name: string;
@@ -43,6 +44,8 @@ export function BoosterOpenStage({
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [dismissed, setDismissed] = useState(false);
+  const t = useTranslations("openPack");
+  const tCommon = useTranslations("common");
   const { phase, card, started, begin, resolve, fail, isBusy } =
     useOpenSequence<DrawnCard>(initialDraw);
 
@@ -54,7 +57,7 @@ export function BoosterOpenStage({
       const result = await openBoosterAction(userBoosterId);
       if (result.error || !result.result) {
         fail();
-        setError(result.error ?? "Could not open booster");
+        setError(result.error ?? t("couldNotOpen"));
         return;
       }
       resolve({
@@ -68,7 +71,7 @@ export function BoosterOpenStage({
         signature: result.result.signature,
         isDuplicate: result.result.isDuplicate,
         pointsAwarded: result.result.pointsAwarded,
-        message: result.success ?? "Opened",
+        message: result.success ?? t("opened"),
       });
     });
   }
@@ -98,7 +101,7 @@ export function BoosterOpenStage({
         card={card}
         frontImageUrl={frontImageUrl}
         backImageUrl={backImageUrl}
-        eyebrow={`For ${viewerName}`}
+        eyebrow={t("forViewer", { name: viewerName })}
         onDismiss={() => setDismissed(true)}
         details={
           card ? (
@@ -115,7 +118,7 @@ export function BoosterOpenStage({
               </div>
               {card.isDuplicate ? (
                 <p className="mt-2 text-sm text-amber-200">
-                  Duplicate — {card.pointsAwarded} points awarded
+                  {t("duplicatePoints", { points: card.pointsAwarded })}
                 </p>
               ) : null}
             </div>
@@ -124,11 +127,11 @@ export function BoosterOpenStage({
       />
       <p className="sr-only" aria-live="polite">
         {phase === "charge"
-          ? "Opening pack"
+          ? t("openingPack")
           : phase === "burst"
-            ? "Pack bursting"
+            ? t("packBursting")
             : card
-              ? `${card.name} revealed`
+              ? t("revealed", { name: card.name })
               : ""}
       </p>
       {error ? (
@@ -151,26 +154,26 @@ export function BoosterOpenStage({
           <p className="mt-3 text-sm text-[#d7d3c8]/60 italic">{card.message}</p>
           {card.isDuplicate ? (
             <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d4b36a] uppercase">
-              Echo — {card.pointsAwarded} echoes awarded
+              {t("echoAwarded", { points: card.pointsAwarded })}
             </p>
           ) : null}
           <Link
             href="/admin/queue"
             className={cn(buttonVariants(), "mt-8")}
           >
-            Back to queue
+            {t("backToQueue")}
           </Link>
         </div>
       ) : !overlayOpen ? (
         <div className="mt-8 flex justify-center gap-10">
           <Button size="lg" disabled={opening} onClick={confirmOpen}>
-            {opening ? "Opening…" : "Open pack"}
+            {opening ? t("opening") : t("openPack")}
           </Button>
           <Link
             href="/admin/queue"
             className="inline-flex h-12 items-center font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
           >
-            Cancel
+            {tCommon("cancel")}
           </Link>
         </div>
       ) : null}

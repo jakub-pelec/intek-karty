@@ -26,14 +26,6 @@
       "targetField": "name",
       "required": true
     },
-    "twitchChannelPointCost": {
-      "type": "integer",
-      "required": true,
-      "min": 1
-    },
-    "twitchRewardId": {
-      "type": "string"
-    },
     "holographicChancePercent": {
       "type": "decimal",
       "default": 0,
