@@ -4,7 +4,7 @@ import { authConfig } from "@/auth.config";
 
 const { auth } = NextAuth(authConfig);
 
-const publicPaths = ["/login", "/reveal"];
+const publicPaths = ["/", "/login", "/reveal"];
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
@@ -20,13 +20,8 @@ export default auth((req) => {
     return NextResponse.next();
   }
 
-  if (pathname === "/") {
-    const dest = isLoggedIn ? "/dashboard" : "/login";
-    return NextResponse.redirect(new URL(dest, req.url));
-  }
-
   if (publicPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`))) {
-    if (pathname === "/login" && isLoggedIn) {
+    if ((pathname === "/" || pathname === "/login") && isLoggedIn) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
     return NextResponse.next();

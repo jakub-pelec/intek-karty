@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@strapi/plugin-users-permissions':
         specifier: 5.15.1
-        version: 5.15.1(57a13c53fe4b69cfdff7da9cf88b243f)
+        version: 5.15.1(ef94646da02e822dedb111d451751e3f)
       '@strapi/strapi':
         specifier: 5.15.1
-        version: 5.15.1(@babel/runtime@7.29.7)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/state@6.7.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.43.11)(@swc/helpers@0.5.23)(@types/hoist-non-react-statics@3.3.7(@types/react@18.3.31))(@types/node@26.4.1)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(better-sqlite3@12.4.1)(codemirror@5.65.21)(esbuild@0.25.12)(koa@2.16.1)(postcss@8.5.28)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(redux@4.2.1)(styled-components@6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.51.2)(type-fest@4.41.0)
+        version: 5.15.1(@babel/runtime@7.29.7)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/state@6.7.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.43.11)(@swc/helpers@0.5.23)(@types/hoist-non-react-statics@3.3.7(@types/react@18.3.31))(@types/node@26.4.1)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(better-sqlite3@12.4.1)(codemirror@5.65.21)(esbuild@0.25.12)(koa@2.16.1)(postcss@8.5.28)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(redux@4.2.1)(sharp@0.33.5)(styled-components@6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.51.2)(type-fest@4.41.0)
       better-sqlite3:
         specifier: 12.4.1
         version: 12.4.1
@@ -26,6 +26,9 @@ importers:
       react-router-dom:
         specifier: ^6.30.1
         version: 6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      sharp:
+        specifier: ^0.33.5
+        version: 0.33.5
       styled-components:
         specifier: ^6.1.18
         version: 6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6572,7 +6575,7 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@pmmmwh/react-refresh-webpack-plugin@0.5.15(react-refresh@0.14.0)(type-fest@4.41.0)(webpack-hot-middleware@2.26.1)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28))':
+  '@pmmmwh/react-refresh-webpack-plugin@0.5.15(react-refresh@0.14.0)(type-fest@4.41.0)(webpack-hot-middleware@2.26.1)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5))':
     dependencies:
       ansi-html: 0.0.9
       core-js-pure: 3.50.0
@@ -6582,7 +6585,7 @@ snapshots:
       react-refresh: 0.14.0
       schema-utils: 4.3.3
       source-map: 0.7.6
-      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)
+      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)
     optionalDependencies:
       type-fest: 4.41.0
       webpack-hot-middleware: 2.26.1
@@ -7883,11 +7886,11 @@ snapshots:
       qs: 6.11.1
       sift: 16.0.1
 
-  '@strapi/plugin-users-permissions@5.15.1(57a13c53fe4b69cfdff7da9cf88b243f)':
+  '@strapi/plugin-users-permissions@5.15.1(ef94646da02e822dedb111d451751e3f)':
     dependencies:
       '@strapi/design-system': 2.0.0-rc.25(@babel/runtime@7.29.7)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/state@6.7.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.43.11)(@strapi/icons@2.0.0-rc.25(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(codemirror@5.65.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@strapi/icons': 2.0.0-rc.25(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
-      '@strapi/strapi': 5.15.1(@babel/runtime@7.29.7)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/state@6.7.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.43.11)(@swc/helpers@0.5.23)(@types/hoist-non-react-statics@3.3.7(@types/react@18.3.31))(@types/node@26.4.1)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(better-sqlite3@12.4.1)(codemirror@5.65.21)(esbuild@0.25.12)(koa@2.16.1)(postcss@8.5.28)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(redux@4.2.1)(styled-components@6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.51.2)(type-fest@4.41.0)
+      '@strapi/strapi': 5.15.1(@babel/runtime@7.29.7)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/state@6.7.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.43.11)(@swc/helpers@0.5.23)(@types/hoist-non-react-statics@3.3.7(@types/react@18.3.31))(@types/node@26.4.1)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(better-sqlite3@12.4.1)(codemirror@5.65.21)(esbuild@0.25.12)(koa@2.16.1)(postcss@8.5.28)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(redux@4.2.1)(sharp@0.33.5)(styled-components@6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.51.2)(type-fest@4.41.0)
       '@strapi/utils': 5.15.1
       bcryptjs: 2.4.3
       formik: 2.4.5(@types/react@18.3.31)(react@18.3.1)
@@ -7976,9 +7979,9 @@ snapshots:
       - redux
       - typescript
 
-  '@strapi/strapi@5.15.1(@babel/runtime@7.29.7)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/state@6.7.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.43.11)(@swc/helpers@0.5.23)(@types/hoist-non-react-statics@3.3.7(@types/react@18.3.31))(@types/node@26.4.1)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(better-sqlite3@12.4.1)(codemirror@5.65.21)(esbuild@0.25.12)(koa@2.16.1)(postcss@8.5.28)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(redux@4.2.1)(styled-components@6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.51.2)(type-fest@4.41.0)':
+  '@strapi/strapi@5.15.1(@babel/runtime@7.29.7)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/state@6.7.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.43.11)(@swc/helpers@0.5.23)(@types/hoist-non-react-statics@3.3.7(@types/react@18.3.31))(@types/node@26.4.1)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(better-sqlite3@12.4.1)(codemirror@5.65.21)(esbuild@0.25.12)(koa@2.16.1)(postcss@8.5.28)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(redux@4.2.1)(sharp@0.33.5)(styled-components@6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.51.2)(type-fest@4.41.0)':
     dependencies:
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.15(react-refresh@0.14.0)(type-fest@4.41.0)(webpack-hot-middleware@2.26.1)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28))
+      '@pmmmwh/react-refresh-webpack-plugin': 0.5.15(react-refresh@0.14.0)(type-fest@4.41.0)(webpack-hot-middleware@2.26.1)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5))
       '@strapi/admin': 5.15.1(@babel/runtime@7.29.7)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/state@6.7.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.43.11)(@strapi/data-transfer@5.15.1(@types/node@26.4.1)(better-sqlite3@12.4.1)(typescript@5.4.4))(@types/hoist-non-react-statics@3.3.7(@types/react@18.3.31))(@types/node@26.4.1)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(better-sqlite3@12.4.1)(codemirror@5.65.21)(debug@4.3.4)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(redux@4.2.1)(styled-components@6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@strapi/cloud-cli': 5.15.1
       '@strapi/content-manager': 5.15.1(7aa08ae3d465a58cea527c27b1ff41d3)
@@ -8010,19 +8013,19 @@ snapshots:
       commander: 8.3.0
       concurrently: 8.2.2
       copyfiles: 2.4.1
-      css-loader: 6.11.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28))
+      css-loader: 6.11.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5))
       dotenv: 16.4.5
-      esbuild-loader: 4.3.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28))
+      esbuild-loader: 4.3.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5))
       esbuild-register: 3.5.0(esbuild@0.25.12)
       execa: 5.1.1
-      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.4.4)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28))
+      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.4.4)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5))
       fs-extra: 11.2.0
       get-latest-version: 5.1.0
       git-url-parse: 14.0.0
-      html-webpack-plugin: 5.6.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28))
+      html-webpack-plugin: 5.6.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5))
       inquirer: 8.2.5
       lodash: 4.17.21
-      mini-css-extract-plugin: 2.7.7(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28))
+      mini-css-extract-plugin: 2.7.7(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5))
       nodemon: 3.0.2
       ora: 5.4.1
       outdent: 0.8.0
@@ -8035,13 +8038,13 @@ snapshots:
       read-pkg-up: 7.0.1
       resolve-from: 5.0.0
       semver: 7.5.4
-      style-loader: 3.3.4(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28))
+      style-loader: 3.3.4(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5))
       styled-components: 6.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       typescript: 5.4.4
       vite: 5.4.19(@types/node@26.4.1)(terser@5.51.2)
-      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)
+      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)
       webpack-bundle-analyzer: 4.10.2
-      webpack-dev-middleware: 6.1.2(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28))
+      webpack-dev-middleware: 6.1.2(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5))
       webpack-hot-middleware: 2.26.1
       yalc: 1.0.0-pre.53
       yup: 0.32.9
@@ -9256,7 +9259,7 @@ snapshots:
 
   crypto-random-string@2.0.0: {}
 
-  css-loader@6.11.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)):
+  css-loader@6.11.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.28)
       postcss: 8.5.28
@@ -9265,9 +9268,9 @@ snapshots:
       postcss-modules-scope: 3.2.1(postcss@8.5.28)
       postcss-modules-values: 4.0.0(postcss@8.5.28)
       postcss-value-parser: 4.2.0
-      semver: 7.5.4
+      semver: 7.8.5
     optionalDependencies:
-      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)
+      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)
 
   css-select@4.3.0:
     dependencies:
@@ -9547,12 +9550,12 @@ snapshots:
 
   es6-error@4.1.1: {}
 
-  esbuild-loader@4.3.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)):
+  esbuild-loader@4.3.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)):
     dependencies:
       esbuild: 0.25.12
       get-tsconfig: 4.14.3
       loader-utils: 2.0.4
-      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)
+      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)
       webpack-sources: 1.4.3
 
   esbuild-register@3.5.0(esbuild@0.25.12):
@@ -9752,7 +9755,7 @@ snapshots:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
 
-  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.4.4)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)):
+  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.4.4)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)):
     dependencies:
       '@babel/code-frame': 7.29.7
       chalk: 4.1.2
@@ -9764,10 +9767,10 @@ snapshots:
       minimatch: 3.1.5
       node-abort-controller: 3.1.1
       schema-utils: 3.3.0
-      semver: 7.5.4
+      semver: 7.8.5
       tapable: 2.3.3
       typescript: 5.4.4
-      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)
+      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)
 
   form-data@4.0.6:
     dependencies:
@@ -9872,7 +9875,7 @@ snapshots:
       get-it: 8.8.3
       registry-auth-token: 5.1.1
       registry-url: 5.1.0
-      semver: 7.5.4
+      semver: 7.8.5
 
   get-nonce@1.0.1: {}
 
@@ -10085,7 +10088,7 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.51.2
 
-  html-webpack-plugin@5.6.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)):
+  html-webpack-plugin@5.6.0(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -10093,7 +10096,7 @@ snapshots:
       pretty-error: 4.0.0
       tapable: 2.3.3
     optionalDependencies:
-      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)
+      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)
 
   htmlparser2@6.1.0:
     dependencies:
@@ -10870,10 +10873,10 @@ snapshots:
 
   mimic-response@3.1.0: {}
 
-  mini-css-extract-plugin@2.7.7(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)):
+  mini-css-extract-plugin@2.7.7(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)):
     dependencies:
       schema-utils: 4.3.3
-      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)
+      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)
 
   minimalistic-assert@1.0.1: {}
 
@@ -10897,16 +10900,17 @@ snapshots:
 
   minimist@1.2.8: {}
 
-  minimizer-webpack-plugin@5.9.0(esbuild@0.25.12)(postcss@8.5.28)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)):
+  minimizer-webpack-plugin@5.9.0(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.3.3
       terser: 5.51.2
-      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)
+      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)
     optionalDependencies:
       esbuild: 0.25.12
       postcss: 8.5.28
+      sharp: 0.33.5
 
   minipass@3.3.6:
     dependencies:
@@ -11033,7 +11037,7 @@ snapshots:
       ignore-by-default: 1.0.1
       minimatch: 3.1.5
       pstree.remy: 1.1.8
-      semver: 7.5.4
+      semver: 7.8.5
       simple-update-notifier: 2.0.0
       supports-color: 5.5.0
       touch: 3.1.1
@@ -12164,9 +12168,9 @@ snapshots:
 
   strip-json-comments@2.0.1: {}
 
-  style-loader@3.3.4(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)):
+  style-loader@3.3.4(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)):
     dependencies:
-      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)
+      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)
 
   style-mod@4.1.3: {}
 
@@ -12496,7 +12500,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  webpack-dev-middleware@6.1.2(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)):
+  webpack-dev-middleware@6.1.2(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)):
     dependencies:
       colorette: 2.0.20
       memfs: 3.5.3
@@ -12504,7 +12508,7 @@ snapshots:
       range-parser: 1.3.0
       schema-utils: 4.3.3
     optionalDependencies:
-      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)
+      webpack: 5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)
 
   webpack-hot-middleware@2.26.1:
     dependencies:
@@ -12519,7 +12523,7 @@ snapshots:
 
   webpack-sources@3.5.1: {}
 
-  webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28):
+  webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5):
     dependencies:
       '@types/estree': 1.0.9
       '@types/json-schema': 7.0.15
@@ -12534,7 +12538,7 @@ snapshots:
       events: 3.3.0
       graceful-fs: 4.2.11
       mime-db: 1.54.0
-      minimizer-webpack-plugin: 5.9.0(esbuild@0.25.12)(postcss@8.5.28)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28))
+      minimizer-webpack-plugin: 5.9.0(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5)(webpack@5.110.3(esbuild@0.25.12)(postcss@8.5.28)(sharp@0.33.5))
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.3

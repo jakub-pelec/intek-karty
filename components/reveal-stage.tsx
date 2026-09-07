@@ -13,6 +13,7 @@ type RevealPayload = {
   cardNumber: number;
   rarity: Rarity;
   imageUrl: string | null;
+  holoMapUrl?: string | null;
   backImageUrl?: string | null;
   isDuplicate: boolean;
   holographic: boolean;
@@ -35,6 +36,7 @@ function fromApi(row: {
   cardNumber: number;
   cardRarity: Rarity;
   cardImageUrl: string | null;
+  holoMapUrl?: string | null;
   backImageUrl?: string | null;
   isDuplicate: boolean;
   holographic: boolean;
@@ -47,6 +49,7 @@ function fromApi(row: {
     cardNumber: row.cardNumber,
     rarity: row.cardRarity,
     imageUrl: row.cardImageUrl,
+    holoMapUrl: row.holoMapUrl,
     backImageUrl: row.backImageUrl,
     isDuplicate: row.isDuplicate,
     holographic: row.holographic,
@@ -152,6 +155,7 @@ export function RevealStage({
               <CardInspect
                 name={current.cardName}
                 imageUrl={current.imageUrl}
+                holoMapUrl={current.holoMapUrl}
                 backImageUrl={current.backImageUrl}
                 rarity={current.rarity}
                 holographic={current.holographic}

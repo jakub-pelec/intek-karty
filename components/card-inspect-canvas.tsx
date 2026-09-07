@@ -19,10 +19,12 @@ export type CardInspectProps = {
   name: string;
   imageUrl: string | null;
   backImageUrl?: string | null;
+  holoMapUrl?: string | null;
   rarity?: Rarity;
   holographic?: boolean;
   signature?: boolean;
   glow?: boolean;
+  legend?: { number: string };
   className?: string;
 };
 
@@ -30,10 +32,13 @@ export function CardInspectCanvas({
   name,
   imageUrl,
   backImageUrl,
+  holoMapUrl,
   rarity,
   holographic = false,
+  signature = false,
   glow = true,
-}: Omit<CardInspectProps, "className" | "signature">) {
+  legend,
+}: Omit<CardInspectProps, "className">) {
   const frame = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
   const [ready, setReady] = useState(false);
@@ -48,7 +53,7 @@ export function CardInspectCanvas({
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [name, imageUrl, backImageUrl, holographic]);
+  }, [name, imageUrl, backImageUrl, holoMapUrl, holographic]);
 
   const markReady = useCallback(() => {
     requestAnimationFrame(() => setReady(true));
@@ -105,8 +110,11 @@ export function CardInspectCanvas({
               name={name}
               imageUrl={imageUrl}
               backImageUrl={backImageUrl}
+              holoMapUrl={holoMapUrl}
               rarity={rarity}
               holographic={holographic}
+              signature={signature}
+              legend={legend}
               scale={1}
               onReady={markReady}
             />

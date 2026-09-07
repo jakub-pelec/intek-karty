@@ -29,6 +29,7 @@ export type OpenCard = {
   name: string;
   imageUrl: string | null;
   backImageUrl?: string | null;
+  holoMapUrl?: string | null;
   rarity: Rarity;
   holographic: boolean;
   signature?: boolean;
@@ -58,10 +59,13 @@ export function BoosterOpenScene({
   }, []);
 
   useEffect(() => {
-    if (!card?.imageUrl) return;
-    const image = new Image();
-    image.src = card.imageUrl;
-  }, [card?.imageUrl]);
+    if (!card?.imageUrl && !card?.holoMapUrl) return;
+    if (card.imageUrl) {
+      const image = new Image();
+      image.src = card.imageUrl;
+    }
+    if (card.holoMapUrl) preloadHoloAssets(card.holoMapUrl);
+  }, [card?.imageUrl, card?.holoMapUrl]);
 
   return (
     <div
@@ -197,6 +201,7 @@ function RevealedCard({
         name={card.name}
         imageUrl={card.imageUrl}
         backImageUrl={card.backImageUrl}
+        holoMapUrl={card.holoMapUrl}
         rarity={card.rarity}
         holographic={card.holographic}
         interactive={phase === "reveal"}

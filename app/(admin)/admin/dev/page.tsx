@@ -37,6 +37,7 @@ type ShowcaseCard = {
   name: string;
   rarity: Rarity;
   imageUrl: string | null;
+  holoMapUrl?: string | null;
   backImageUrl?: string | null;
   signed?: boolean;
 };
@@ -49,6 +50,7 @@ function withCollectionBack(
     name: card.name,
     rarity: card.rarity,
     imageUrl: card.imageUrl,
+    holoMapUrl: "holoMapUrl" in card ? card.holoMapUrl : undefined,
     signed: card.signed,
     backImageUrl:
       "backImageUrl" in card && card.backImageUrl
@@ -76,6 +78,7 @@ export default async function AdminDevPage() {
         name: cards.name,
         rarity: cards.rarity,
         imageUrl: cards.imageUrl,
+        holoMapUrl: cards.holoMapUrl,
         signed: cards.signed,
         backImageUrl: collections.backImageUrl,
       })
@@ -137,6 +140,8 @@ export default async function AdminDevPage() {
       return {
         name: FEATURED_SHOWCASE_CARD.name,
         imageUrl: FEATURED_SHOWCASE_CARD.imageUrl,
+        holoMapUrl: catalog.find((row) => row.number === FEATURED_SHOWCASE_CARD.number)
+          ?.holoMapUrl,
         backImageUrl:
           catalog.find((row) => row.number === FEATURED_SHOWCASE_CARD.number)
             ?.backImageUrl ?? ORIGIN_COLLECTION.backImageUrl,
@@ -152,6 +157,7 @@ export default async function AdminDevPage() {
     return {
       name: showcase.name,
       imageUrl: showcase.imageUrl,
+      holoMapUrl: showcase.holoMapUrl,
       backImageUrl: showcase.backImageUrl,
       rarity: showcase.rarity,
       holographic: false,
@@ -211,6 +217,7 @@ export default async function AdminDevPage() {
                   <CardInspect
                     name={card.name}
                     imageUrl={card.imageUrl}
+                    holoMapUrl={card.holoMapUrl}
                     backImageUrl={card.backImageUrl}
                     rarity={card.rarity}
                     holographic={variant.holographic}

@@ -34,8 +34,8 @@ export function BoosterOpenOverlay({
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    if (open) preloadHoloAssets();
-  }, [open]);
+    if (open) preloadHoloAssets(card?.holoMapUrl);
+  }, [open, card?.holoMapUrl]);
 
   useEffect(() => {
     if (!open) return;

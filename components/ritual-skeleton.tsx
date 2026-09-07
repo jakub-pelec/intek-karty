@@ -37,30 +37,6 @@ function PageHeaderSkeleton({
   );
 }
 
-function FilterBone({ children }: { children: string }) {
-  return (
-    <span className="border-b border-transparent pb-0.5 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase">
-      <TypeBone>{children}</TypeBone>
-    </span>
-  );
-}
-
-function FilterRow({
-  labels,
-  className,
-}: {
-  labels: string[];
-  className?: string;
-}) {
-  return (
-    <div className={cn("flex flex-wrap items-center justify-center gap-x-6 gap-y-2", className)}>
-      {labels.map((label) => (
-        <FilterBone key={label}>{label}</FilterBone>
-      ))}
-    </div>
-  );
-}
-
 function FieldBone({ label }: { label: string }) {
   return (
     <div>
@@ -348,41 +324,62 @@ export function ListPageSkeleton({
 
 export function CollectionPageSkeleton() {
   return (
-    <SkeletonRoot className="mx-auto w-full max-w-[104rem] pt-2 md:pt-6">
-      <h1 className="mb-3 text-center font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide text-[#cfc6b4] italic md:text-[53px]">
-        Collection
-      </h1>
-      <p className="mb-10 text-center font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.3em] uppercase">
-        <TypeBone>XII of XX relics bound</TypeBone>
-      </p>
-      <div className="mb-8 flex flex-col items-center gap-4">
-        <FilterRow className="mb-2 gap-x-10" labels={["Origin", "Expansion"]} />
-        <FilterRow labels={["All", "Bound", "Unseen"]} />
-        <FilterRow
-          className="gap-x-5"
-          labels={["Any rarity", "Common", "Rare", "Epic", "Legendary", "Joker"]}
-        />
-        <FilterRow labels={["Any mark", "Holo", "Signed"]} />
-        <FilterRow labels={["Number", "Rarity", "Name", "Newest"]} />
-      </div>
-      <div className="border border-[#d4b36a]/25 bg-[#05040a]/45 px-5 py-6 sm:px-8 sm:py-8">
-      <p className="mb-6 text-right font-[family-name:var(--font-cinzel)] text-[16px] tracking-[0.16em] uppercase">
-        <TypeBone>Completed 12/40</TypeBone>
-      </p>
-      <div className="grid grid-cols-2 gap-x-6 gap-y-[64px] md:grid-cols-3 md:gap-x-10 md:gap-y-[80px] xl:grid-cols-4 xl:gap-x-12 xl:gap-y-[88px]">
-        {Array.from({ length: 8 }, (_, index) => (
-          <div key={index}>
-            <RelicFrame sealed>
-              <div className="absolute inset-0">
-                <div className="ritual-shimmer h-full w-full" />
-              </div>
-            </RelicFrame>
-            <p className="mt-3 text-center font-[family-name:var(--font-cormorant)] text-lg italic">
-              <TypeBone>Relic name</TypeBone>
+    <SkeletonRoot className="mx-auto w-full max-w-[104rem] px-4 pt-2 pb-16 md:px-8 md:pt-6">
+      <div className="relative flex flex-col items-start gap-10 lg:flex-row lg:gap-16">
+        <aside className="flex w-full shrink-0 flex-col gap-10 lg:w-56 lg:border-r lg:border-[#d4b36a]/25 lg:pr-10">
+          {[
+            ["Set", ["Origin", "Expansion"]],
+            ["Status", ["All", "Bound", "Unseen"]],
+            ["Rarity", ["Any rarity", "Common", "Rare"]],
+            ["Mark", ["Any mark", "Holo", "Signed"]],
+            ["Sort", ["Number", "Rarity", "Name"]],
+          ].map(([label, items]) => (
+            <div key={label as string} className="flex flex-col items-start gap-3">
+              <span className="mb-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.24em] uppercase">
+                <TypeBone>{label as string}</TypeBone>
+              </span>
+              {(items as string[]).map((item) => (
+                <span
+                  key={item}
+                  className="border-b border-transparent pb-0.5 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase"
+                >
+                  <TypeBone>{item}</TypeBone>
+                </span>
+              ))}
+            </div>
+          ))}
+        </aside>
+        <div className="relative min-w-0 flex-1">
+          <div className="mb-8 flex flex-col justify-between md:flex-row md:items-end">
+            <div>
+              <h1 className="font-[family-name:var(--font-cormorant)] text-[40px] leading-none tracking-wide text-[#cfc6b4] italic md:text-[53px]">
+                Collection
+              </h1>
+              <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.3em] uppercase">
+                <TypeBone>XII of XX relics bound</TypeBone>
+              </p>
+            </div>
+            <p className="mt-4 font-[family-name:var(--font-cinzel)] text-[16px] tracking-[0.16em] uppercase md:mt-0">
+              <TypeBone>Completed 12/40</TypeBone>
             </p>
           </div>
-        ))}
-      </div>
+          <div className="border border-[#d4b36a]/25 bg-[#05040a]/45 px-5 py-8 sm:px-10 sm:py-12">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-[64px] md:grid-cols-3 md:gap-x-10 md:gap-y-[80px] xl:grid-cols-4 xl:gap-x-12 xl:gap-y-[88px]">
+              {Array.from({ length: 8 }, (_, index) => (
+                <div key={index}>
+                  <RelicFrame sealed>
+                    <div className="absolute inset-0">
+                      <div className="ritual-shimmer h-full w-full" />
+                    </div>
+                  </RelicFrame>
+                  <p className="mt-3 text-center font-[family-name:var(--font-cormorant)] text-lg italic">
+                    <TypeBone>Relic name</TypeBone>
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </SkeletonRoot>
   );
@@ -390,74 +387,91 @@ export function CollectionPageSkeleton() {
 
 export function AltarPageSkeleton() {
   return (
-    <SkeletonRoot className="flex flex-col items-center pt-2 md:pt-8">
-      <h1 className="mb-16 text-center font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide italic opacity-90 md:text-[53px]">
+    <SkeletonRoot className="flex flex-col items-center px-4 pt-2 pb-16 md:px-8 md:pt-8">
+      <h1 className="mb-10 text-center font-[family-name:var(--font-cinzel)] text-[12px] font-medium tracking-[0.4em] uppercase md:mb-12">
         <TypeBone>Welcome, Viewer.</TypeBone>
       </h1>
-      <div className="relative mb-16 flex flex-col items-center">
-        <p className="mb-6 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/60 uppercase">
-          The Latest Vision
-        </p>
-        <div className="relative w-[280px] md:w-[340px]">
-          <CardBloom color="#ffffff" />
-          <RelicFrame sealed className="relative z-10 w-full">
-            <div className="absolute inset-0">
-              <div className="ritual-shimmer h-full w-full" />
-            </div>
-          </RelicFrame>
-        </div>
-        <p className="mt-5 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] uppercase">
-          <TypeBone>XII / XX</TypeBone>
-        </p>
-        <h2 className="mt-2 text-center font-[family-name:var(--font-cormorant)] text-[33px] tracking-wider italic md:text-[40px]">
-          <TypeBone>Relic name</TypeBone>
-        </h2>
-        <span className="mt-2 font-[family-name:var(--font-cinzel)] text-[10px] font-semibold tracking-[0.3em] uppercase">
-          <TypeBone>legendary holo</TypeBone>
-        </span>
-        <span className="mt-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.1em] uppercase">
-          <TypeBone>6 Sep 2026</TypeBone>
-        </span>
-        <div className="relic-plinth mt-12 grid w-[min(100%,560px)] grid-cols-3 gap-3 px-3 pt-6 pb-2 md:gap-6 md:px-6">
-          {[
-            ["12 / 37", "Relics Found"],
-            ["40", "Echoes Gathered"],
-            ["3", "Titles Bestowed"],
-          ].map(([value, label]) => (
-            <div key={label} className="flex min-w-0 flex-col items-center text-center">
-              <span className="font-[family-name:var(--font-cinzel)] text-[22px]">
-                <TypeBone>{value}</TypeBone>
-              </span>
-              <span className="mt-2 font-[family-name:var(--font-cinzel)] text-[9px] leading-3 tracking-[0.12em] uppercase">
-                <TypeBone>{label}</TypeBone>
-              </span>
-            </div>
-          ))}
-        </div>
+      <div className="relative mb-12 flex w-full max-w-7xl flex-col lg:mb-16 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(260px,380px)_minmax(0,1fr)] lg:gap-10 xl:gap-12">
+        <section className="order-2 flex flex-col pt-10 lg:order-1 lg:pt-12">
+          <p className="mb-6 text-center font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
+            Recent Manifestations
+          </p>
+          <ul className="space-y-1">
+            {Array.from({ length: 4 }, (_, index) => (
+              <li
+                key={index}
+                className="flex items-center justify-between gap-3 border-b border-white/5 px-3 py-2 first:border-t"
+              >
+                <span className="text-[18px] italic">
+                  <TypeBone>01 Relic name</TypeBone>
+                </span>
+                <span className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.1em] uppercase">
+                  <TypeBone>Rare</TypeBone>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section className="relative order-1 mb-8 flex flex-col items-center lg:order-2 lg:mb-0">
+          <p className="mb-6 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
+            The Latest Vision
+          </p>
+          <div className="relative w-full max-w-[380px]">
+            <CardBloom color="#d4b36a" />
+            <RelicFrame sealed className="relative z-10 w-full">
+              <div className="absolute inset-0">
+                <div className="ritual-shimmer h-full w-full" />
+              </div>
+            </RelicFrame>
+          </div>
+          <p className="mt-8 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.25em] uppercase">
+            <TypeBone>XII / XX</TypeBone>
+          </p>
+          <h2 className="mt-3 text-center font-[family-name:var(--font-cormorant)] text-[36px] tracking-wider italic md:text-[46px]">
+            <TypeBone>Relic name</TypeBone>
+          </h2>
+          <span className="mt-3 font-[family-name:var(--font-cinzel)] text-[11px] font-semibold tracking-[0.3em] uppercase">
+            <TypeBone>legendary holo</TypeBone>
+          </span>
+          <span className="mt-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.1em] uppercase">
+            <TypeBone>6 Sep 2026</TypeBone>
+          </span>
+        </section>
+        <section className="order-3 flex flex-col pt-10 lg:pt-12">
+          <p className="mb-6 text-center font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
+            Titles Bestowed
+          </p>
+          <ul className="space-y-1">
+            {Array.from({ length: 4 }, (_, index) => (
+              <li
+                key={index}
+                className="flex flex-col items-center justify-center gap-1 border-b border-white/5 px-3 py-4 first:border-t"
+              >
+                <span className="font-[family-name:var(--font-cinzel)] text-[13px] tracking-widest uppercase">
+                  <TypeBone>First Witness</TypeBone>
+                </span>
+                <span className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.2em] uppercase">
+                  <TypeBone>6 Sep 2026</TypeBone>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
-      <div className="grid w-full max-w-4xl grid-cols-1 gap-20 px-2 md:grid-cols-2 md:px-6">
-        {["Recent Manifestations", "Titles Bestowed"].map((title) => (
-          <section key={title} className="relative flex flex-col">
-            <div className="absolute -top-1 right-0 left-0 h-px bg-gradient-to-r from-transparent via-[#d4b36a]/30 to-transparent" />
-            <h3 className="mb-6 pt-4 text-center font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.3em] text-[#d4b36a]/80 uppercase">
-              {title}
-            </h3>
-            <ul className="space-y-4">
-              {Array.from({ length: 4 }, (_, index) => (
-                <li
-                  key={index}
-                  className="flex items-center justify-between gap-3 border-b border-white/5 py-1"
-                >
-                  <span className="text-[17px] italic">
-                    <TypeBone>01 Relic name</TypeBone>
-                  </span>
-                  <span className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.1em] uppercase">
-                    <TypeBone>Rare</TypeBone>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
+      <div className="relic-plinth mx-auto grid w-full max-w-6xl grid-cols-3 gap-3 px-3 pt-8 pb-4 md:gap-8 md:px-8 md:pt-10 md:pb-6">
+        {[
+          ["12 / 37", "Relics Found"],
+          ["40", "Echoes Gathered"],
+          ["3", "Titles Bestowed"],
+        ].map(([value, label]) => (
+          <div key={label} className="flex min-w-0 flex-col items-center text-center">
+            <span className="font-[family-name:var(--font-cinzel)] text-[22px] md:text-[26px]">
+              <TypeBone>{value}</TypeBone>
+            </span>
+            <span className="mt-2 font-[family-name:var(--font-cinzel)] text-[9px] leading-[14px] tracking-[0.12em] uppercase md:mt-3 md:text-[10px]">
+              <TypeBone>{label}</TypeBone>
+            </span>
+          </div>
         ))}
       </div>
     </SkeletonRoot>

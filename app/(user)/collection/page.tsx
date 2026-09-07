@@ -6,7 +6,6 @@ import { listActiveCollections } from "@/db/queries/collections";
 import { isLiveCmsRow, liveCms } from "@/lib/cms/live";
 import { parseCollectionQuery, type CollectionSlot } from "@/lib/collection";
 import { requireUser } from "@/lib/rbac";
-import { toRoman } from "@/lib/ritual";
 
 export default async function CollectionPage({
   searchParams,
@@ -53,6 +52,7 @@ export default async function CollectionPage({
             description: card.description,
             rarity: card.rarity,
             imageUrl: card.imageUrl,
+            holoMapUrl: card.holoMapUrl,
             holographic: own.holographic,
             signature: card.signed,
             acquiredAt: own.acquiredAt,
@@ -66,13 +66,7 @@ export default async function CollectionPage({
   const total = activeCatalog.length;
 
   return (
-    <main className="mx-auto w-full max-w-[104rem] pt-2 md:pt-6">
-      <h1 className="mb-3 text-center font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide text-[#cfc6b4] italic md:text-[53px]">
-        Collection
-      </h1>
-      <p className="mb-10 text-center font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.3em] text-[#d4b36a]/70 uppercase">
-        {toRoman(ownedInSet)} of {toRoman(total)} relics bound
-      </p>
+    <main className="mx-auto w-full max-w-[104rem] px-4 pt-2 pb-16 md:px-8 md:pt-6">
       <CollectionBrowser
         key={query.set ?? "set"}
         slots={slots}
@@ -84,3 +78,4 @@ export default async function CollectionPage({
     </main>
   );
 }
+

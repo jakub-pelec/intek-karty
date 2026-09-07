@@ -41,6 +41,7 @@ export type StrapiCard = {
   signed?: boolean;
   active?: boolean;
   image?: StrapiMedia;
+  holoMap?: StrapiMedia;
   collection?: StrapiRelation;
 };
 
@@ -250,6 +251,7 @@ export function mapCard(entry: StrapiCard, strapiUrl: string) {
     signed,
     active: entry.active !== false,
     imageUrl: mediaUrl(strapiUrl, entry.image),
+    holoMapUrl: mediaUrl(strapiUrl, entry.holoMap),
     uniqueKey: cardUniqueKey(collectionCmsId, number, signed),
   };
 }

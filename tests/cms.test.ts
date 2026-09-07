@@ -15,6 +15,7 @@ import {
   shouldDeactivate,
   uniqueByDocumentId,
 } from "@/lib/cms/map-catalog";
+import { packHoloChannels } from "@/lib/holo-map";
 
 describe("cms mapper", () => {
   it("builds absolute media URLs", () => {
@@ -74,12 +75,14 @@ describe("cms mapper", () => {
         rarity: "rare",
         signed: true,
         image: { url: "/uploads/ember.png" },
+        holoMap: { url: "/uploads/ember-holo.png" },
         collection: { documentId: "col1" },
       },
       "http://cms.test",
     );
     expect(card.uniqueKey).toBe("col1:4:true");
     expect(card.imageUrl).toBe("http://cms.test/uploads/ember.png");
+    expect(card.holoMapUrl).toBe("http://cms.test/uploads/ember-holo.png");
     expect(card.description).toBe("A spark.");
 
     const booster = mapBooster(
@@ -168,5 +171,46 @@ describe("cms mapper", () => {
       model: "",
       documentId: undefined,
     });
+  });
+});
+
+describe("holo channel packer", () => {
+  it("writes a foil mask on R and Sobel X/Y on G/B", () => {
+    const white = packHoloChannels(
+      new Uint8Array([
+        255, 255, 255, 255, 255, 255, 255, 255,
+        255, 255, 255, 255, 255, 255, 255, 255,
+      ]),
+      2,
+      2,
+    );
+    expect(white[0]).toBe(115);
+    expect(white[1]).toBe(128);
+    expect(white[2]).toBe(128);
+
+    const black = packHoloChannels(
+      new Uint8Array([
+        0, 0, 0, 255, 0, 0, 0, 255,
+        0, 0, 0, 255, 0, 0, 0, 255,
+      ]),
+      2,
+      2,
+    );
+    expect(black[0]).toBe(0);
+    expect(black[1]).toBe(128);
+
+    const gradient = packHoloChannels(
+      new Uint8Array([
+        0, 0, 0, 255, 255, 255, 255, 255,
+        0, 0, 0, 255, 255, 255, 255, 255,
+      ]),
+      2,
+      2,
+    );
+    expect(gradient[0]).toBeGreaterThan(white[0]);
+    expect(gradient[1]).toBeGreaterThan(128);
+    expect(gradient[4]).toBeGreaterThan(128);
+    expect(gradient[2]).toBe(128);
+    expect(gradient[5]).toBe(128);
   });
 });

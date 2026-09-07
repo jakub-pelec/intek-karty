@@ -29,6 +29,7 @@ export type CollectionSlot = {
     description: string;
     rarity: Rarity;
     imageUrl: string | null;
+    holoMapUrl?: string | null;
     holographic: boolean;
     signature: boolean;
     acquiredAt: Date | string;

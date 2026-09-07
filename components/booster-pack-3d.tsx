@@ -95,15 +95,11 @@ export function PackMesh({
       map: front,
       roughness: 0.42,
       metalness: 0.08,
-      transparent: true,
-      alphaTest: 0.12,
     });
     const backMat = new THREE.MeshStandardMaterial({
       map: back,
       roughness: 0.42,
       metalness: 0.08,
-      transparent: true,
-      alphaTest: 0.12,
     });
     return [edge, edge, edge, edge, frontMat, backMat];
   }, [front, back]);
@@ -131,7 +127,7 @@ function applyPackOpacity(materials: THREE.MeshStandardMaterial[], opacity: numb
     material.transparent = fading;
     material.opacity = fading ? opacity : 1;
     material.depthWrite = true;
-    material.alphaTest = fading ? 0 : 0.12;
+    material.alphaTest = 0;
   }
 }
 

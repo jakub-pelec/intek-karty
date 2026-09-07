@@ -1,7 +1,7 @@
 "use client";
 
 import { Children, Fragment, isValidElement, useRef, type ReactNode } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 function isRitualSkeleton(node: ReactNode): boolean {
   if (node == null || typeof node === "boolean") return false;
@@ -24,9 +24,7 @@ function isRitualSkeleton(node: ReactNode): boolean {
 
 export function RitualPageCache({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const search = searchParams.toString();
-  const cacheKey = search ? `${pathname}?${search}` : pathname;
+  const cacheKey = pathname;
   const cache = useRef(new Map<string, ReactNode>());
   const prevKey = useRef(cacheKey);
   const navigated = prevKey.current !== cacheKey;

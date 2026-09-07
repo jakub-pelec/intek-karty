@@ -153,6 +153,121 @@ body::-webkit-scrollbar {
   border-top: 1px solid rgba(212, 179, 106, 0.4);
 }
 
+@keyframes landingBreathe {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes landingDrift {
+  0% {
+    transform: translateY(12px) translateX(0) scale(1);
+  }
+  100% {
+    transform: translateY(var(--mote-rise, -50vh)) translateX(var(--mote-drift, 24px))
+      scale(0.7);
+  }
+}
+
+.landing-well-indigo {
+  background: radial-gradient(circle, rgba(26, 22, 48, 0.8) 0%, transparent 60%);
+  animation: landingBreathe 8s ease-in-out infinite;
+}
+
+.landing-well-gold {
+  background: radial-gradient(circle, rgba(212, 179, 106, 0.12) 0%, transparent 60%);
+  animation: landingBreathe 10s ease-in-out infinite alternate-reverse;
+}
+
+.landing-mote {
+  position: absolute;
+  bottom: -8px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.landing-mote-gold {
+  background: #e3c57a;
+  box-shadow: 0 0 8px 2px rgba(212, 179, 106, 0.45);
+}
+
+.landing-mote-gold-pale {
+  background: #f0d48a;
+  box-shadow: 0 0 8px 2px rgba(224, 196, 120, 0.4);
+}
+
+.landing-mote-gold-deep {
+  background: #c49a3c;
+  box-shadow: 0 0 7px 2px rgba(176, 132, 48, 0.5);
+}
+
+.landing-mote-purple {
+  background: #6d28d9;
+  box-shadow: 0 0 10px 2px rgba(167, 139, 250, 0.75);
+}
+
+.landing-pack-glow {
+  border-radius: 50%;
+  filter: blur(28px);
+}
+
+.landing-pack-glow-core {
+  background: radial-gradient(
+    circle,
+    rgba(232, 207, 138, 0.55) 0%,
+    rgba(212, 179, 106, 0.28) 42%,
+    transparent 72%
+  );
+  animation: landingBreathe 5.5s ease-in-out infinite;
+}
+
+.landing-pack-glow-halo {
+  background: radial-gradient(
+    circle,
+    rgba(212, 179, 106, 0.22) 0%,
+    rgba(212, 179, 106, 0.08) 48%,
+    transparent 74%
+  );
+  animation: landingBreathe 8s ease-in-out infinite reverse;
+}
+
+@keyframes landingPackFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.landing-pack-float-a,
+.landing-pack-float-b,
+.landing-pack-float-c {
+  animation: landingPackFloat ease-in-out infinite;
+}
+
+.landing-pack-float-a {
+  animation-duration: 7.2s;
+}
+
+.landing-pack-float-b {
+  animation-duration: 8.4s;
+  animation-delay: -2.6s;
+}
+
+.landing-pack-float-c {
+  animation-duration: 6.6s;
+  animation-delay: -1.2s;
+}
+
 .holo-anim {
   background-size: 200% 200%;
   animation: holoSweep 4s linear infinite;
@@ -291,6 +406,60 @@ button:hover > .collection-bound-card {
     text-shadow 0.35s ease;
 }
 
+@keyframes altarWellBreathe {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.altar-well {
+  animation: altarWellBreathe 4.5s ease-in-out infinite;
+}
+
+.collection-vault-well {
+  background: radial-gradient(
+    circle at 50% 28%,
+    rgba(26, 22, 48, 0.55) 0%,
+    transparent 68%
+  );
+  animation: altarWellBreathe 4.5s ease-in-out infinite;
+}
+
+.altar-center-dust {
+  background-image: radial-gradient(
+    circle at center,
+    rgba(215, 211, 200, 0.4) 1px,
+    transparent 1px
+  );
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 10%, transparent 65%);
+}
+
+.altar-ember-row {
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.altar-ember-row:hover {
+  background: rgba(212, 179, 106, 0.08);
+  box-shadow: inset 0 0 12px rgba(212, 179, 106, 0.15);
+}
+
+.altar-pane-rule {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(212, 179, 106, 0.3) 20%,
+    rgba(212, 179, 106, 0.3) 80%,
+    transparent
+  );
+}
+
 a.ritual-ember:hover:not(.ritual-ember-solid),
 .ritual-ember-text:hover:not(:disabled) {
   color: #e8cf8a;
@@ -312,8 +481,23 @@ a.ritual-ember-solid:hover {
   .ritual-ember,
   .collection-bound-card,
   .ritual-shimmer,
-  .ritual-skeleton-fade {
+  .ritual-skeleton-fade,
+  .landing-well-indigo,
+  .landing-well-gold,
+  .landing-pack-glow,
+  .landing-pack-glow-core,
+  .landing-pack-glow-halo,
+  .landing-pack-float-a,
+  .landing-pack-float-b,
+  .landing-pack-float-c,
+  .altar-well,
+  .collection-vault-well {
     animation: none;
     transition: none;
+  }
+
+  .landing-mote {
+    animation: none !important;
+    opacity: 0;
   }
 }

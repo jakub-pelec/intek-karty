@@ -16,6 +16,7 @@ type DrawnCard = {
   number: number;
   rarity: Rarity;
   imageUrl: string | null;
+  holoMapUrl?: string | null;
   backImageUrl?: string | null;
   holographic: boolean;
   signature: boolean;
@@ -61,6 +62,7 @@ export function BoosterOpenStage({
         number: result.result.card.number,
         rarity: result.result.card.rarity,
         imageUrl: result.result.card.imageUrl,
+        holoMapUrl: result.result.card.holoMapUrl,
         backImageUrl: result.result.backImageUrl,
         holographic: result.result.holographic,
         signature: result.result.signature,

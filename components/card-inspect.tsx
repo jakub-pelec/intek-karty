@@ -32,7 +32,12 @@ export function CardInspect({
         .filter(Boolean)
         .join(" ")}
     >
-      <CardInspectCanvas name={name} holographic={holographic} {...props} />
+      <CardInspectCanvas
+        name={name}
+        holographic={holographic}
+        signature={signature}
+        {...props}
+      />
     </div>
   );
 }

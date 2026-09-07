@@ -121,6 +121,7 @@ async function upsertCard(values: {
   signed: boolean;
   active: boolean;
   imageUrl: string | null;
+  holoMapUrl: string | null;
   updatedAt: Date;
 }) {
   const db = getDb();
@@ -244,6 +245,7 @@ async function syncCatalogUnlocked() {
       signed: row.signed,
       active: row.active,
       imageUrl: row.imageUrl,
+      holoMapUrl: row.holoMapUrl,
       updatedAt: new Date(),
     });
   }
@@ -308,7 +310,16 @@ async function syncCatalogUnlocked() {
 
   for (const entry of raw.achievements) {
     const row = mapAchievement(entry);
-    const existing = await findIdByCmsId(achievements, row.cmsId);
+    const existing =
+      (await findIdByCmsId(achievements, row.cmsId)) ??
+      (
+        await getDb()
+          .select({ id: achievements.id })
+          .from(achievements)
+          .where(eq(achievements.slug, row.slug))
+          .limit(1)
+      )[0]?.id ??
+      null;
     const values = {
       cmsId: row.cmsId,
       slug: row.slug,

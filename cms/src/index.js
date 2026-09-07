@@ -1,4 +1,13 @@
+const {
+  backfillPublishedCards,
+  dataTouchesImage,
+  generateForDocument,
+  isHoloMapOnlyUpdate,
+} = require("./api/card/services/holo-map");
+
 const CARD_LIST = ["number", "name", "rarity", "collection"];
+const CARD_UID = "api::card.card";
+const HOLO_ACTIONS = new Set(["create", "update", "publish"]);
 
 async function ensureCardListColumns(strapi) {
   const service = strapi.plugin("content-manager").service("content-types");
@@ -34,9 +43,33 @@ async function ensureDropRateLabels(strapi) {
 }
 
 module.exports = {
-  register() {},
+  register({ strapi }) {
+    strapi.documents.use(async (context, next) => {
+      if (context.uid !== CARD_UID || !HOLO_ACTIONS.has(context.action)) {
+        return next();
+      }
+      const data = context.params?.data;
+      if (data && isHoloMapOnlyUpdate(data)) return next();
+      const result = await next();
+      const documentId = result?.documentId ?? context.params?.documentId;
+      if (!documentId) return result;
+      const imageChanged = context.action === "create" || dataTouchesImage(data);
+      if (!imageChanged && context.action !== "publish") return result;
+      try {
+        await generateForDocument(strapi, documentId, { force: imageChanged });
+      } catch (error) {
+        strapi.log.warn(`[holo-map] ${error.message}`);
+      }
+      return result;
+    });
+  },
   async bootstrap({ strapi }) {
     await ensureCardListColumns(strapi);
     await ensureDropRateLabels(strapi);
+    try {
+      await backfillPublishedCards(strapi);
+    } catch (error) {
+      strapi.log.warn(`[holo-map] backfill skipped: ${error.message}`);
+    }
   },
 };

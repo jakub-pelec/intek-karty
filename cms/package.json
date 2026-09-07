@@ -7,7 +7,8 @@
     "develop": "strapi develop",
     "start": "node scripts/start-hosted.mjs",
     "build": "strapi build",
-    "console": "strapi console"
+    "console": "strapi console",
+    "backfill-holo-maps": "node scripts/backfill-holo-maps.js"
   },
   "dependencies": {
     "@strapi/plugin-users-permissions": "5.15.1",
@@ -16,12 +17,13 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.1",
+    "sharp": "^0.33.5",
     "styled-components": "^6.1.18"
   },
   "engines": {
     "node": ">=20.0.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["better-sqlite3"]
+    "onlyBuiltDependencies": ["better-sqlite3", "sharp"]
   }
 }

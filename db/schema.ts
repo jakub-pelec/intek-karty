@@ -118,6 +118,7 @@ export const cards = pgTable(
     description: text("description").notNull(),
     rarity: rarityEnum("rarity").notNull(),
     imageUrl: text("image_url"),
+    holoMapUrl: text("holo_map_url"),
     cmsId: text("cms_id"),
     signed: boolean("signed").default(false).notNull(),
     active: boolean("active").default(true).notNull(),

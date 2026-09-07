@@ -47,15 +47,25 @@ async function fetchPages<T>(
 }
 
 export async function fetchCatalogFromStrapi() {
+  const cardQuery =
+    "status=published&populate[image]=true&populate[holoMap]=true&populate[collection]=true";
+  const cardQueryLegacy =
+    "status=published&populate[image]=true&populate[collection]=true";
+
   const [collections, cards, boosters, achievements, rewards] = await Promise.all([
     fetchPages<StrapiCollection>(
       "/api/collections",
       "status=published&populate[backImage]=true",
     ),
-    fetchPages<StrapiCard>(
-      "/api/cards",
-      "status=published&populate[image]=true&populate[collection]=true",
-    ),
+    fetchPages<StrapiCard>("/api/cards", cardQuery).catch((error) => {
+      if (
+        error instanceof CmsSyncError &&
+        error.message.includes("Invalid key holoMap")
+      ) {
+        return fetchPages<StrapiCard>("/api/cards", cardQueryLegacy);
+      }
+      throw error;
+    }),
     fetchPages<StrapiBooster>(
       "/api/boosters",
       "status=published&populate[collection]=true&populate[frontImage]=true&populate[backImage]=true&populate[dropRates]=true",

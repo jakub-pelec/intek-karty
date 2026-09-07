@@ -16,6 +16,7 @@ export async function GET() {
         cardNumber: draws.cardNumber,
         cardRarity: draws.cardRarity,
         cardImageUrl: draws.cardImageUrl,
+        holoMapUrl: cards.holoMapUrl,
         isDuplicate: draws.isDuplicate,
         holographic: draws.holographic,
         signature: draws.signature,
