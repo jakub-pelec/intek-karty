@@ -389,6 +389,7 @@ export function CollectionBrowser({
             <CardInspect
               className="relative z-10 w-80 shrink-0 sm:w-[28rem] lg:w-[32rem]"
               name={selected.owned.name}
+              number={selected.number}
               imageUrl={selected.owned.imageUrl}
               holoMapUrl={selected.owned.holoMapUrl}
               backImageUrl={backImageUrl}
@@ -396,7 +397,6 @@ export function CollectionBrowser({
               holographic={selected.owned.holographic}
               signature={selected.owned.signature}
               glow={false}
-              legend={{ number: toRoman(selected.number) }}
             />
             <div className="relative z-10 min-w-0 w-full flex-1 space-y-8 text-center sm:text-left">
               <div className="space-y-4">

@@ -34,7 +34,7 @@
       "targetKind": "existing-ui",
       "projectId": "e9b4d7b3-184c-4c35-98e3-d3d6964eecea",
       "baselineDraftId": "fac6add2-c52a-46a4-b9e5-aa461dafe19b",
-      "activeDraftId": "fac6add2-c52a-46a4-b9e5-aa461dafe19b",
+      "activeDraftId": "ee7703fc-2be5-4b85-af25-d4ed525b0816",
       "designSystemPath": ".superdesign/design-system.md",
       "contextFiles": [
         ".superdesign/design-system.md",
@@ -43,8 +43,8 @@
         "components/ritual-nav.tsx"
       ],
       "fingerprints": {
-        ".superdesign/design-system.md": "a5116b7ba4b1ae39575e87788bd0eaa962f34d70daa88c1720618d20c8a896f8",
-        "app/(user)/dashboard/page.tsx": "4466465978e38129a9bf367b065296ffd1c7f8aaa5dfbfa3814109c6a67f926f",
+        ".superdesign/design-system.md": "506158caf3e8dc04f96bcb3653ebf551f7a3152e71b06354fc74625a22243f22",
+        "app/(user)/dashboard/page.tsx": "98bfef2818c135a703ce84af8eff350d69c0838ec19064ac7b1ab02bcd8f5ab7",
         "components/ritual-shell.tsx": "5073dc3f0c10e968399919e04d7ddbb9c46c2f1edadf12ace98862b5e10aaffb",
         "components/ritual-nav.tsx": "c538f359d2361a7b53b20d355a3e01247480a972337d998cc3a64060eb11f795"
       },
@@ -53,27 +53,47 @@
         "fac6add2-c52a-46a4-b9e5-aa461dafe19b": {
           "title": "Altar",
           "visualDirection": "shipped ritual abyss",
+          "currentVersion": 3
+        },
+        "48117c8d-4896-4b33-bf67-da343e582c99": {
+          "title": "Intek Binder - Processional Altar Split",
+          "visualDirection": "two-column processional shrine, vertical ledger stats, ember motes",
+          "parentDraftId": "fac6add2-c52a-46a4-b9e5-aa461dafe19b",
+          "currentVersion": 1
+        },
+        "ee7703fc-2be5-4b85-af25-d4ed525b0816": {
+          "title": "Intek Binder - Triptych Altar",
+          "visualDirection": "three-pane chapel, center relic, plinth stones, frame breathe",
+          "parentDraftId": "fac6add2-c52a-46a4-b9e5-aa461dafe19b",
+          "currentVersion": 1
+        },
+        "0a5e65cb-7b7a-4e2e-8c06-a073f008c488": {
+          "title": "Intek Binder - Radial Well Altar",
+          "visualDirection": "sunken circular well, orbiting stats, concentric gold rings",
+          "parentDraftId": "fac6add2-c52a-46a4-b9e5-aa461dafe19b",
           "currentVersion": 1
         }
       },
-      "updatedAt": "2026-09-06T16:51:00.000Z"
+      "updatedAt": "2026-09-07T11:55:00.000Z"
     },
     "/collection": {
       "targetKind": "existing-ui",
       "projectId": "e9b4d7b3-184c-4c35-98e3-d3d6964eecea",
-      "activeDraftId": "ded2c643-e1f8-4234-952a-5f3b9e654823",
+      "activeDraftId": "41b30b35-2688-42a6-82bb-166075df5084",
       "sourceTarget": "/dashboard",
       "sourceDraftId": "fac6add2-c52a-46a4-b9e5-aa461dafe19b",
       "designSystemPath": ".superdesign/design-system.md",
       "contextFiles": [
         ".superdesign/design-system.md",
         "app/(user)/collection/page.tsx",
+        "components/collection-browser.tsx",
         "components/ritual-shell.tsx",
         "components/ritual-nav.tsx"
       ],
       "fingerprints": {
-        ".superdesign/design-system.md": "a5116b7ba4b1ae39575e87788bd0eaa962f34d70daa88c1720618d20c8a896f8",
-        "app/(user)/collection/page.tsx": "b206e95aeb4a8c820714cf43cc824a6eec9649069d51bdc0d9f9f263c63a4662",
+        ".superdesign/design-system.md": "506158caf3e8dc04f96bcb3653ebf551f7a3152e71b06354fc74625a22243f22",
+        "app/(user)/collection/page.tsx": "d9ac7b3585f74b9f1fed77af3bb3db04dda28829a224d7e43463e81da6251b16",
+        "components/collection-browser.tsx": "b0fb5c21ecfad15c82e43b1de453d6ad9b82d97143c905c9c3fac490933fbc7d",
         "components/ritual-shell.tsx": "5073dc3f0c10e968399919e04d7ddbb9c46c2f1edadf12ace98862b5e10aaffb",
         "components/ritual-nav.tsx": "c538f359d2361a7b53b20d355a3e01247480a972337d998cc3a64060eb11f795"
       },
@@ -84,9 +104,27 @@
           "visualDirection": "shipped ritual abyss",
           "parentDraftId": "fac6add2-c52a-46a4-b9e5-aa461dafe19b",
           "currentVersion": 1
+        },
+        "41b30b35-2688-42a6-82bb-166075df5084": {
+          "title": "Intek Binder - Vault Collection",
+          "visualDirection": "left filter rail, right relic vault grid",
+          "parentDraftId": "ded2c643-e1f8-4234-952a-5f3b9e654823",
+          "currentVersion": 1
+        },
+        "f6e24971-3630-4438-b6a2-e007d71641b5": {
+          "title": "Intek Binder - Collection Chapel Vault",
+          "visualDirection": "plinth filter toolbar, breathing well behind grid",
+          "parentDraftId": "ded2c643-e1f8-4234-952a-5f3b9e654823",
+          "currentVersion": 1
+        },
+        "935e0568-dca1-428a-894c-8c11d6587cb5": {
+          "title": "Intek Binder - Collection Codex",
+          "visualDirection": "two-page codex, ledger filters and vault grid",
+          "parentDraftId": "ded2c643-e1f8-4234-952a-5f3b9e654823",
+          "currentVersion": 1
         }
       },
-      "updatedAt": "2026-09-06T16:51:00.000Z"
+      "updatedAt": "2026-09-07T12:02:00.000Z"
     },
     "/achievements": {
       "targetKind": "existing-ui",
@@ -431,6 +469,89 @@
         }
       },
       "updatedAt": "2026-09-06T16:51:00.000Z"
+    },
+    "/": {
+      "targetKind": "new-ui",
+      "projectId": "e9b4d7b3-184c-4c35-98e3-d3d6964eecea",
+      "activeDraftId": "b20ec140-8c76-41ca-8e3f-00f6fcf19549",
+      "sourceTarget": "/login",
+      "sourceDraftId": "2d20b8de-326e-4e7b-8619-a551615530e9",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "app/page.tsx",
+        "components/ui/button.tsx",
+        "app/globals.css"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "506158caf3e8dc04f96bcb3653ebf551f7a3152e71b06354fc74625a22243f22",
+        "app/page.tsx": "663b6be7be4b12176f78aca0d0d4600a40bc62b94fae42a4e14c08d5be0f7240",
+        "components/ui/button.tsx": "b2c8ce6ab8a586c918b746e4830f55ce80c29b265f67804ee9c5197042528d5e",
+        "app/globals.css": "4897f34130a61713208c719499f5350828cca236f124ae34d605267af9e7d1a3"
+      },
+      "components": [],
+      "drafts": {
+        "b20ec140-8c76-41ca-8e3f-00f6fcf19549": {
+          "title": "Landing",
+          "visualDirection": "ritual abyss landing with overlapping packs, centered Enter, drifting gold motes",
+          "parentDraftId": "2d20b8de-326e-4e7b-8619-a551615530e9",
+          "currentVersion": 2
+        }
+      },
+      "updatedAt": "2026-09-07T11:28:57.855Z",
+      "referenceIds": [
+        "65dc52a4-a164-4d54-9fa2-611768a44ca0",
+        "b7fe39e8-8338-4042-a1b0-20454bf3cb67",
+        "8adc88a9-7bbc-4d05-9602-0acc7b896f88"
+      ]
+    },
+    "card-inspect": {
+      "targetKind": "existing-ui",
+      "projectId": "e9b4d7b3-184c-4c35-98e3-d3d6964eecea",
+      "baselineDraftId": "b41a5d8f-8023-43ec-b777-7d2e00acd068",
+      "activeDraftId": "3995e1d6-040a-46b3-8436-b751b68a6e99",
+      "sourceTarget": "/collection",
+      "designSystemPath": ".superdesign/design-system.md",
+      "referenceIds": [
+        "b651d349-654f-4de0-935c-98bdde2d7f59"
+      ],
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "components/collection-browser.tsx",
+        "components/card-inspect.tsx"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "506158caf3e8dc04f96bcb3653ebf551f7a3152e71b06354fc74625a22243f22",
+        "components/collection-browser.tsx": "f897e00ce91bc83cdfaaa1dcdc3ffd93a3c75377e391381e37b8464e258b412e",
+        "components/card-inspect.tsx": "4e075228d99e199209b17e6e6b9391fe09655b1526ae71081fd7c6a8630c9d4f"
+      },
+      "components": [],
+      "drafts": {
+        "b41a5d8f-8023-43ec-b777-7d2e00acd068": {
+          "title": "Card inspect",
+          "visualDirection": "shipped two-column inspect overlay with lore",
+          "currentVersion": 1
+        },
+        "008b6e13-111d-4b71-9a63-37530c6a0f1a": {
+          "title": "Intek Binder - Reliquary Pedestal Inspect",
+          "visualDirection": "centered relic shrine, caption under the card, no lore",
+          "parentDraftId": "b41a5d8f-8023-43ec-b777-7d2e00acd068",
+          "currentVersion": 1
+        },
+        "1b5c0a41-b851-4c56-9aa1-9af4b3bbd5f6": {
+          "title": "Intek Binder - Chapel Well Inspect",
+          "visualDirection": "name above card in a well, gold-ruled mark stones, no lore",
+          "parentDraftId": "b41a5d8f-8023-43ec-b777-7d2e00acd068",
+          "currentVersion": 1
+        },
+        "3995e1d6-040a-46b3-8436-b751b68a6e99": {
+          "title": "Intek Binder Card Ledger Inspect",
+          "visualDirection": "two-column overlay, engraved rarity/mark/seal/bound ledger, no lore",
+          "parentDraftId": "b41a5d8f-8023-43ec-b777-7d2e00acd068",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-09-07T12:26:54.078Z"
     }
   }
 }

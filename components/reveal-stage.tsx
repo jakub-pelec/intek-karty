@@ -154,6 +154,7 @@ export function RevealStage({
             ) : (
               <CardInspect
                 name={current.cardName}
+                number={current.cardNumber}
                 imageUrl={current.imageUrl}
                 holoMapUrl={current.holoMapUrl}
                 backImageUrl={current.backImageUrl}

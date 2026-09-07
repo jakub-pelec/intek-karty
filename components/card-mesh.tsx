@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useSceneTimer } from "@/lib/three-compat";
@@ -8,6 +8,14 @@ import type { Rarity } from "@/db/schema";
 import { PACK_SIZE } from "@/lib/pack-size";
 import { RARITIES, RARITY_LABELS } from "@/lib/constants";
 import { cardArtUrl, RARITY_LIGHT } from "@/lib/open-fx";
+import {
+  HOLO_FRAGMENT,
+  HOLO_GAIN,
+  HOLO_LIFT,
+  HOLO_SATURATION,
+  HOLO_STRENGTH,
+} from "@/lib/holo-foil";
+import { toRoman } from "@/lib/ritual";
 
 export const CARD_SIZE = [PACK_SIZE[0], PACK_SIZE[1], 0.03] as const;
 
@@ -31,6 +39,8 @@ type CardMeshProps = {
   envMap?: THREE.Texture | null;
   scale?: number;
   showFx?: boolean;
+  float?: boolean;
+  number?: number;
   legend?: { number: string };
   onReady?: () => void;
 };
@@ -132,9 +142,13 @@ export function CardMesh({
   interactive = true,
   envMap = null,
   scale = 1,
+  float = false,
+  number,
   legend,
   onReady,
 }: CardMeshProps) {
+  const roman =
+    legend?.number ?? (number && number > 0 ? toRoman(number) : "");
   const group = useRef<THREE.Group>(null);
   const timer = useSceneTimer();
   const { gl } = useThree();
@@ -147,6 +161,7 @@ export function CardMesh({
     px: 0,
     py: 0,
   });
+  const tilt = useRef(new THREE.Vector2());
 
   const front = useMemo(
     () =>
@@ -161,10 +176,11 @@ export function CardMesh({
     () =>
       new THREE.MeshStandardMaterial({
         color: "#0c0b12",
-        roughness: 0.6,
-        metalness: 0.2,
+        roughness: holographic ? 0.28 : 0.6,
+        metalness: holographic ? 0.22 : 0.2,
+        envMapIntensity: holographic ? 0.45 : 0.35,
       }),
-    [],
+    [holographic],
   );
 
   useEffect(() => {
@@ -226,6 +242,10 @@ export function CardMesh({
     const idleY = !drag.current.active && interactive ? Math.sin(t * 0.32) * 0.1 : 0;
     node.rotation.x = THREE.MathUtils.clamp(drag.current.x + idleX, -Math.PI, Math.PI);
     node.rotation.y = drag.current.y + idleY;
+    node.position.y = float
+      ? Math.sin(t * 0.62) * 0.022 + Math.sin(t * 0.37) * 0.008
+      : 0;
+    tilt.current.set(node.rotation.y, node.rotation.x);
   });
 
   return (
@@ -250,14 +270,15 @@ export function CardMesh({
         <primitive object={back} attach="material" />
       </mesh>
       {holographic && texture ? (
-        <HoloFoil rarity={rarity} art={texture} />
+        <HoloFoil rarity={rarity} art={texture} tilt={tilt} />
       ) : null}
-      {legend ? (
-        <CardFaceLegend
-          name={name}
-          number={legend.number}
-          rarity={rarity}
-        />
+      {holographic && backTexture ? (
+        <group rotation={[0, Math.PI, 0]} position={[0, 0, -0.002]}>
+          <HoloFoil rarity={rarity} art={backTexture} tilt={tilt} flipX />
+        </group>
+      ) : null}
+      {texture ? (
+        <CardFaceLegend number={roman} rarity={rarity} />
       ) : null}
     </group>
   );
@@ -278,112 +299,14 @@ const HOLO_VERTEX = /* glsl */ `
   }
 `;
 
-const HOLO_FRAGMENT = /* glsl */ `
-  varying vec2 vUv;
-  varying float vFresnel;
-  varying vec2 vSlide;
-  uniform float uTime;
-  uniform sampler2D uArt;
-  uniform vec2 uTexel;
-  uniform vec3 uRarity;
-  uniform float uLift;
-  uniform float uGain;
-  uniform float uSaturation;
-  uniform float uStrength;
-
-  vec3 pal(float t) {
-    return 0.5 + 0.5 * cos(6.2831853 * (t + vec3(0.0, 0.33, 0.67)));
-  }
-
-  float artLuma(vec2 uv) {
-    return dot(texture2D(uArt, clamp(uv, 0.0, 1.0)).rgb, vec3(0.3, 0.59, 0.11));
-  }
-
-  void main() {
-    vec2 t = uTexel * 3.5;
-    float lum = artLuma(vUv);
-    float gx =
-      artLuma(vUv + vec2(-t.x, -t.y)) * -1.0 +
-      artLuma(vUv + vec2( t.x, -t.y)) +
-      artLuma(vUv + vec2(-t.x,  0.0)) * -2.0 +
-      artLuma(vUv + vec2( t.x,  0.0)) * 2.0 +
-      artLuma(vUv + vec2(-t.x,  t.y)) * -1.0 +
-      artLuma(vUv + vec2( t.x,  t.y));
-    float gy =
-      artLuma(vUv + vec2(-t.x, -t.y)) * -1.0 +
-      artLuma(vUv + vec2( 0.0, -t.y)) * -2.0 +
-      artLuma(vUv + vec2( t.x, -t.y)) * -1.0 +
-      artLuma(vUv + vec2(-t.x,  t.y)) +
-      artLuma(vUv + vec2( 0.0,  t.y)) * 2.0 +
-      artLuma(vUv + vec2( t.x,  t.y));
-    vec2 bump = vec2(gx, gy) * 0.35;
-    float edge = clamp(length(bump), 0.0, 1.0);
-
-    float blur =
-      (artLuma(vUv + vec2(-t.x, -t.y)) +
-       artLuma(vUv + vec2( t.x, -t.y)) +
-       artLuma(vUv + vec2(-t.x,  t.y)) +
-       artLuma(vUv + vec2( t.x,  t.y)) +
-       artLuma(vUv + vec2(-t.x,  0.0)) +
-       artLuma(vUv + vec2( t.x,  0.0)) +
-       artLuma(vUv + vec2( 0.0, -t.y)) +
-       artLuma(vUv + vec2( 0.0,  t.y))) * 0.125;
-    float detail = clamp(abs(lum - blur) * 6.5, 0.0, 1.0);
-    float photo = clamp((lum - 0.03) * 2.6, 0.0, 1.0);
-    float coverage = clamp(photo * 0.7 + edge * 1.15 + detail * 1.05, 0.0, 1.0);
-    coverage = pow(coverage, 0.72);
-
-    float hue = vSlide.x * 0.95 + vSlide.y * 0.5 + uTime * 0.32 + lum * 0.35 + vFresnel * 0.3;
-    vec3 irid = pal(hue);
-    float iridLuma = dot(irid, vec3(0.299, 0.587, 0.114));
-    irid = mix(vec3(iridLuma), irid, uSaturation);
-    irid = mix(irid, irid * mix(uRarity, vec3(1.0), uLift), 0.22);
-
-    float glare = pow(1.0 - abs(fract(vUv.x + vSlide.x * 0.55 + uTime * 0.11) * 2.0 - 1.0), 3.5);
-    float fres = pow(clamp(vFresnel + dot(bump, vSlide) * 0.35, 0.0, 1.0), 0.85);
-    float wash = coverage * (0.24 + fres * 0.36 + glare * 0.4) * uGain * uStrength;
-    gl_FragColor = vec4(irid, wash);
-  }
-`;
-
-const HOLO_LIFT: Record<Rarity, number> = {
-  common: 0.42,
-  rare: 0.64,
-  epic: 0.62,
-  legendary: 0.6,
-  joker: 0.66,
-};
-
-const HOLO_GAIN: Record<Rarity, number> = {
-  common: 1.15,
-  rare: 1.35,
-  epic: 1.42,
-  legendary: 1.32,
-  joker: 1.5,
-};
-
-const HOLO_SATURATION: Record<Rarity, number> = {
-  common: 0.72,
-  rare: 0.8,
-  epic: 0.86,
-  legendary: 0.84,
-  joker: 0.9,
-};
-
-const HOLO_STRENGTH: Record<Rarity, number> = {
-  common: 1.2,
-  rare: 1.32,
-  epic: 1.38,
-  legendary: 1.34,
-  joker: 1.45,
-};
-
 function createHoloMaterial(art: THREE.Texture) {
   return new THREE.ShaderMaterial({
     uniforms: {
-      uTime: { value: 0 },
       uArt: { value: art },
       uTexel: { value: artTexel(art) },
+      uTilt: { value: new THREE.Vector2() },
+      uTime: { value: 0 },
+      uFlipX: { value: 0 },
       uRarity: { value: new THREE.Color("#ffffff") },
       uLift: { value: 0.28 },
       uGain: { value: 1 },
@@ -406,22 +329,34 @@ function artTexel(art: THREE.Texture) {
   return new THREE.Vector2(1 / width, 1 / height);
 }
 
-function HoloFoil({ rarity, art }: { rarity: Rarity; art: THREE.Texture }) {
-  const timer = useSceneTimer();
+function HoloFoil({
+  rarity,
+  art,
+  tilt,
+  flipX = false,
+}: {
+  rarity: Rarity;
+  art: THREE.Texture;
+  tilt: RefObject<THREE.Vector2>;
+  flipX?: boolean;
+}) {
   const rarityHex = RARITY_LIGHT[rarity];
   const lift = HOLO_LIFT[rarity];
   const gain = HOLO_GAIN[rarity];
   const saturation = HOLO_SATURATION[rarity];
   const strength = HOLO_STRENGTH[rarity];
+  const timer = useSceneTimer();
   const material = useMemo(() => createHoloMaterial(art), [art]);
 
   useEffect(() => () => material.dispose(), [material]);
 
   useFrame(() => {
-    timer.update();
     const uniforms = material.uniforms;
-    if (!uniforms.uArt || !uniforms.uTexel) return;
+    if (!uniforms.uArt || !uniforms.uTexel || !uniforms.uTilt || !uniforms.uTime || !uniforms.uFlipX)
+      return;
+    timer.update();
     (uniforms.uTime as THREE.IUniform<number>).value = timer.getElapsed();
+    (uniforms.uFlipX as THREE.IUniform<number>).value = flipX ? 1 : 0;
     (uniforms.uRarity as THREE.IUniform<THREE.Color>).value.set(rarityHex);
     (uniforms.uLift as THREE.IUniform<number>).value = lift;
     (uniforms.uGain as THREE.IUniform<number>).value = gain;
@@ -429,6 +364,9 @@ function HoloFoil({ rarity, art }: { rarity: Rarity; art: THREE.Texture }) {
     (uniforms.uStrength as THREE.IUniform<number>).value = strength;
     uniforms.uArt.value = art;
     (uniforms.uTexel as THREE.IUniform<THREE.Vector2>).value.copy(artTexel(art));
+    if (tilt.current) {
+      (uniforms.uTilt as THREE.IUniform<THREE.Vector2>).value.copy(tilt.current);
+    }
   });
 
   return (
@@ -453,7 +391,6 @@ const GOLD = "#d4b36a";
 const GOLD_SOFT = "rgba(212, 179, 106, 0.38)";
 const GOLD_GLOW = "rgba(212, 179, 106, 0.75)";
 const ABYSS_FILL = "rgba(5, 4, 10, 0.82)";
-const BONE = "#f3efe6";
 const TOP_PLAQUE_EXTRA = 20;
 
 function rarityGlow(hex: string, alpha = 0.72) {
@@ -676,10 +613,9 @@ function paintCardLegend(
   ctx: CanvasRenderingContext2D,
   w: number,
   h: number,
-  legend: { name: string; number: string; rarity: Rarity },
+  legend: { number: string; rarity: Rarity },
 ) {
   const cinzel = ritualFont("--font-cinzel", "Cinzel, serif");
-  const cormorant = ritualFont("--font-cormorant", "Cormorant Garamond, serif");
   const pad = w * 0.075;
   const line = Math.max(2, w * 0.0055);
 
@@ -688,18 +624,20 @@ function paintCardLegend(
   const topFont = Math.round(w * 0.03);
   const topPadY = w * 0.026 + TOP_PLAQUE_EXTRA / 2;
   const topPadX = w * 0.042;
-  ctx.font = `500 ${topFont}px ${cinzel}`;
-  paintPlaque(ctx, legend.number.toUpperCase(), {
-    x: pad,
-    y: pad,
-    align: "left",
-    tracking: 0.22,
-    color: GOLD,
-    glow: GOLD_GLOW,
-    padX: topPadX,
-    padY: topPadY,
-    line,
-  });
+  if (legend.number) {
+    ctx.font = `500 ${topFont}px ${cinzel}`;
+    paintPlaque(ctx, legend.number.toUpperCase(), {
+      x: pad,
+      y: pad,
+      align: "left",
+      tracking: 0.22,
+      color: GOLD,
+      glow: GOLD_GLOW,
+      padX: topPadX,
+      padY: topPadY,
+      line,
+    });
+  }
 
   const rarityColor = RARITY_LIGHT[legend.rarity];
   ctx.font = `500 ${topFont}px ${cinzel}`;
@@ -714,36 +652,13 @@ function paintCardLegend(
     padY: topPadY,
     line,
   });
-
-  const maxName = w - pad * 2.2;
-  let nameSize = Math.round(w * 0.068);
-  ctx.font = `italic 600 ${nameSize}px ${cormorant}`;
-  while (nameSize > 28 && ctx.measureText(legend.name).width > maxName - w * 0.12) {
-    nameSize -= 2;
-    ctx.font = `italic 600 ${nameSize}px ${cormorant}`;
-  }
-  const nameMetrics = ctx.measureText(legend.name);
-  const nameH =
-    (nameMetrics.actualBoundingBoxAscent || nameSize) +
-    (nameMetrics.actualBoundingBoxDescent || nameSize * 0.2);
-  const nameBoxW = Math.min(maxName, nameMetrics.width + w * 0.14);
-  const nameBoxH = nameH + w * 0.07;
-  const nameBoxX = (w - nameBoxW) / 2;
-  const nameBoxY = h - pad - nameBoxH;
-  strokeRelicRim(ctx, nameBoxX, nameBoxY, nameBoxW, nameBoxH, line, true);
-  ctx.textBaseline = "middle";
-  glowText(ctx, BONE, GOLD_GLOW, () => {
-    ctx.textAlign = "center";
-    ctx.fillText(legend.name, w / 2, nameBoxY + nameBoxH / 2);
-  });
 }
 
 function useCardLegendTexture(legend: {
-  name: string;
   number: string;
   rarity: Rarity;
 }) {
-  const key = `rim4|${legend.number}|${legend.name}|${legend.rarity}`;
+  const key = `rim5|${legend.number}|${legend.rarity}`;
   const [texture, setTexture] = useState<THREE.CanvasTexture | null>(
     () => legendCache.get(key) ?? null,
   );
@@ -758,10 +673,8 @@ function useCardLegendTexture(legend: {
 
     const paint = async () => {
       const cinzel = ritualFont("--font-cinzel", "Cinzel");
-      const cormorant = ritualFont("--font-cormorant", "Cormorant Garamond");
       await Promise.all([
         document.fonts.load(`500 48px ${cinzel}`),
-        document.fonts.load(`italic 600 96px ${cormorant}`),
         document.fonts.ready,
       ]);
       if (cancelled) return;
@@ -785,21 +698,19 @@ function useCardLegendTexture(legend: {
     return () => {
       cancelled = true;
     };
-  }, [key, legend.name, legend.number, legend.rarity]);
+  }, [key, legend.number, legend.rarity]);
 
   return texture;
 }
 
 function CardFaceLegend({
-  name,
   number,
   rarity,
 }: {
-  name: string;
   number: string;
   rarity: Rarity;
 }) {
-  const texture = useCardLegendTexture({ name, number, rarity });
+  const texture = useCardLegendTexture({ number, rarity });
   const material = useMemo(
     () =>
       new THREE.MeshBasicMaterial({

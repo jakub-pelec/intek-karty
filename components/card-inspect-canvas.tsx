@@ -24,6 +24,8 @@ export type CardInspectProps = {
   holographic?: boolean;
   signature?: boolean;
   glow?: boolean;
+  float?: boolean;
+  number?: number;
   legend?: { number: string };
   className?: string;
 };
@@ -37,6 +39,8 @@ export function CardInspectCanvas({
   holographic = false,
   signature = false,
   glow = true,
+  float = false,
+  number,
   legend,
 }: Omit<CardInspectProps, "className">) {
   const frame = useRef<HTMLDivElement>(null);
@@ -114,7 +118,9 @@ export function CardInspectCanvas({
               rarity={rarity}
               holographic={holographic}
               signature={signature}
+              number={number}
               legend={legend}
+              float={float}
               scale={1}
               onReady={markReady}
             />

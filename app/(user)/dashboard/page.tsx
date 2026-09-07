@@ -161,6 +161,7 @@ export default async function DashboardPage() {
                 <CardInspect
                   className="relative z-10 w-full"
                   name={latest.cardName}
+                  number={latest.cardNumber}
                   imageUrl={latest.cardImageUrl}
                   holoMapUrl={latestHolo}
                   backImageUrl={latestBack}
@@ -168,6 +169,7 @@ export default async function DashboardPage() {
                   holographic={latest.holographic}
                   signature={latest.signature}
                   glow={false}
+                  float
                 />
               </div>
               <p className="mt-8 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.25em] text-[#d7d3c8]/50 uppercase">

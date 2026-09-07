@@ -139,6 +139,7 @@ export default async function AdminDevPage() {
     if (rarity === FEATURED_SHOWCASE_CARD.rarity) {
       return {
         name: FEATURED_SHOWCASE_CARD.name,
+        number: FEATURED_SHOWCASE_CARD.number,
         imageUrl: FEATURED_SHOWCASE_CARD.imageUrl,
         holoMapUrl: catalog.find((row) => row.number === FEATURED_SHOWCASE_CARD.number)
           ?.holoMapUrl,
@@ -156,6 +157,7 @@ export default async function AdminDevPage() {
     const showcase = withCollectionBack(card);
     return {
       name: showcase.name,
+      number: showcase.number,
       imageUrl: showcase.imageUrl,
       holoMapUrl: showcase.holoMapUrl,
       backImageUrl: showcase.backImageUrl,
@@ -216,6 +218,7 @@ export default async function AdminDevPage() {
                 <article key={variant.label} className="space-y-3 text-center">
                   <CardInspect
                     name={card.name}
+                    number={card.number}
                     imageUrl={card.imageUrl}
                     holoMapUrl={card.holoMapUrl}
                     backImageUrl={card.backImageUrl}

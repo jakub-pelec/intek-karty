@@ -23,10 +23,15 @@ import {
 
 const OPEN_FOV = 32;
 const PACK_SCALE = { fullscreen: 0.62, inline: 1 } as const;
+const CARD_SCALE = {
+  fullscreen: PACK_SCALE.fullscreen * 1.2,
+  inline: PACK_SCALE.inline * 1.2,
+} as const;
 const CAMERA_Z = { fullscreen: 5.2, inline: 3.2 } as const;
 
 export type OpenCard = {
   name: string;
+  number?: number;
   imageUrl: string | null;
   backImageUrl?: string | null;
   holoMapUrl?: string | null;
@@ -122,7 +127,7 @@ export function BoosterOpenScene({
                 key={`${card.name}-${card.rarity}-${card.holographic}`}
                 card={card}
                 phase={phase}
-                scale={fullscreen ? PACK_SCALE.fullscreen : PACK_SCALE.inline}
+                scale={fullscreen ? CARD_SCALE.fullscreen : CARD_SCALE.inline}
               />
             </Suspense>
           ) : null}
@@ -204,6 +209,7 @@ function RevealedCard({
         holoMapUrl={card.holoMapUrl}
         rarity={card.rarity}
         holographic={card.holographic}
+        number={card.number}
         interactive={phase === "reveal"}
       />
     </group>

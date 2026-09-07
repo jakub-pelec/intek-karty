@@ -1,7 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import type { CSSProperties } from "react";
 import type { Rarity } from "@/db/schema";
-import { RARITY_LIGHT } from "@/lib/open-fx";
+import { HoloFoil2D } from "@/components/holo-foil-2d";
 import { cn } from "@/lib/utils";
 
 export type CardFaceProps = {
@@ -19,9 +20,6 @@ const GRID_SIZES =
 
 export function CardFace(props: CardFaceProps) {
   const rarity = props.rarity ?? "common";
-  const holoStyle = {
-    "--holo-tint": RARITY_LIGHT[rarity],
-  } as CSSProperties;
 
   return (
     <div
@@ -45,11 +43,8 @@ export function CardFace(props: CardFaceProps) {
           {props.name}
         </div>
       )}
-      {props.holographic ? (
-        <div
-          className="card-holo-foil pointer-events-none absolute inset-0"
-          style={holoStyle}
-        />
+      {props.holographic && props.imageUrl ? (
+        <HoloFoil2D imageUrl={props.imageUrl} rarity={rarity} />
       ) : null}
     </div>
   );
