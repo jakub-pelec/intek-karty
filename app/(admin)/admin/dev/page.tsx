@@ -193,7 +193,7 @@ export default async function AdminDevPage() {
                 frontImageUrl={pack.frontImageUrl}
                 backImageUrl={pack.backImageUrl}
               />
-              <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d7d3c8]/55 uppercase">
+              <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.2em] text-[#d7d3c8]/55 uppercase">
                 {pack.name}
               </p>
             </article>
@@ -207,7 +207,7 @@ export default async function AdminDevPage() {
             className="relative"
           >
             <div className="mb-6 flex flex-col items-center pt-4">
-              <h2 className="font-[family-name:var(--font-cormorant)] text-[26px] tracking-wide text-[#cfc6b4] italic md:text-[33px]">
+              <h2 className="font-[family-name:var(--font-cormorant)] text-[28px] tracking-wide text-[#cfc6b4] italic md:text-[35px]">
                 {formatCardNumber(card.number)} {card.name}
               </h2>
               <div className="mt-3 flex justify-center gap-3">
@@ -230,7 +230,7 @@ export default async function AdminDevPage() {
                     glow={false}
                   />
                   <div className="flex flex-wrap items-center justify-center gap-2">
-                    <p className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.18em] text-[#d7d3c8]/55 uppercase">
+                    <p className="font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.18em] text-[#d7d3c8]/55 uppercase">
                       {t(variant.key)}
                     </p>
                     <MutationBadges

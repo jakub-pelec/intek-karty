@@ -108,7 +108,7 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
               key={link.href}
               href={link.href}
               className={cn(
-                "ritual-ember font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.14em] uppercase md:text-[11px] md:tracking-[0.2em]",
+                "ritual-ember font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.14em] uppercase md:text-[13px] md:tracking-[0.2em]",
                 active ? "text-[#d4b36a]" : "text-[#d7d3c8]",
               )}
             >
@@ -126,7 +126,7 @@ export function RitualNav({ showAdmin }: { showAdmin: boolean }) {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "ritual-ember font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.18em] uppercase",
+                  "ritual-ember font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.18em] uppercase",
                   active ? "text-[#d4b36a]" : "text-[#cfc6b4]",
                 )}
               >

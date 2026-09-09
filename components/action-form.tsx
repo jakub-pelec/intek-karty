@@ -22,12 +22,12 @@ export function ActionForm({
   return (
     <form action={formAction} className={cn("space-y-4", className)}>
       {state?.error ? (
-        <p className="border border-[#8b1e2d]/50 bg-[#1a0a0c] px-3 py-2 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#f3efe6] uppercase">
+        <p className="border border-[#8b1e2d]/50 bg-[#1a0a0c] px-3 py-2 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.16em] text-[#f3efe6] uppercase">
           {state.error}
         </p>
       ) : null}
       {state?.success ? (
-        <p className="border border-[#d4b36a]/25 bg-[#0c0b12] px-3 py-2 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d4b36a] uppercase">
+        <p className="border border-[#d4b36a]/25 bg-[#0c0b12] px-3 py-2 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.16em] text-[#d4b36a] uppercase">
           {state.success}
         </p>
       ) : null}

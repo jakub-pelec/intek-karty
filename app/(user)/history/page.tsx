@@ -73,7 +73,7 @@ export default async function HistoryPage({
         <Link
           href="/history"
           className={cn(
-            "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.24em] uppercase",
+            "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.24em] uppercase",
             tab === "cards"
               ? "border-[#d4b36a] text-[#d4b36a]"
               : "border-transparent text-[#d7d3c8]",
@@ -84,7 +84,7 @@ export default async function HistoryPage({
         <Link
           href="/history?tab=points"
           className={cn(
-            "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.24em] uppercase",
+            "ritual-ember border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.24em] uppercase",
             tab === "points"
               ? "border-[#d4b36a] text-[#d4b36a]"
               : "border-transparent text-[#d7d3c8]",
@@ -111,12 +111,12 @@ export default async function HistoryPage({
                   <span className="truncate text-lg text-[#f3efe6] italic">
                     {String(row.cardNumber).padStart(2, "0")} {row.cardName}
                     {row.isDuplicate ? (
-                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[12px] text-[#d4b36a] not-italic uppercase">
+                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[14px] text-[#d4b36a] not-italic uppercase">
                         ({tCommon("echo")})
                       </span>
                     ) : null}
                     {row.signature ? (
-                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[12px] text-[#d4b36a] not-italic uppercase">
+                      <span className="ml-1 font-[family-name:var(--font-cinzel)] text-[14px] text-[#d4b36a] not-italic uppercase">
                         ({tCommon("signed")})
                       </span>
                     ) : null}
@@ -162,7 +162,7 @@ export default async function HistoryPage({
           {page > 1 ? (
             <Link
               href={`/history?tab=${tab}&page=${page - 1}`}
-              className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+              className="font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
             >
               {tCommon("previous")}
             </Link>
@@ -170,7 +170,7 @@ export default async function HistoryPage({
           {hasMore ? (
             <Link
               href={`/history?tab=${tab}&page=${page + 1}`}
-              className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+              className="font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
             >
               {tCommon("next")}
             </Link>

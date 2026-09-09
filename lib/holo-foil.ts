@@ -1,35 +1,35 @@
 import type { Rarity } from "@/db/schema";
 
 export const HOLO_LIFT: Record<Rarity, number> = {
-  common: 0.42,
-  rare: 0.64,
-  epic: 0.62,
-  legendary: 0.6,
-  joker: 0.66,
+  common: 0.28,
+  rare: 0.42,
+  epic: 0.38,
+  legendary: 0.36,
+  joker: 0.4,
 };
 
 export const HOLO_GAIN: Record<Rarity, number> = {
-  common: 1.35,
-  rare: 1.55,
-  epic: 1.65,
-  legendary: 1.52,
-  joker: 1.75,
+  common: 1.42,
+  rare: 1.64,
+  epic: 1.74,
+  legendary: 1.62,
+  joker: 1.86,
 };
 
 export const HOLO_SATURATION: Record<Rarity, number> = {
-  common: 0.82,
-  rare: 0.88,
-  epic: 0.92,
-  legendary: 0.9,
-  joker: 0.95,
+  common: 1.02,
+  rare: 1.1,
+  epic: 1.16,
+  legendary: 1.12,
+  joker: 1.22,
 };
 
 export const HOLO_STRENGTH: Record<Rarity, number> = {
-  common: 1.38,
-  rare: 1.5,
-  epic: 1.58,
-  legendary: 1.52,
-  joker: 1.68,
+  common: 1.5,
+  rare: 1.64,
+  epic: 1.72,
+  legendary: 1.66,
+  joker: 1.84,
 };
 
 /** Shared IQ pal() foil. Three.js prepends precision; raw WebGL must add it. */
@@ -49,7 +49,7 @@ export const HOLO_FRAGMENT = /* glsl */ `
   uniform float uStrength;
 
   vec3 pal(float t) {
-    return 0.5 + 0.5 * cos(6.2831853 * (t + vec3(0.0, 0.33, 0.67)));
+    return 0.08 + 0.98 * cos(6.2831853 * (t + vec3(0.0, 0.33, 0.67)));
   }
 
   float artLuma(vec2 uv) {
@@ -91,15 +91,24 @@ export const HOLO_FRAGMENT = /* glsl */ `
     float coverage = clamp(lights * 0.78 + edge * 0.48 + detail * 0.32, 0.0, 1.0);
     coverage = pow(coverage, 1.12);
 
-    float hue = uTime * 0.1 + uTilt.x * 0.43 + uTilt.y * 0.33 + uv.x * uTilt.x * 0.2 + uv.y * uTilt.y * 0.13 + lum * 0.22 + vFresnel * 0.3;
+    float hue = uTime * 0.14 + uv.x * 0.4 + uv.y * 0.26 + uTilt.x * 0.32 + uTilt.y * 0.24 + lum * 0.18 + vFresnel * 0.12;
     vec3 irid = pal(hue);
     float iridLuma = dot(irid, vec3(0.299, 0.587, 0.114));
     irid = mix(vec3(iridLuma), irid, uSaturation);
-    irid = mix(irid, irid * mix(uRarity, vec3(1.0), uLift), 0.22);
+    irid = mix(irid, irid * mix(uRarity, vec3(1.0), uLift), 0.02);
+    float yellow = smoothstep(0.06, 0.24, min(irid.r, irid.g) - irid.b);
+    yellow *= 1.0 - smoothstep(0.26, 0.55, abs(irid.r - irid.g));
+    float green = smoothstep(0.08, 0.28, irid.g - max(irid.r, irid.b));
+    irid = mix(irid, vec3(iridLuma), max(yellow, green) * 0.62);
+    iridLuma = dot(irid, vec3(0.299, 0.587, 0.114));
+    irid *= mix(1.0, 0.58, smoothstep(0.58, 0.95, iridLuma));
 
-    float glare = pow(1.0 - abs(fract(uv.x + uTilt.x * 0.33 + uv.y * 0.35 + uTilt.y * 0.21) * 2.0 - 1.0), 2.2);
-    float fres = pow(clamp(vFresnel + uTilt.x * 0.08 + uTilt.y * 0.07 + dot(bump, uTilt) * 0.06, 0.0, 1.0), 0.7);
-    float wash = coverage * (0.18 + fres * 0.55 + glare * 0.78) * uGain * uStrength;
+    float sweep = uv.x * 0.72 + uv.y * 0.38 + uTime * 0.11 + uTilt.x * 0.28 + uTilt.y * 0.18;
+    float glare = pow(1.0 - abs(fract(sweep) * 2.0 - 1.0), 1.7);
+    float fres = pow(clamp(vFresnel + uTilt.x * 0.05 + uTilt.y * 0.04 + dot(bump, uTilt) * 0.04, 0.0, 1.0), 0.85);
+    float wash = coverage * (0.38 + glare * 0.46 + fres * 0.18) * uGain * uStrength;
+    wash *= mix(1.0, 0.7, smoothstep(0.55, 1.0, vFresnel));
+    wash *= mix(1.0, 0.64, lights);
     gl_FragColor = vec4(irid, wash);
   }
 `;

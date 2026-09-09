@@ -53,13 +53,13 @@ export default async function HomePage() {
           <div className="flex w-full max-w-5xl flex-col items-center gap-12 md:flex-row md:gap-20">
             <div className="flex w-full flex-1 flex-col items-center md:items-start">
               <div className="flex w-full max-w-md flex-col items-center text-center md:items-start md:text-left">
-                <p className="mb-4 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.3em] text-[#d4b36a] uppercase">
+                <p className="mb-4 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.3em] text-[#d4b36a] uppercase">
                   {t("landing.eyebrow")}
                 </p>
-                <h1 className="mb-6 font-[family-name:var(--font-cormorant)] text-[48px] leading-tight tracking-wide text-[#cfc6b4] italic md:text-[64px]">
+                <h1 className="mb-6 font-[family-name:var(--font-cormorant)] text-[50px] leading-tight tracking-wide text-[#cfc6b4] italic md:text-[66px]">
                   {t("landing.title")}
                 </h1>
-                <p className="mb-12 font-[family-name:var(--font-cormorant)] text-[22px] tracking-wide text-[#d7d3c8]/80 italic md:text-[26px]">
+                <p className="mb-12 font-[family-name:var(--font-cormorant)] text-[24px] tracking-wide text-[#d7d3c8]/80 italic md:text-[28px]">
                   {t("landing.body")}
                 </p>
                 <div className="relic-plinth flex w-full flex-col items-center pt-8">
@@ -72,7 +72,7 @@ export default async function HomePage() {
                   >
                     {t("landing.enter")}
                   </Link>
-                  <p className="mt-4 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.22em] text-[#d7d3c8]/40 uppercase">
+                  <p className="mt-4 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.22em] text-[#d7d3c8]/40 uppercase">
                     {t("landing.viaTwitch")}
                   </p>
                 </div>

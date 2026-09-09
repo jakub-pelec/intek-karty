@@ -14,7 +14,7 @@ export function LanguageSwitch() {
   return (
     <nav
       aria-label={t("switch")}
-      className="flex items-center gap-1.5 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.2em] uppercase"
+      className="flex items-center gap-1.5 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] uppercase"
     >
       {locales.map((value, index) => (
         <span key={value} className="flex items-center gap-1.5">

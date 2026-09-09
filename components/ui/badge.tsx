@@ -20,7 +20,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] uppercase",
+        "inline-flex items-center font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] uppercase",
         className,
       )}
       {...props}

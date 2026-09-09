@@ -104,7 +104,7 @@ export function BoosterOpenOverlay({
       {canDismiss ? (
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex flex-col items-center gap-4 px-6 pb-10 pt-24">
           {eyebrow ? (
-            <p className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.28em] text-[#d4b36a] uppercase">
+            <p className="font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.28em] text-[#d4b36a] uppercase">
               {eyebrow}
             </p>
           ) : null}
@@ -112,13 +112,13 @@ export function BoosterOpenOverlay({
           <button
             type="button"
             onClick={onDismiss}
-            className="pointer-events-auto mt-2 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.28em] text-[#d7d3c8] uppercase transition-colors hover:text-[#d4b36a]"
+            className="pointer-events-auto mt-2 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.28em] text-[#d7d3c8] uppercase transition-colors hover:text-[#d4b36a]"
           >
             {tCommon("continue")}
           </button>
         </div>
       ) : (
-        <p className="pointer-events-none absolute inset-x-0 bottom-10 z-20 text-center font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.28em] text-[#d7d3c8]/70 uppercase">
+        <p className="pointer-events-none absolute inset-x-0 bottom-10 z-20 text-center font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.28em] text-[#d7d3c8]/70 uppercase">
           {phase === "charge" ? t("sealBreaking") : t("visionArrives")}
         </p>
       )}

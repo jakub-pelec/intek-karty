@@ -106,7 +106,7 @@ export function AppShell({
         </div>
 
         <nav className="flex-1 overflow-y-auto px-3 pb-4">
-          <p className="mb-2 px-2 text-[10px] font-medium uppercase tracking-[0.16em] text-[var(--muted)]">
+          <p className="mb-2 px-2 text-[12px] font-medium uppercase tracking-[0.16em] text-[var(--muted)]">
             Collection
           </p>
           <ul className="space-y-0.5">
@@ -124,7 +124,7 @@ export function AppShell({
 
           {user.role === "admin" ? (
             <div className="mt-6">
-              <p className="mb-2 px-2 text-[10px] font-medium uppercase tracking-[0.16em] text-[var(--muted)]">
+              <p className="mb-2 px-2 text-[12px] font-medium uppercase tracking-[0.16em] text-[var(--muted)]">
                 Staff
               </p>
               <div

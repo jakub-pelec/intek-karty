@@ -50,10 +50,10 @@ export default async function AdminUsersPage({
                   className="flex items-center justify-between gap-4 py-5"
                 >
                   <div className="min-w-0">
-                    <p className="font-[family-name:var(--font-cormorant)] text-[22px] text-[#f3efe6] italic">
+                    <p className="font-[family-name:var(--font-cormorant)] text-[24px] text-[#f3efe6] italic">
                       {user.name}
                     </p>
-                    <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
+                    <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.16em] text-[#d7d3c8]/60 uppercase">
                       {t("roleEchoes", { role: user.role, points: user.pointsBalance })}
                     </p>
                   </div>

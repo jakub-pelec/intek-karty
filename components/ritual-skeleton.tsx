@@ -33,7 +33,7 @@ function PageHeaderSkeleton({
 }) {
   return (
     <RitualPageHeader title={title}>
-      <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.3em] uppercase">
+      <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.3em] uppercase">
         <TypeBone>{eyebrow}</TypeBone>
       </p>
     </RitualPageHeader>
@@ -64,10 +64,10 @@ function AdminListRow({
   return (
     <li className="flex items-center justify-between gap-4 border-b border-[#d7d3c8]/15 py-5 last:border-b-0">
       <div className="min-w-0">
-        <p className="font-[family-name:var(--font-cormorant)] text-[22px] italic">
+        <p className="font-[family-name:var(--font-cormorant)] text-[24px] italic">
           <TypeBone>{name}</TypeBone>
         </p>
-        <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] uppercase">
+        <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.16em] uppercase">
           <TypeBone>{meta}</TypeBone>
         </p>
       </div>
@@ -77,7 +77,7 @@ function AdminListRow({
         </span>
       ) : null}
       {badges ? (
-        <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] uppercase">
+        <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] uppercase">
           <TypeBone>{tRarity("legendary")}</TypeBone>
         </span>
       ) : null}
@@ -203,7 +203,7 @@ export function AdminDevSkeleton() {
     <SkeletonRoot className="mx-auto w-full max-w-5xl pt-2 md:pt-6">
       <PageHeaderSkeleton title={t("title")} eyebrow={t("eyebrow")} />
       <section className="relative mb-16">
-        <h2 className="mb-6 pt-4 text-center font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.3em] text-[#d4b36a]/80 uppercase">
+        <h2 className="mb-6 pt-4 text-center font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.3em] text-[#d4b36a]/80 uppercase">
           {t("openingRehearsal")}
         </h2>
         <div className="mx-auto aspect-[2/3] w-full max-w-xl border border-[#d4b36a]/30 bg-[#0c0b12]">
@@ -235,20 +235,20 @@ export function ListPageSkeleton({
         <PageHeaderSkeleton title={title} eyebrow={fallbackEyebrow} />
       ) : (
         <header className="mb-12 text-center">
-          <h1 className="font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide italic md:text-[53px]">
+          <h1 className="font-[family-name:var(--font-cormorant)] text-[42px] tracking-wide italic md:text-[55px]">
             <TypeBone>{t("common.loading")}</TypeBone>
           </h1>
-          <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.3em] uppercase">
+          <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.3em] uppercase">
             <TypeBone>{fallbackEyebrow}</TypeBone>
           </p>
         </header>
       )}
       {tabs ? (
         <div className="mb-8 flex justify-center gap-10">
-          <span className="border-b border-transparent pb-0.5 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.24em] uppercase">
+          <span className="border-b border-transparent pb-0.5 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.24em] uppercase">
             <TypeBone>{t("chronicle.manifestations")}</TypeBone>
           </span>
-          <span className="border-b border-transparent pb-0.5 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.24em] uppercase">
+          <span className="border-b border-transparent pb-0.5 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.24em] uppercase">
             <TypeBone>{t("chronicle.echoes")}</TypeBone>
           </span>
         </div>
@@ -258,20 +258,20 @@ export function ListPageSkeleton({
           {Array.from({ length: 3 }, (_, index) => (
             <li key={index} className="border border-[#d4b36a]/30 bg-[#0c0b12] px-6 py-5">
               <div className="flex items-baseline justify-between gap-4">
-                <h2 className="font-[family-name:var(--font-cormorant)] text-[26px] italic">
+                <h2 className="font-[family-name:var(--font-cormorant)] text-[28px] italic">
                   <TypeBone>{t("skeleton.signedPrint")}</TypeBone>
                 </h2>
-                <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] uppercase">
+                <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.16em] uppercase">
                   <TypeBone>{t("offerings.echoes", { count: 40 })}</TypeBone>
                 </span>
               </div>
               <p className="mt-2 text-sm leading-relaxed">
                 <TypeBone>{t("skeleton.offeringBlurb")}</TypeBone>
               </p>
-              <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] uppercase">
+              <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] uppercase">
                 <TypeBone>{t("offerings.remaining", { count: 3 })}</TypeBone>
               </p>
-              <p className="mt-4 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase">
+              <p className="mt-4 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.24em] uppercase">
                 <TypeBone>{t("skeleton.redeem")}</TypeBone>
               </p>
             </li>
@@ -306,10 +306,10 @@ export function ListPageSkeleton({
           {Array.from({ length: 5 }, (_, index) => (
             <li key={index} className="border-b border-[#d7d3c8]/15 px-6 py-5 last:border-b-0">
               <div className="flex items-baseline justify-between gap-4">
-                <h2 className="font-[family-name:var(--font-cormorant)] text-[26px] italic">
+                <h2 className="font-[family-name:var(--font-cormorant)] text-[28px] italic">
                   <TypeBone>{t("skeleton.firstOffering")}</TypeBone>
                 </h2>
-                <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] uppercase">
+                <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.2em] uppercase">
                   <TypeBone>{t("titles.bestowed")}</TypeBone>
                 </span>
               </div>
@@ -353,13 +353,13 @@ export function CollectionPageSkeleton() {
         <aside className="flex w-full shrink-0 flex-col gap-10 lg:w-56 lg:border-r lg:border-[#d4b36a]/25 lg:pr-10">
           {filters.map(([label, items]) => (
             <div key={label} className="flex flex-col items-start gap-3">
-              <span className="mb-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.24em] uppercase">
+              <span className="mb-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase">
                 <TypeBone>{label}</TypeBone>
               </span>
               {items.map((item) => (
                 <span
                   key={item}
-                  className="border-b border-transparent pb-0.5 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase"
+                  className="border-b border-transparent pb-0.5 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.24em] uppercase"
                 >
                   <TypeBone>{item}</TypeBone>
                 </span>
@@ -370,10 +370,10 @@ export function CollectionPageSkeleton() {
         <div className="relative min-w-0 flex-1">
           <div className="mb-8 flex flex-col justify-between md:flex-row md:items-end">
             <div>
-              <h1 className="font-[family-name:var(--font-cormorant)] text-[40px] leading-none tracking-wide text-[#cfc6b4] italic md:text-[53px]">
+              <h1 className="font-[family-name:var(--font-cormorant)] text-[42px] leading-none tracking-wide text-[#cfc6b4] italic md:text-[55px]">
                 {t("title")}
               </h1>
-              <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.3em] uppercase">
+              <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.3em] uppercase">
                 <TypeBone>{tSkeleton("relicsBound")}</TypeBone>
               </p>
             </div>
@@ -406,12 +406,12 @@ export function AltarPageSkeleton() {
   const tSkeleton = useTranslations("skeleton");
   return (
     <SkeletonRoot className="flex flex-col items-center px-4 pt-2 pb-16 md:px-8 md:pt-8">
-      <h1 className="mb-10 text-center font-[family-name:var(--font-cinzel)] text-[12px] font-medium tracking-[0.4em] uppercase md:mb-12">
+      <h1 className="mb-10 text-center font-[family-name:var(--font-cinzel)] text-[14px] font-medium tracking-[0.4em] uppercase md:mb-12">
         <TypeBone>{tSkeleton("welcome")}</TypeBone>
       </h1>
       <div className="relative mb-12 flex w-full max-w-7xl flex-col lg:mb-16 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(260px,380px)_minmax(0,1fr)] lg:gap-10 xl:gap-12">
         <section className="order-2 flex flex-col pt-10 lg:order-1 lg:pt-12">
-          <p className="mb-6 text-center font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
+          <p className="mb-6 text-center font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
             {t("recentManifestations")}
           </p>
           <ul className="space-y-1">
@@ -420,10 +420,10 @@ export function AltarPageSkeleton() {
                 key={index}
                 className="flex items-center justify-between gap-3 border-b border-white/5 px-3 py-2 first:border-t"
               >
-                <span className="text-[18px] italic">
+                <span className="text-[20px] italic">
                   <TypeBone>{`01 ${tSkeleton("relicName")}`}</TypeBone>
                 </span>
-                <span className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.1em] uppercase">
+                <span className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.1em] uppercase">
                   <TypeBone>{tRarity("rare")}</TypeBone>
                 </span>
               </li>
@@ -431,7 +431,7 @@ export function AltarPageSkeleton() {
           </ul>
         </section>
         <section className="relative order-1 mb-8 flex flex-col items-center lg:order-2 lg:mb-0">
-          <p className="mb-6 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
+          <p className="mb-6 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
             {t("latestVision")}
           </p>
           <div className="relative w-full max-w-[380px]">
@@ -442,21 +442,21 @@ export function AltarPageSkeleton() {
               </div>
             </RelicFrame>
           </div>
-          <p className="mt-8 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.25em] uppercase">
+          <p className="mt-8 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.25em] uppercase">
             <TypeBone>XII / XX</TypeBone>
           </p>
-          <h2 className="mt-3 text-center font-[family-name:var(--font-cormorant)] text-[36px] tracking-wider italic md:text-[46px]">
+          <h2 className="mt-3 text-center font-[family-name:var(--font-cormorant)] text-[38px] tracking-wider italic md:text-[48px]">
             <TypeBone>{tSkeleton("relicName")}</TypeBone>
           </h2>
-          <span className="mt-3 font-[family-name:var(--font-cinzel)] text-[11px] font-semibold tracking-[0.3em] uppercase">
+          <span className="mt-3 font-[family-name:var(--font-cinzel)] text-[13px] font-semibold tracking-[0.3em] uppercase">
             <TypeBone>{`${tRarity("legendary")}${t("holoSuffix")}`}</TypeBone>
           </span>
-          <span className="mt-1 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.1em] uppercase">
+          <span className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.1em] uppercase">
             <TypeBone>6 Sep 2026</TypeBone>
           </span>
         </section>
         <section className="order-3 flex flex-col pt-10 lg:pt-12">
-          <p className="mb-6 text-center font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
+          <p className="mb-6 text-center font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.3em] text-[#d4b36a]/60 uppercase lg:mb-8">
             {t("titlesBestowed")}
           </p>
           <ul className="space-y-1">
@@ -465,10 +465,10 @@ export function AltarPageSkeleton() {
                 key={index}
                 className="flex flex-col items-center justify-center gap-1 border-b border-white/5 px-3 py-4 first:border-t"
               >
-                <span className="font-[family-name:var(--font-cinzel)] text-[13px] tracking-widest uppercase">
+                <span className="font-[family-name:var(--font-cinzel)] text-[15px] tracking-widest uppercase">
                   <TypeBone>First Witness</TypeBone>
                 </span>
-                <span className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.2em] uppercase">
+                <span className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] uppercase">
                   <TypeBone>6 Sep 2026</TypeBone>
                 </span>
               </li>
@@ -483,10 +483,10 @@ export function AltarPageSkeleton() {
           ["3", tSkeleton("titlesBestowed")],
         ].map(([value, label]) => (
           <div key={label} className="flex min-w-0 flex-col items-center text-center">
-            <span className="font-[family-name:var(--font-cinzel)] text-[22px] md:text-[26px]">
+            <span className="font-[family-name:var(--font-cinzel)] text-[24px] md:text-[28px]">
               <TypeBone>{value}</TypeBone>
             </span>
-            <span className="mt-2 font-[family-name:var(--font-cinzel)] text-[9px] leading-[14px] tracking-[0.12em] uppercase md:mt-3 md:text-[10px]">
+            <span className="mt-2 font-[family-name:var(--font-cinzel)] text-[11px] leading-[16px] tracking-[0.12em] uppercase md:mt-3 md:text-[12px]">
               <TypeBone>{label}</TypeBone>
             </span>
           </div>

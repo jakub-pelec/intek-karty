@@ -12,7 +12,7 @@ export default function ErrorPage({
   const t = useTranslations("error");
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-3 px-4 text-center">
-      <h1 className="font-[family-name:var(--font-display)] text-[33px]">{t("title")}</h1>
+      <h1 className="font-[family-name:var(--font-display)] text-[35px]">{t("title")}</h1>
       <p className="max-w-md text-sm text-[var(--muted)]">{error.message}</p>
       <button
         type="button"

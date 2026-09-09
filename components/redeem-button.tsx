@@ -22,7 +22,7 @@ export function RedeemButton({
         size="sm"
         variant="ghost"
         disabled={disabled || pending}
-        className="ritual-ember-text h-auto rounded-none px-0 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#f3efe6] uppercase hover:bg-transparent"
+        className="ritual-ember-text h-auto rounded-none px-0 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.24em] text-[#f3efe6] uppercase hover:bg-transparent"
         onClick={() =>
           start(async () => {
             const result = await redeemRewardAction(rewardId);
@@ -33,7 +33,7 @@ export function RedeemButton({
         {pending ? t("binding") : t("claim")}
       </Button>
       {message ? (
-        <p className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] text-[#d7d3c8]/70 uppercase">
+        <p className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/70 uppercase">
           {message}
         </p>
       ) : null}

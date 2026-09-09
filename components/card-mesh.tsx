@@ -293,7 +293,8 @@ const HOLO_VERTEX = /* glsl */ `
     vec3 worldNormal = normalize(mat3(modelMatrix) * normal);
     vec3 worldPos = (modelMatrix * vec4(position, 1.0)).xyz;
     vec3 viewDir = normalize(cameraPosition - worldPos);
-    vFresnel = pow(1.0 - clamp(dot(worldNormal, viewDir), 0.0, 1.0), 1.45);
+    float facing = clamp(dot(worldNormal, viewDir), 0.0, 1.0);
+    vFresnel = 0.36 + pow(1.0 - facing, 1.6) * 0.38;
     vSlide = viewDir.xy * 0.4;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   }

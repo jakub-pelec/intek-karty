@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva(
-  "ritual-ember inline-flex items-center justify-center gap-2 rounded-none font-[family-name:var(--font-cinzel)] text-[11px] font-medium tracking-[0.24em] uppercase disabled:pointer-events-none disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4b36a]",
+  "ritual-ember inline-flex items-center justify-center gap-2 rounded-none font-[family-name:var(--font-cinzel)] text-[13px] font-medium tracking-[0.24em] uppercase disabled:pointer-events-none disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4b36a]",
   {
     variants: {
       variant: {

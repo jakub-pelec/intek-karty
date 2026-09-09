@@ -82,7 +82,7 @@ export function BoosterOpenStage({
 
   return (
     <div className="mx-auto max-w-xl text-center">
-      <h2 className="mb-8 font-[family-name:var(--font-cormorant)] text-[33px] tracking-wide text-[#cfc6b4] italic">
+      <h2 className="mb-8 font-[family-name:var(--font-cormorant)] text-[35px] tracking-wide text-[#cfc6b4] italic">
         {boosterName}
       </h2>
       {!overlayOpen && !showResult ? (
@@ -109,7 +109,7 @@ export function BoosterOpenStage({
               <p className="text-xs tracking-[0.18em] text-[#cfc6b4] uppercase">
                 {formatCardNumber(card.number)}
               </p>
-              <h3 className="mt-1 font-[family-name:var(--font-display)] text-[33px] text-[#f3efe6]">
+              <h3 className="mt-1 font-[family-name:var(--font-display)] text-[35px] text-[#f3efe6]">
                 {card.name}
               </h3>
               <div className="mt-3 flex justify-center gap-1">
@@ -135,16 +135,16 @@ export function BoosterOpenStage({
               : ""}
       </p>
       {error ? (
-        <p className="mt-4 border border-[#8b1e2d]/50 bg-[#1a0a0c] px-3 py-2 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#f3efe6] uppercase">
+        <p className="mt-4 border border-[#8b1e2d]/50 bg-[#1a0a0c] px-3 py-2 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.16em] text-[#f3efe6] uppercase">
           {error}
         </p>
       ) : null}
       {showResult && card ? (
         <div className="mt-8">
-          <p className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d4b36a]/70 uppercase">
+          <p className="font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.2em] text-[#d4b36a]/70 uppercase">
             {formatCardNumber(card.number)}
           </p>
-          <h3 className="mt-2 font-[family-name:var(--font-cormorant)] text-[33px] text-[#f3efe6] italic">
+          <h3 className="mt-2 font-[family-name:var(--font-cormorant)] text-[35px] text-[#f3efe6] italic">
             {card.name}
           </h3>
           <div className="mt-3 flex justify-center gap-3">
@@ -153,7 +153,7 @@ export function BoosterOpenStage({
           </div>
           <p className="mt-3 text-sm text-[#d7d3c8]/60 italic">{card.message}</p>
           {card.isDuplicate ? (
-            <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d4b36a] uppercase">
+            <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.16em] text-[#d4b36a] uppercase">
               {t("echoAwarded", { points: card.pointsAwarded })}
             </p>
           ) : null}
@@ -171,7 +171,7 @@ export function BoosterOpenStage({
           </Button>
           <Link
             href="/admin/queue"
-            className="inline-flex h-12 items-center font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+            className="inline-flex h-12 items-center font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.24em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
           >
             {tCommon("cancel")}
           </Link>

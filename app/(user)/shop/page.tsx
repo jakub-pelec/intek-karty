@@ -33,10 +33,10 @@ export default async function ShopPage() {
                 className="border border-[#d4b36a]/30 bg-[#0c0b12] px-6 py-5"
               >
                 <div className="flex items-baseline justify-between gap-4">
-                  <h2 className="font-[family-name:var(--font-cormorant)] text-[26px] text-[#f3efe6] italic">
+                  <h2 className="font-[family-name:var(--font-cormorant)] text-[28px] text-[#f3efe6] italic">
                     {reward.name}
                   </h2>
-                  <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d4b36a] uppercase">
+                  <span className="shrink-0 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.16em] text-[#d4b36a] uppercase">
                     {t("echoes", { count: reward.pointCost })}
                   </span>
                 </div>
@@ -44,13 +44,13 @@ export default async function ShopPage() {
                   {reward.description}
                 </p>
                 {reward.stock !== null ? (
-                  <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] text-[#d7d3c8]/70 uppercase">
+                  <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/70 uppercase">
                     {t("remaining", { count: reward.stock })}
                   </p>
                 ) : null}
                 <div className="mt-4">
                   {soldOut ? (
-                    <p className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d7d3c8]/50 uppercase">
+                    <p className="font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.2em] text-[#d7d3c8]/50 uppercase">
                       {t("exhausted")}
                     </p>
                   ) : (
@@ -60,7 +60,7 @@ export default async function ShopPage() {
                     />
                   )}
                   {unaffordable && !soldOut ? (
-                    <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.16em] text-[#d7d3c8]/55 uppercase">
+                    <p className="mt-2 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8]/55 uppercase">
                       {t("notEnough")}
                     </p>
                   ) : null}

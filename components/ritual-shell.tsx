@@ -35,7 +35,7 @@ export async function RitualShell({
               <form action={logout}>
                 <button
                   type="submit"
-                  className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+                  className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
                 >
                   {user.name} · {user.pointsBalance} · {t("common.depart")}
                 </button>

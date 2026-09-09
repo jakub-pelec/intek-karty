@@ -33,7 +33,7 @@ export function SanctumSection({
       {rule ? (
         <div className="absolute -top-1 right-0 left-0 h-px bg-gradient-to-r from-transparent via-[#d4b36a]/30 to-transparent" />
       ) : null}
-      <h2 className="mb-6 pt-4 text-center font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.3em] text-[#d4b36a]/80 uppercase">
+      <h2 className="mb-6 pt-4 text-center font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.3em] text-[#d4b36a]/80 uppercase">
         {title}
       </h2>
       {children}
@@ -63,7 +63,7 @@ export function SanctumPager({
       {prevHref ? (
         <Link
           href={prevHref}
-          className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+          className="font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
         >
           {t("previous")}
         </Link>
@@ -71,7 +71,7 @@ export function SanctumPager({
       {nextHref ? (
         <Link
           href={nextHref}
-          className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
+          className="font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.2em] text-[#d7d3c8] uppercase hover:text-[#d4b36a]"
         >
           {t("next")}
         </Link>

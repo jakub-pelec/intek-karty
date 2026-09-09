@@ -50,7 +50,7 @@ export function TitlesCatalog({ rows }: { rows: TitleRow[] }) {
               <div className="flex items-baseline justify-between gap-4">
                 <h2
                   className={cn(
-                    "font-[family-name:var(--font-cormorant)] text-[26px] italic",
+                    "font-[family-name:var(--font-cormorant)] text-[28px] italic",
                     row.done ? "text-[#f3efe6]" : "text-[#d7d3c8]",
                   )}
                 >
@@ -58,7 +58,7 @@ export function TitlesCatalog({ rows }: { rows: TitleRow[] }) {
                 </h2>
                 <span
                   className={cn(
-                    "shrink-0 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] uppercase",
+                    "shrink-0 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.2em] uppercase",
                     row.done ? "text-[#7dbe72]" : "text-[#d7d3c8]",
                   )}
                 >

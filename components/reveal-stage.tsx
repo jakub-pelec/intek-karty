@@ -171,7 +171,7 @@ export function RevealStage({
               <p className="text-sm text-white/70">
                 {formatCardNumber(current.cardNumber)}
               </p>
-              <h2 className="font-[family-name:var(--font-display)] text-[33px]">
+              <h2 className="font-[family-name:var(--font-display)] text-[35px]">
                 {current.cardName}
               </h2>
               <div className="flex justify-center gap-1">

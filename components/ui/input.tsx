@@ -34,7 +34,7 @@ export function Label({
   return (
     <label
       className={cn(
-        "mb-1 block font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.2em] text-[#d4b36a]/70 uppercase",
+        "mb-1 block font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.2em] text-[#d4b36a]/70 uppercase",
         className,
       )}
       {...props}
@@ -57,7 +57,7 @@ export function Check({
   ...props
 }: InputHTMLAttributes<HTMLInputElement> & { children: string }) {
   return (
-    <label className="flex items-center gap-2 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d7d3c8] uppercase">
+    <label className="flex items-center gap-2 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.16em] text-[#d7d3c8] uppercase">
       <input type="checkbox" className={cn("accent-[#d4b36a]", className)} {...props} />
       {children}
     </label>

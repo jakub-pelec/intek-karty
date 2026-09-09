@@ -47,12 +47,12 @@ function InspectLedgerRow({
 }) {
   return (
     <div className="flex items-center justify-between border-b border-[#d4b36a]/15 py-3 last:border-b-0">
-      <span className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.2em] text-[#d4b36a]/70 uppercase">
+      <span className="font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.2em] text-[#d4b36a]/70 uppercase">
         {label}
       </span>
       <span
         className={cn(
-          "font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase",
+          "font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.24em] uppercase",
           valueClassName ?? "text-[#d7d3c8]",
         )}
       >
@@ -75,7 +75,7 @@ function RelicsBound({
   return (
     <p
       className={cn(
-        "font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.3em] text-[#d4b36a] uppercase",
+        "font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.3em] text-[#d4b36a] uppercase",
         className,
       )}
     >
@@ -107,7 +107,7 @@ function FilterLink({
         onSelect();
       }}
       className={cn(
-        "ritual-ember self-center border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.16em] uppercase md:self-start md:text-[11px] md:tracking-[0.24em]",
+        "ritual-ember self-center border-b pb-0.5 font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.16em] uppercase md:self-start md:text-[13px] md:tracking-[0.24em]",
         active
           ? "border-[#d4b36a] text-[#d4b36a]"
           : "border-transparent text-[#d7d3c8]/40 hover:border-[#d4b36a]/50",
@@ -129,7 +129,7 @@ function FilterGroup({
 }) {
   return (
     <div className={cn("flex min-w-0 flex-col items-center gap-1.5 md:items-start md:gap-3", className)}>
-      <span className="font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.24em] text-[#d7d3c8]/40 uppercase">
+      <span className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#d7d3c8]/40 uppercase">
         {label}
       </span>
       <div className="flex flex-row flex-wrap items-center justify-center gap-x-3 gap-y-1.5 md:flex-col md:items-start md:justify-start md:gap-3">
@@ -223,7 +223,7 @@ export function CollectionBrowser({
     <div className="relative grid grid-cols-1 items-start gap-5 md:grid-cols-[12rem_minmax(0,1fr)] md:gap-x-10 md:gap-y-0 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-x-16">
       <div className="relative z-10 min-w-0 text-center md:col-start-2 md:row-start-1 md:mb-1 md:text-left">
         <div className="flex flex-col justify-between md:flex-row md:items-end">
-          <h1 className="font-[family-name:var(--font-cormorant)] text-[40px] tracking-wide text-[#cfc6b4] italic md:text-[53px]">
+          <h1 className="font-[family-name:var(--font-cormorant)] text-[42px] tracking-wide text-[#cfc6b4] italic md:text-[55px]">
             {t("title")}
           </h1>
           <RelicsBound
@@ -239,7 +239,7 @@ export function CollectionBrowser({
           aria-hidden
           className="pointer-events-none absolute inset-y-0 right-0 hidden w-px bg-gradient-to-b from-transparent via-[#d4b36a] to-transparent md:block"
         />
-        <h2 className="hidden font-[family-name:var(--font-cormorant)] text-[53px] tracking-wide text-[#cfc6b4] italic md:mb-1 md:block">
+        <h2 className="hidden font-[family-name:var(--font-cormorant)] text-[55px] tracking-wide text-[#cfc6b4] italic md:mb-1 md:block">
           {t("filters")}
         </h2>
         <div className="flex w-full flex-col items-center gap-3 md:items-start md:gap-10">
@@ -369,7 +369,7 @@ export function CollectionBrowser({
                           )}
                           <div className="pointer-events-none absolute inset-0 z-[15] flex items-center justify-center bg-[#05040a]/55">
                             <span
-                              className="font-[family-name:var(--font-cormorant)] text-[80px] font-semibold text-[#e8edf2] italic"
+                              className="font-[family-name:var(--font-cormorant)] text-[82px] font-semibold text-[#e8edf2] italic"
                               style={{
                                 textShadow:
                                   "0 0 8px rgba(232,237,242,0.95), 0 0 22px rgba(184,192,200,0.75), 0 0 42px rgba(184,192,200,0.45)",
@@ -380,7 +380,7 @@ export function CollectionBrowser({
                           </div>
                         </>
                       )}
-                      <p className="absolute top-3 z-20 w-full text-center font-[family-name:var(--font-cinzel)] text-[9px] tracking-[0.18em] text-[#d7d3c8]/40 uppercase">
+                      <p className="absolute top-3 z-20 w-full text-center font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.18em] text-[#d7d3c8]/40 uppercase">
                         {toRoman(slot.number)}
                       </p>
                     </RelicFrame>
@@ -391,7 +391,7 @@ export function CollectionBrowser({
                         {slot.owned.name}
                       </p>
                     ) : (
-                      <p className="font-[family-name:var(--font-cinzel)] text-[10px] tracking-[0.18em] text-[#8a8578] uppercase">
+                      <p className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.18em] text-[#8a8578] uppercase">
                         {slot.signed ? t("unseenSigned") : t("unseen")}
                       </p>
                     )}
@@ -445,7 +445,7 @@ export function CollectionBrowser({
                 <p className="font-[family-name:var(--font-cinzel)] text-xs tracking-[0.2em] text-[#d7d3c8]/70 uppercase">
                   {toRoman(selected.number)}
                 </p>
-                <h2 className="font-[family-name:var(--font-cormorant)] text-[40px] leading-none text-[#f3efe6] italic sm:text-[72px]">
+                <h2 className="font-[family-name:var(--font-cormorant)] text-[42px] leading-none text-[#f3efe6] italic sm:text-[74px]">
                   {selected.owned.name}
                 </h2>
               </div>
@@ -475,7 +475,7 @@ export function CollectionBrowser({
               </div>
               <button
                 type="button"
-                className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] text-[#f3efe6] uppercase hover:text-[#d4b36a]"
+                className="font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.24em] text-[#f3efe6] uppercase hover:text-[#d4b36a]"
                 onClick={() => setSelected(null)}
               >
                 {tCommon("close")}
