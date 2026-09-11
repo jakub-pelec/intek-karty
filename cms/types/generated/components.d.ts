@@ -26,10 +26,36 @@ export interface BoosterDropRate extends Struct.ComponentSchema {
   };
 }
 
+export interface CardTag extends Struct.ComponentSchema {
+  collectionName: 'components_card_tags';
+  info: {
+    displayName: 'Tag';
+    icon: 'price-tag';
+  };
+  attributes: {
+    value: Schema.Attribute.Enumeration<
+      [
+        'chat',
+        'hype',
+        'raid',
+        'food',
+        'cat',
+        'mod',
+        'clutch',
+        'night',
+        'sub',
+        'overlay',
+      ]
+    > &
+      Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'booster.drop-rate': BoosterDropRate;
+      'card.tag': CardTag;
     }
   }
 }

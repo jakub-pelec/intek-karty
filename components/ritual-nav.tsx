@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 const viewerLinks = [
   { href: "/dashboard", key: "altar" },
   { href: "/collection", key: "collection" },
+  { href: "/deck", key: "deck" },
   { href: "/achievements", key: "titles" },
   { href: "/shop", key: "offerings" },
   { href: "/history", key: "chronicle" },

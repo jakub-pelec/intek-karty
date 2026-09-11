@@ -1,3 +1,4 @@
+import type { CardTag } from "@/lib/game/types";
 import type { Rarity } from "@/db/schema";
 import { RARITIES } from "@/lib/constants";
 
@@ -21,8 +22,15 @@ export type CollectionSlot = {
   id: string;
   number: number;
   name: string;
+  description: string;
   rarity: Rarity;
   signed: boolean;
+  tags: CardTag[];
+  basePoints: number;
+  effectKind: string | null;
+  effectTag: string | null;
+  effectValue: number | null;
+  effectThreshold: number | null;
   owned: null | {
     id: string;
     name: string;

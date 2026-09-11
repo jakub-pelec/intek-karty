@@ -5,6 +5,7 @@ import { cards, userCards } from "@/db/schema";
 import { listActiveCollections } from "@/db/queries/collections";
 import { isLiveCmsRow, liveCms } from "@/lib/cms/live";
 import { parseCollectionQuery, type CollectionSlot } from "@/lib/collection";
+import { parseEffectKind, parseEffectTag, parseGameTags } from "@/lib/game/play-card";
 import { requireUser } from "@/lib/rbac";
 
 export default async function CollectionPage({
@@ -43,8 +44,15 @@ export default async function CollectionPage({
       id: card.id,
       number: card.number,
       name: card.name,
+      description: card.description,
       rarity: card.rarity,
       signed: card.signed,
+      tags: parseGameTags(card.tags),
+      basePoints: card.basePoints,
+      effectKind: parseEffectKind(card.effectKind),
+      effectTag: parseEffectTag(card.effectTag),
+      effectValue: card.effectValue,
+      effectThreshold: card.effectThreshold,
       owned: own
         ? {
             id: card.id,

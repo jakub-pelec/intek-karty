@@ -120,6 +120,12 @@ async function upsertCard(values: {
   signed: boolean;
   active: boolean;
   imageUrl: string | null;
+  basePoints: number;
+  tags: string[];
+  effectKind: string | null;
+  effectTag: string | null;
+  effectValue: number | null;
+  effectThreshold: number | null;
   updatedAt: Date;
 }) {
   const db = getDb();
@@ -243,6 +249,12 @@ async function syncCatalogUnlocked() {
       signed: row.signed,
       active: row.active,
       imageUrl: row.imageUrl,
+      basePoints: row.basePoints,
+      tags: row.tags,
+      effectKind: row.effectKind,
+      effectTag: row.effectTag,
+      effectValue: row.effectValue,
+      effectThreshold: row.effectThreshold,
       updatedAt: new Date(),
     });
   }

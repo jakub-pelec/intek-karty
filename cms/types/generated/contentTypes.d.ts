@@ -500,6 +500,15 @@ export interface ApiCardCard extends Struct.CollectionTypeSchema {
     active: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
+    basePoints: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<3>;
     collection: Schema.Attribute.Relation<
       'manyToOne',
       'api::collection.collection'
@@ -508,6 +517,37 @@ export interface ApiCardCard extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    effectKind: Schema.Attribute.Enumeration<
+      ['per_tag', 'tribe', 'lone', 'high_rarity']
+    >;
+    effectTag: Schema.Attribute.Enumeration<
+      [
+        'chat',
+        'hype',
+        'raid',
+        'food',
+        'cat',
+        'mod',
+        'clutch',
+        'night',
+        'sub',
+        'overlay',
+      ]
+    >;
+    effectThreshold: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    effectValue: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::card.card'> &
@@ -529,6 +569,7 @@ export interface ApiCardCard extends Struct.CollectionTypeSchema {
     signed: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
+    tags: Schema.Attribute.Component<'card.tag', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

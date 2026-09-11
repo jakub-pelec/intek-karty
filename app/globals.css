@@ -444,6 +444,37 @@ button:hover > .collection-bound-card {
   animation: altarWellBreathe 4.5s ease-in-out infinite;
 }
 
+.match-card-scene {
+  perspective: 900px;
+}
+
+.match-card-pivot {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.2, 0.75, 0.25, 1);
+  transition-delay: var(--flip-delay, 0ms);
+}
+
+.match-card-pivot.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.match-card-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.match-card-back {
+  position: relative;
+  transform: rotateY(0deg);
+}
+
+.match-card-front {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}
+
 .altar-center-dust {
   background-image: radial-gradient(
     circle at center,
@@ -495,6 +526,7 @@ a.ritual-ember-solid:hover {
   .open-flash,
   .ritual-ember,
   .collection-bound-card,
+  .match-card-pivot,
   .ritual-shimmer,
   .ritual-skeleton-fade,
   .landing-well-indigo,

@@ -336,6 +336,71 @@ export function ListPageSkeleton({
   );
 }
 
+export function DeckPageSkeleton() {
+  const t = useTranslations("deck");
+  const tCollection = useTranslations("collection");
+  const tRarity = useTranslations("rarity");
+  const filters = [
+    [tCollection("rarity"), [tCollection("anyRarity"), tRarity("common"), tRarity("rare")]],
+    [t("type"), [t("anyType"), t("effectKind.per_tag")]],
+    [t("effect"), [t("anyEffect"), t("effectKind.tribe")]],
+    [tCollection("sort"), [t("sortPoints"), t("sortRarity"), t("sortName")]],
+  ] as const;
+  return (
+    <SkeletonRoot className="mx-auto w-full max-w-[104rem] px-4 pt-8 pb-16 md:px-8 md:pt-6">
+      <div className="relative grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)] lg:gap-x-16 lg:gap-y-0">
+        <div className="relative z-10 min-w-0 text-center lg:col-start-2 lg:row-start-1 lg:mb-6 lg:text-left">
+          <h1 className="font-[family-name:var(--font-cormorant)] text-[42px] tracking-wide text-[#cfc6b4] italic md:text-[55px]">
+            {t("title")}
+          </h1>
+          <p className="mt-3 font-[family-name:var(--font-cinzel)] text-[14px] tracking-[0.3em] uppercase">
+            <TypeBone>{t("eyebrow", { count: 1 })}</TypeBone>
+          </p>
+        </div>
+        <aside className="relative z-10 flex w-full min-w-0 flex-col items-center gap-8 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:items-start lg:gap-10 lg:pr-10">
+          {filters.map(([label, items]) => (
+            <div key={label} className="flex flex-col items-center gap-3 lg:items-start">
+              <span className="font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.24em] uppercase">
+                <TypeBone>{label}</TypeBone>
+              </span>
+              {items.map((item) => (
+                <span
+                  key={item}
+                  className="border-b border-transparent pb-0.5 font-[family-name:var(--font-cinzel)] text-[13px] tracking-[0.24em] uppercase"
+                >
+                  <TypeBone>{item}</TypeBone>
+                </span>
+              ))}
+            </div>
+          ))}
+        </aside>
+        <div className="relative min-w-0 lg:col-start-2 lg:row-start-2">
+          <div className="grid grid-cols-3 gap-4 md:grid-cols-6 md:gap-6">
+            {Array.from({ length: 6 }, (_, index) => (
+              <RelicFrame key={index} sealed>
+                <div className="absolute inset-0">
+                  <div className="ritual-shimmer h-full w-full" />
+                </div>
+              </RelicFrame>
+            ))}
+          </div>
+          <div className="mt-12 border border-[#d4b36a]/25 bg-[#05040a]/45 px-4 py-6 sm:px-10 sm:py-12">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-16 lg:grid-cols-3">
+              {Array.from({ length: 6 }, (_, index) => (
+                <RelicFrame key={index} sealed>
+                  <div className="absolute inset-0">
+                    <div className="ritual-shimmer h-full w-full" />
+                  </div>
+                </RelicFrame>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </SkeletonRoot>
+  );
+}
+
 export function CollectionPageSkeleton() {
   const t = useTranslations("collection");
   const tRarity = useTranslations("rarity");

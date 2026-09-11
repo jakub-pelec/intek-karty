@@ -80,6 +80,32 @@ describe("cms mapper", () => {
     );
     expect(card.uniqueKey).toBe("col1:4:true");
     expect(card.imageUrl).toBe("http://cms.test/uploads/ember.png");
+    expect(card.basePoints).toBe(5);
+    expect(card.tags).toEqual([]);
+    expect(card.effectKind).toBeNull();
+
+    const scored = mapCard(
+      {
+        documentId: "card2",
+        number: 1,
+        name: "Cat",
+        rarity: "common",
+        signed: false,
+        image: { url: "/uploads/cat.png" },
+        collection: { documentId: "col1" },
+        basePoints: 4,
+        tags: [{ value: "cat" }, { value: "chat" }],
+        effectKind: "per_tag",
+        effectTag: "food",
+        effectValue: 2,
+      },
+      "http://cms.test",
+    );
+    expect(scored.basePoints).toBe(4);
+    expect(scored.tags).toEqual(["cat", "chat"]);
+    expect(scored.effectKind).toBe("per_tag");
+    expect(scored.effectTag).toBe("food");
+    expect(scored.effectValue).toBe(2);
 
     const booster = mapBooster(
       {
@@ -108,6 +134,38 @@ describe("cms mapper", () => {
         stock: null,
       }).stock,
     ).toBeNull();
+  });
+
+  it("rejects unknown card tags and effects that need a tag", () => {
+    expect(() =>
+      mapCard(
+        {
+          documentId: "bad",
+          number: 1,
+          name: "Bad",
+          rarity: "common",
+          image: { url: "/a.png" },
+          collection: { documentId: "col1" },
+          tags: [{ value: "dragon" }],
+        },
+        "http://cms.test",
+      ),
+    ).toThrow(/Unknown card tag/);
+    expect(() =>
+      mapCard(
+        {
+          documentId: "bad2",
+          number: 1,
+          name: "Bad",
+          rarity: "common",
+          image: { url: "/a.png" },
+          collection: { documentId: "col1" },
+          effectKind: "per_tag",
+          effectValue: 2,
+        },
+        "http://cms.test",
+      ),
+    ).toThrow(/needs an effect tag/);
   });
 
   it("treats only published CMS rows as live catalog", () => {

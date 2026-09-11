@@ -54,7 +54,7 @@ export async function fetchCatalogFromStrapi() {
     ),
     fetchPages<StrapiCard>(
       "/api/cards",
-      "status=published&populate[image]=true&populate[collection]=true",
+      "status=published&populate[image]=true&populate[collection]=true&populate[tags]=true",
     ),
     fetchPages<StrapiBooster>(
       "/api/boosters",

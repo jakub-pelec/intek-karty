@@ -1,6 +1,7 @@
 import { BoosterOpenDemo } from "@/components/booster-open-demo";
 import { BoosterPackPreview } from "@/components/booster-pack-preview";
 import { CardInspect } from "@/components/card-inspect";
+import { MatchDevPanel } from "@/components/match-dev-panel";
 import { RitualPageHeader } from "@/components/ritual-page-header";
 import { SanctumSection } from "@/components/sanctum";
 import { MutationBadges, RarityBadge } from "@/components/ui/badge";
@@ -18,6 +19,8 @@ import { ORIGIN_COLLECTION } from "@/db/seed-data/collections";
 import type { Rarity } from "@/db/schema";
 import { RARITIES } from "@/lib/constants";
 import { formatCardNumber } from "@/lib/utils";
+import { listQueueReadyPlayers } from "@/db/queries/decks";
+import { requireAdmin } from "@/lib/rbac";
 import { getTranslations } from "next-intl/server";
 
 const SHOWCASE_RARITIES: Rarity[] = [
@@ -61,6 +64,7 @@ function withCollectionBack(
 }
 
 export default async function AdminDevPage() {
+  const user = await requireAdmin();
   let catalog: ShowcaseCard[] = [];
   let packs: {
     name: string;
@@ -166,7 +170,10 @@ export default async function AdminDevPage() {
       holographic: false,
     };
   }).filter((card): card is NonNullable<typeof card> => Boolean(card));
-  const t = await getTranslations("dev");
+  const [t, opponents] = await Promise.all([
+    getTranslations("dev"),
+    listQueueReadyPlayers(user.id).catch(() => [] as Awaited<ReturnType<typeof listQueueReadyPlayers>>),
+  ]);
 
   return (
     <main className="mx-auto w-full max-w-5xl pt-2 md:pt-6">
@@ -174,6 +181,9 @@ export default async function AdminDevPage() {
         title={t("title")}
         eyebrow={t("eyebrow")}
       />
+      <SanctumSection title={t("duelRehearsal")} className="mb-16" rule={false}>
+        <MatchDevPanel opponents={opponents} rating={user.rating} />
+      </SanctumSection>
       <SanctumSection title={t("openingRehearsal")} className="mb-16" rule={false}>
         <div className="mx-auto max-w-xl">
           <BoosterOpenDemo

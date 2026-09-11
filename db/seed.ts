@@ -18,7 +18,7 @@ import {
 } from "./schema";
 import { SEED_ACHIEVEMENTS } from "./seed-data/achievements";
 import { SEED_BOOSTERS } from "./seed-data/boosters";
-import { SEED_CARDS } from "./seed-data/cards";
+import { SEED_CARDS, seedCardGameFields } from "./seed-data/cards";
 import { ORIGIN_COLLECTION, ORIGIN_COLLECTION_ID } from "./seed-data/collections";
 import {
   DEMO_NOTE,
@@ -93,14 +93,20 @@ async function seedCards(collectionId: string) {
           rarity: card.rarity,
           imageUrl: card.imageUrl,
           signed: card.signed ?? false,
+          ...seedCardGameFields(card),
           updatedAt: new Date(),
         })
         .where(eq(cards.id, existing[0].id));
     } else {
       await db.insert(cards).values({
-        ...card,
+        number: card.number,
+        name: card.name,
+        description: card.description,
+        rarity: card.rarity,
+        imageUrl: card.imageUrl,
         collectionId,
         signed: card.signed ?? false,
+        ...seedCardGameFields(card),
       });
     }
   }

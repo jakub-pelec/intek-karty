@@ -12,8 +12,15 @@ function slot(
 ): CollectionSlot {
   return {
     name: partial.name ?? `Card ${partial.number}`,
+    description: partial.description ?? "",
     rarity: partial.rarity ?? "common",
     signed: partial.signed ?? false,
+    tags: partial.tags ?? [],
+    basePoints: partial.basePoints ?? 3,
+    effectKind: partial.effectKind ?? null,
+    effectTag: partial.effectTag ?? null,
+    effectValue: partial.effectValue ?? null,
+    effectThreshold: partial.effectThreshold ?? null,
     owned: partial.owned ?? null,
     ...partial,
   };

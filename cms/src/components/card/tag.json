@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_card_tags",
+  "info": {
+    "displayName": "Tag",
+    "icon": "price-tag"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "enumeration",
+      "enum": [
+        "chat",
+        "hype",
+        "raid",
+        "food",
+        "cat",
+        "mod",
+        "clutch",
+        "night",
+        "sub",
+        "overlay"
+      ],
+      "required": true
+    }
+  }
+}

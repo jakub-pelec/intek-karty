@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { CardFace } from "@/components/card-face";
 import { CardInspect } from "@/components/card-inspect";
+import { CardRulesText } from "@/components/card-rules";
 import { RelicFrame } from "@/components/relic-frame";
 import {
   COLLECTION_SORTS,
@@ -158,6 +159,7 @@ export function CollectionBrowser({
   const t = useTranslations("collection");
   const tRarity = useTranslations("rarity");
   const tCommon = useTranslations("common");
+  const tTag = useTranslations("cardTag");
   const search = searchParams.toString();
   const [selected, setSelected] = useState<CollectionSlot | null>(null);
   const [optimistic, setOptimistic] = useState<CollectionQuery | null>(null);
@@ -387,9 +389,15 @@ export function CollectionBrowser({
                   </div>
                   <div className="mt-3 text-center">
                     {slot.owned ? (
-                      <p className="truncate font-[family-name:var(--font-cormorant)] text-lg text-[#d7d3c8] italic">
-                        {slot.owned.name}
-                      </p>
+                      <>
+                        <p className="truncate font-[family-name:var(--font-cormorant)] text-lg text-[#d7d3c8] italic">
+                          {slot.owned.name}
+                        </p>
+                        <p className="mt-1 font-[family-name:var(--font-cinzel)] text-[11px] tracking-[0.16em] text-[#d4b36a]/80 uppercase">
+                          {t("points", { count: slot.basePoints })}
+                          {slot.tags.length ? ` · ${slot.tags.map((tag) => tTag(tag)).join(" · ")}` : ""}
+                        </p>
+                      </>
                     ) : (
                       <p className="font-[family-name:var(--font-cinzel)] text-[12px] tracking-[0.18em] text-[#8a8578] uppercase">
                         {slot.signed ? t("unseenSigned") : t("unseen")}
@@ -449,6 +457,21 @@ export function CollectionBrowser({
                   {selected.owned.name}
                 </h2>
               </div>
+              {selected.owned.description ? (
+                <p className="text-lg leading-relaxed text-[#d7d3c8]">
+                  {selected.owned.description}
+                </p>
+              ) : null}
+              <CardRulesText
+                tags={selected.tags}
+                effectKind={selected.effectKind}
+                effectTag={selected.effectTag}
+                effectValue={selected.effectValue}
+                effectThreshold={selected.effectThreshold}
+                holographic={selected.owned.holographic}
+                signed={selected.owned.signature}
+                basePoints={selected.basePoints}
+              />
               <div className="mx-auto flex w-full max-w-sm flex-col border-y border-[#d4b36a]/30 sm:mx-0">
                 <InspectLedgerRow
                   label={t("inspect.rarity")}

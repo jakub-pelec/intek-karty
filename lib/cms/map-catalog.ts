@@ -1,6 +1,13 @@
 import type { AchievementCondition, Rarity } from "@/db/schema";
 import { RARITIES } from "@/lib/constants";
 import { DrawEngineError, assertRatesSumTo100, type DropRate } from "@/lib/draw-engine";
+import {
+  isCardTag,
+  isEffectKind,
+  RARITY_BASE_POINTS,
+  type CardTag,
+  type EffectKind,
+} from "@/lib/game/types";
 
 export const CMS_MODELS = [
   "collection",
@@ -41,6 +48,12 @@ export type StrapiCard = {
   active?: boolean;
   image?: StrapiMedia;
   collection?: StrapiRelation;
+  basePoints?: number | null;
+  tags?: Array<string | { value?: string } | null> | null;
+  effectKind?: string | null;
+  effectTag?: string | null;
+  effectValue?: number | null;
+  effectThreshold?: number | null;
 };
 
 export type StrapiBooster = {
@@ -194,6 +207,79 @@ function isRarity(value: string): value is Rarity {
   return (RARITIES as readonly string[]).includes(value);
 }
 
+function mapCardTags(raw: StrapiCard["tags"]): CardTag[] {
+  const tags: CardTag[] = [];
+  for (const item of raw ?? []) {
+    const value =
+      typeof item === "string"
+        ? item
+        : item && typeof item === "object"
+          ? item.value
+          : undefined;
+    if (!value) continue;
+    if (!isCardTag(value)) {
+      throw new CmsSyncError(`Unknown card tag: ${value}`);
+    }
+    if (!tags.includes(value)) tags.push(value);
+  }
+  return tags;
+}
+
+function mapCardEffect(entry: StrapiCard): {
+  effectKind: EffectKind | null;
+  effectTag: CardTag | null;
+  effectValue: number | null;
+  effectThreshold: number | null;
+} {
+  const kindRaw = entry.effectKind?.trim() || "";
+  if (!kindRaw) {
+    return {
+      effectKind: null,
+      effectTag: null,
+      effectValue: null,
+      effectThreshold: null,
+    };
+  }
+  if (!isEffectKind(kindRaw)) {
+    throw new CmsSyncError(`Unknown card effect: ${kindRaw}`);
+  }
+  const tagRaw = entry.effectTag?.trim() || "";
+  let effectTag: CardTag | null = null;
+  if (tagRaw) {
+    if (!isCardTag(tagRaw)) {
+      throw new CmsSyncError(`Unknown card effect tag: ${tagRaw}`);
+    }
+    effectTag = tagRaw;
+  }
+  if ((kindRaw === "per_tag" || kindRaw === "tribe") && !effectTag) {
+    throw new CmsSyncError(`Card effect ${kindRaw} needs an effect tag`);
+  }
+  const effectValue =
+    entry.effectValue === null || entry.effectValue === undefined
+      ? 0
+      : requireInt(entry.effectValue, "card effectValue");
+  if (effectValue < 0) {
+    throw new CmsSyncError("card effectValue must be >= 0");
+  }
+  const effectThreshold =
+    kindRaw === "tribe"
+      ? entry.effectThreshold === null || entry.effectThreshold === undefined
+        ? 3
+        : requireInt(entry.effectThreshold, "card effectThreshold")
+      : entry.effectThreshold === null || entry.effectThreshold === undefined
+        ? null
+        : requireInt(entry.effectThreshold, "card effectThreshold");
+  if (effectThreshold !== null && effectThreshold < 1) {
+    throw new CmsSyncError("card effectThreshold must be >= 1");
+  }
+  return {
+    effectKind: kindRaw,
+    effectTag,
+    effectValue,
+    effectThreshold,
+  };
+}
+
 export function mapDropRates(rates: StrapiDropRate[] | undefined): DropRate[] {
   const mapped: DropRate[] = (rates ?? [])
     .map((rate) => {
@@ -237,6 +323,13 @@ export function mapCard(entry: StrapiCard, strapiUrl: string) {
   }
   const number = requireInt(entry.number, "card number");
   const signed = Boolean(entry.signed);
+  const basePoints =
+    entry.basePoints === null || entry.basePoints === undefined
+      ? RARITY_BASE_POINTS[entry.rarity]
+      : requireInt(entry.basePoints, "card basePoints");
+  if (basePoints < 0) {
+    throw new CmsSyncError("card basePoints must be >= 0");
+  }
   return {
     cmsId: requireString(entry.documentId, "card documentId"),
     collectionCmsId,
@@ -247,6 +340,9 @@ export function mapCard(entry: StrapiCard, strapiUrl: string) {
     active: entry.active !== false,
     imageUrl: mediaUrl(strapiUrl, entry.image),
     uniqueKey: cardUniqueKey(collectionCmsId, number, signed),
+    basePoints,
+    tags: mapCardTags(entry.tags),
+    ...mapCardEffect(entry),
   };
 }
 

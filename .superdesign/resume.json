@@ -552,6 +552,112 @@
         }
       },
       "updatedAt": "2026-09-07T12:26:54.078Z"
+    },
+    "/deck": {
+      "targetKind": "existing-ui",
+      "projectId": "e9b4d7b3-184c-4c35-98e3-d3d6964eecea",
+      "baselineDraftId": "5fae7e88-4a47-4752-9f10-2949ddb94ed0",
+      "activeDraftId": "9cdf737c-1669-4990-a156-1d689096cd99",
+      "sourceTarget": "/collection",
+      "sourceDraftId": "41b30b35-2688-42a6-82bb-166075df5084",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "app/(user)/deck/page.tsx",
+        "components/deck-builder.tsx",
+        "components/ritual-shell.tsx",
+        "components/ritual-nav.tsx",
+        "components/relic-frame.tsx",
+        "components/ui/button.tsx",
+        "components/ui/input.tsx",
+        "components/card-rules.tsx",
+        "components/collection-browser.tsx"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "506158caf3e8dc04f96bcb3653ebf551f7a3152e71b06354fc74625a22243f22",
+        "app/(user)/deck/page.tsx": "eb116601fb984f832cdf48176efa9bc732b04d724bd64ff5f24a2dd280d5b7ee",
+        "components/deck-builder.tsx": "28ae3c82dda57a1e91c48fcf77164336b069c24360fbea981cbb96cea3258c5c",
+        "components/ritual-shell.tsx": "5fb5a19e315d5285dbe56750f3cdc67e1d79faf562ffd4406fcbc54cb8e052dd",
+        "components/ritual-nav.tsx": "4f8a193d0fad608f8d730f703cd3c19392c5a403938c58e6cec481a50d8d39a4",
+        "components/relic-frame.tsx": "fe79cb6518e8f0f1af4c30deaed3ec00e86267a2757fa728a915307cea98731b",
+        "components/ui/button.tsx": "a21092633f8b3967b861a32fe8bf9b150fa21f1ec9100ea9bba9b13393aaf977",
+        "components/ui/input.tsx": "9bd3145a03f82b83e3d2afe570f5f3faa6f098450738a014bc009a80eb7f42dd",
+        "components/card-rules.tsx": "96044f8dc2d6e26e8f53d49a99d6a0a93ead9c4160bf01f52131b01638949fd4",
+        "components/collection-browser.tsx": "38ce6f6b2618a5f4095d5fe162969dda15449f283c33d50df2dce68f8eb879a6"
+      },
+      "components": [],
+      "drafts": {
+        "5fae7e88-4a47-4752-9f10-2949ddb94ed0": {
+          "title": "Deck",
+          "visualDirection": "shipped ritual abyss",
+          "currentVersion": 1
+        },
+        "4f4e6de1-dfd8-4a86-891c-771528c08943": {
+          "title": "Intek Binder — Deck Chroma Workshop",
+          "visualDirection": "tag-chroma workshop, rarity-tinted pool, live score notes, named lineups",
+          "parentDraftId": "5fae7e88-4a47-4752-9f10-2949ddb94ed0",
+          "currentVersion": 1
+        },
+        "b559b327-ddf7-433a-811c-0661381d8904": {
+          "title": "Intek Binder Deck — Codex Spread",
+          "visualDirection": "two-page codex: lineup/filter ledger left, slots and vault right",
+          "parentDraftId": "5fae7e88-4a47-4752-9f10-2949ddb94ed0",
+          "currentVersion": 3
+        },
+        "9cdf737c-1669-4990-a156-1d689096cd99": {
+          "title": "Intek Binder Deck — Chapel Dais",
+          "visualDirection": "horizontal filter plinth, relic dais slots, summary stones, vault well",
+          "parentDraftId": "5fae7e88-4a47-4752-9f10-2949ddb94ed0",
+          "currentVersion": 3
+        }
+      },
+      "updatedAt": "2026-09-10T12:40:28.071Z"
+    },
+    "/match": {
+      "targetKind": "existing-ui",
+      "projectId": "e9b4d7b3-184c-4c35-98e3-d3d6964eecea",
+      "baselineDraftId": "33c46272-0f2f-4e10-8998-3cc7f0876fe7",
+      "activeDraftId": "33c46272-0f2f-4e10-8998-3cc7f0876fe7",
+      "sourceTarget": "/collection",
+      "sourceDraftId": "41b30b35-2688-42a6-82bb-166075df5084",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "app/(user)/match/[id]/page.tsx",
+        "components/match-board.tsx",
+        "components/match-flip-card.tsx",
+        "components/ritual-shell.tsx",
+        "components/ritual-nav.tsx",
+        "components/relic-frame.tsx",
+        "components/ui/button.tsx",
+        "components/card-rules.tsx"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "506158caf3e8dc04f96bcb3653ebf551f7a3152e71b06354fc74625a22243f22",
+        "app/(user)/match/[id]/page.tsx": "b604ef32bc0938f2ba4e43e2e6408b1f8af7c6a716b636a178973edba06c779c",
+        "components/match-board.tsx": "5b7f33fda0e2bbf8006f341e6637bfde1ad47a23e4ce649a81d3416d893e4ee8",
+        "components/match-flip-card.tsx": "cdaaaac4bd75d6e553911eb641c1bff6f7d4daae1999f03ee665dd0102d68d47",
+        "components/ritual-shell.tsx": "5fb5a19e315d5285dbe56750f3cdc67e1d79faf562ffd4406fcbc54cb8e052dd",
+        "components/ritual-nav.tsx": "4f8a193d0fad608f8d730f703cd3c19392c5a403938c58e6cec481a50d8d39a4",
+        "components/relic-frame.tsx": "fe79cb6518e8f0f1af4c30deaed3ec00e86267a2757fa728a915307cea98731b",
+        "components/ui/button.tsx": "a21092633f8b3967b861a32fe8bf9b150fa21f1ec9100ea9bba9b13393aaf977",
+        "components/card-rules.tsx": "96044f8dc2d6e26e8f53d49a99d6a0a93ead9c4160bf01f52131b01638949fd4"
+      },
+      "components": [],
+      "drafts": {
+        "33c46272-0f2f-4e10-8998-3cc7f0876fe7": {
+          "title": "Duel",
+          "visualDirection": "shipped ritual abyss",
+          "currentVersion": 1
+        },
+        "fe0fc8d5-846c-4a6c-ab83-12ace3e59bc5": {
+          "title": "Intek Binder — Synergy Constellation",
+          "visualDirection": "6v6 sequential reveal, colored ledger notes, 3D flips, Reveal Next",
+          "parentDraftId": "33c46272-0f2f-4e10-8998-3cc7f0876fe7",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-09-10T10:18:43.193Z"
     }
   }
 }

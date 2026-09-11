@@ -24,6 +24,9 @@ describe("seed catalog", () => {
     const signed = SEED_CARDS.filter((card) => card.signed);
     expect(signed).toHaveLength(1);
     expect(signed[0]?.number).toBe(4);
+    expect(SEED_CARDS.find((card) => card.number === 37)?.tags).toEqual(["cat"]);
+    expect(SEED_CARDS.find((card) => card.number === 37)?.effectKind).toBe("per_tag");
+    expect(SEED_CARDS.find((card) => card.number === 17)?.tags).toEqual(["food"]);
     expect(
       new Set(SEED_CARDS.map((card) => `${card.number}:${card.signed ?? false}`))
         .size,

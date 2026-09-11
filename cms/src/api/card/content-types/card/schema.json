@@ -51,6 +51,44 @@
       "multiple": false,
       "required": true,
       "allowedTypes": ["images"]
+    },
+    "basePoints": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 3
+    },
+    "tags": {
+      "type": "component",
+      "repeatable": true,
+      "component": "card.tag"
+    },
+    "effectKind": {
+      "type": "enumeration",
+      "enum": ["per_tag", "tribe", "lone", "high_rarity"]
+    },
+    "effectTag": {
+      "type": "enumeration",
+      "enum": [
+        "chat",
+        "hype",
+        "raid",
+        "food",
+        "cat",
+        "mod",
+        "clutch",
+        "night",
+        "sub",
+        "overlay"
+      ]
+    },
+    "effectValue": {
+      "type": "integer",
+      "min": 0
+    },
+    "effectThreshold": {
+      "type": "integer",
+      "min": 1
     }
   }
 }

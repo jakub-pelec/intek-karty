@@ -1,8 +1,9 @@
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   boolean,
   index,
   integer,
+  jsonb,
   pgEnum,
   pgTable,
   text,
@@ -56,6 +57,10 @@ export const redemptionStatusEnum = pgEnum("redemption_status", [
   "cancelled",
 ]);
 
+export const matchKindEnum = pgEnum("match_kind", ["ranked", "practice"]);
+export const matchStatusEnum = pgEnum("match_status", ["revealing", "finished"]);
+export const matchWinnerEnum = pgEnum("match_winner", ["a", "b", "draw"]);
+
 export type Rarity = (typeof rarityEnum.enumValues)[number];
 export type Role = (typeof roleEnum.enumValues)[number];
 export type BoosterStatus = (typeof boosterStatusEnum.enumValues)[number];
@@ -63,6 +68,9 @@ export type LedgerSource = (typeof ledgerSourceEnum.enumValues)[number];
 export type AchievementCondition =
   (typeof achievementConditionEnum.enumValues)[number];
 export type RedemptionStatus = (typeof redemptionStatusEnum.enumValues)[number];
+export type MatchKind = (typeof matchKindEnum.enumValues)[number];
+export type MatchStatus = (typeof matchStatusEnum.enumValues)[number];
+export type MatchWinner = (typeof matchWinnerEnum.enumValues)[number];
 
 const timestamps = {
   createdAt: timestamp("created_at", { withTimezone: true })
@@ -82,6 +90,7 @@ export const users = pgTable(
     image: text("image"),
     role: roleEnum("role").default("viewer").notNull(),
     pointsBalance: integer("points_balance").default(0).notNull(),
+    rating: integer("rating").default(1000).notNull(),
     ...timestamps,
   },
   (table) => [uniqueIndex("users_twitch_id_idx").on(table.twitchId)],
@@ -122,6 +131,15 @@ export const cards = pgTable(
     cmsId: text("cms_id"),
     signed: boolean("signed").default(false).notNull(),
     active: boolean("active").default(true).notNull(),
+    basePoints: integer("base_points").default(0).notNull(),
+    tags: text("tags")
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
+    effectKind: text("effect_kind"),
+    effectTag: text("effect_tag"),
+    effectValue: integer("effect_value"),
+    effectThreshold: integer("effect_threshold"),
     ...timestamps,
   },
   (table) => [
@@ -358,12 +376,87 @@ export const shopRedemptions = pgTable(
   (table) => [index("shop_redemptions_created_at_idx").on(table.createdAt)],
 );
 
+export const decks = pgTable(
+  "decks",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    isActive: boolean("is_active").default(false).notNull(),
+    ...timestamps,
+  },
+  (table) => [
+    index("decks_user_id_idx").on(table.userId),
+    uniqueIndex("decks_one_active_per_user")
+      .on(table.userId)
+      .where(sql`${table.isActive} = true`),
+  ],
+);
+
+export const deckCards = pgTable(
+  "deck_cards",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    deckId: uuid("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    cardId: uuid("card_id")
+      .notNull()
+      .references(() => cards.id),
+    slot: integer("slot").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => [
+    uniqueIndex("deck_cards_deck_slot_idx").on(table.deckId, table.slot),
+    uniqueIndex("deck_cards_deck_card_idx").on(table.deckId, table.cardId),
+  ],
+);
+
+export const matches = pgTable(
+  "matches",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    kind: matchKindEnum("kind").notNull(),
+    status: matchStatusEnum("status").default("revealing").notNull(),
+    revealedCount: integer("revealed_count").default(0).notNull(),
+    playerAId: uuid("player_a_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    playerBId: uuid("player_b_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    playerAName: text("player_a_name").notNull(),
+    playerBName: text("player_b_name").notNull(),
+    playerARating: integer("player_a_rating").notNull(),
+    playerBRating: integer("player_b_rating").notNull(),
+    playerALineup: jsonb("player_a_lineup").notNull(),
+    playerBLineup: jsonb("player_b_lineup").notNull(),
+    winnerSide: matchWinnerEnum("winner_side"),
+    ratingDeltaA: integer("rating_delta_a"),
+    ratingDeltaB: integer("rating_delta_b"),
+    finishedAt: timestamp("finished_at", { withTimezone: true }),
+    ...timestamps,
+  },
+  (table) => [
+    index("matches_player_a_idx").on(table.playerAId),
+    index("matches_player_b_idx").on(table.playerBId),
+    index("matches_status_idx").on(table.status),
+  ],
+);
+
 export const usersRelations = relations(users, ({ many }) => ({
   cards: many(userCards),
   boosters: many(userBoosters),
   draws: many(draws),
   ledger: many(pointsLedger),
   achievements: many(userAchievements),
+  decks: many(decks),
+  matchesAsA: many(matches, { relationName: "matchPlayerA" }),
+  matchesAsB: many(matches, { relationName: "matchPlayerB" }),
 }));
 
 export const collectionsRelations = relations(collections, ({ many }) => ({
@@ -377,6 +470,30 @@ export const cardsRelations = relations(cards, ({ one, many }) => ({
     references: [collections.id],
   }),
   owners: many(userCards),
+  deckCards: many(deckCards),
+}));
+
+export const decksRelations = relations(decks, ({ one, many }) => ({
+  user: one(users, { fields: [decks.userId], references: [users.id] }),
+  cards: many(deckCards),
+}));
+
+export const deckCardsRelations = relations(deckCards, ({ one }) => ({
+  deck: one(decks, { fields: [deckCards.deckId], references: [decks.id] }),
+  card: one(cards, { fields: [deckCards.cardId], references: [cards.id] }),
+}));
+
+export const matchesRelations = relations(matches, ({ one }) => ({
+  playerA: one(users, {
+    fields: [matches.playerAId],
+    references: [users.id],
+    relationName: "matchPlayerA",
+  }),
+  playerB: one(users, {
+    fields: [matches.playerBId],
+    references: [users.id],
+    relationName: "matchPlayerB",
+  }),
 }));
 
 export const boosterTypesRelations = relations(boosterTypes, ({ one, many }) => ({

@@ -18,6 +18,10 @@ function strapiImagePattern() {
   }
 }
 
+function isLoopbackHost(hostname: string) {
+  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
+}
+
 const strapiPattern = strapiImagePattern();
 
 const nextConfig: NextConfig = {
@@ -35,6 +39,10 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "*.up.railway.app" },
       ...(strapiPattern ? [strapiPattern] : []),
     ],
+    dangerouslyAllowSVG: true,
+    dangerouslyAllowLocalIP: Boolean(
+      strapiPattern && isLoopbackHost(strapiPattern.hostname),
+    ),
   },
 };
 
